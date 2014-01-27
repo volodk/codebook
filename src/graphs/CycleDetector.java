@@ -3,35 +3,31 @@ package graphs;
 import java.util.Deque;
 import java.util.LinkedList;
 
-public class TopSort {
+// Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 12:37:16 PM 
 
-    public static void printInOrder(DIGraph g){
+public class CycleDetector {
+    
+    static boolean hasNoCycle(DIGraph dig){
         
         Deque<Integer> stack = new LinkedList<>();
+        int[] visited = new int[dig.V()];
         
-        Deque<Integer> inOrder = new LinkedList<>();
-        
-        int[] visited = new int[g.V()];
-        
-        for(int v = 0; v < g.V() && visited[v] == 0; v++){
+        for(int v = 0; v < dig.V() && visited[v] == 0; v++){
             stack.push(v);
             
             while(!stack.isEmpty()){
                 Integer curr = stack.pop();
-                
                 if( visited[curr] == 0 ){
                     visited[curr] = 1;
-                    
-                    inOrder.push(curr);
-                    
-                    for(Integer vv : g.getAdjacent(curr)){
+                    for(Integer vv : dig.getAdjacent(curr)){
                         stack.push(vv);
                     }
+                } else {
+                    return false;   // cycle detected
                 }
             }
         }
         
-        System.out.println(inOrder);
-        
+        return true;
     }
 }

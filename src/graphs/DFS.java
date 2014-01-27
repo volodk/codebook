@@ -7,7 +7,7 @@ import java.util.LinkedList;
 
 public class DFS {
 
-    public static void traverse(Graph g, Action action){
+    public static void traverse(Graph g, Visitor visitor){
         Deque<Integer> stack = new LinkedList<>();
         int[] visited = new int[g.V()];
         
@@ -18,9 +18,9 @@ public class DFS {
                 Integer curr = stack.pop();
                 if( visited[curr] == 0 ){
                     
-                    action.perform(g, curr, visited);
+                    visitor.visit(g, curr, visited);
                     
-                    for(Integer vv : g.getAdjacent(v)){
+                    for(Integer vv : g.getAdjacent(curr)){
                         stack.push(vv);
                     }
                 }
@@ -28,19 +28,19 @@ public class DFS {
         }
     }
     
-    public static void traverse(Graph g, Action action, int from){
+    public static void traverse(Graph g, Visitor visitor, int from){
         Deque<Integer> stack = new LinkedList<>();
         int[] visited = new int[g.V()];
         
         stack.push(from);
         
         while(!stack.isEmpty()){
-            Integer v = stack.pop();
-            if( visited[v] == 0 ){
+            Integer curr = stack.pop();
+            if( visited[curr] == 0 ){
                 
-                action.perform(g, v, visited);
+                visitor.visit(g, curr, visited);
                 
-                for(Integer vv : g.getAdjacent(v)){
+                for(Integer vv : g.getAdjacent(curr)){
                     stack.push(vv);
                 }
             }

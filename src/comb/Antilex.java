@@ -8,10 +8,10 @@ public class Antilex {
 
     public static void main(String[] args) {
         
-        int[] last = { 3,2,1 };
-        int[] p = { 1,2,3 };
+        int[] last = { 3, 2, 1 };
+        int[] p = { 1, 2, 3 };
         
-        do{
+        do {
             System.out.println(Arrays.toString(p));
             next_permutation(p);
         }
@@ -24,16 +24,7 @@ public class Antilex {
     }
 
     static boolean eq(int[] a, int[] b){
-        if( a.length == b.length ){
-            int i = 0;
-            while( i < a.length ){
-                if(a[i] != b[i])
-                    return false;
-                i++;
-            }
-            return true;
-        }
-        return false;
+        return Arrays.equals(a, b);
     }
     
     

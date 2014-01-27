@@ -5,6 +5,10 @@ package graphs;
 public class DIGraph extends Graph {
     
     private boolean loopsAllowed;
+    
+    public DIGraph(int v) {
+        super(v);
+    }
 
     public DIGraph(int v, boolean loopsAllowed) {
         super(v);
