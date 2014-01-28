@@ -15,6 +15,18 @@ public class DIGraph extends Graph {
         this.loopsAllowed = loopsAllowed;
     }
     
+    public DIGraph reverse(){
+        DIGraph r = new DIGraph(V());
+        
+        for( int from = 0; from < V(); from++ ){
+            for( Integer to : getAdjacent(from) ){
+                r.addEdge(to, from);
+            }
+        }
+        
+        return r;
+    }
+    
     @Override
     public void addEdge(int from, int to) {
         if(from != to || ( from == to && loopsAllowed) )

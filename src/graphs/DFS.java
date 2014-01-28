@@ -7,44 +7,44 @@ import java.util.LinkedList;
 
 public class DFS {
 
-    public static void traverse(Graph g, Visitor visitor){
+    public static void traverse(Graph g, Visitor visitor) {
         Deque<Integer> stack = new LinkedList<>();
         int[] visited = new int[g.V()];
-        
-        for(int v = 0; v < g.V(); v++){
+
+        for (int v = 0; v < g.V(); v++) {
             stack.push(v);
-            
-            while(!stack.isEmpty()){
+
+            while (!stack.isEmpty()) {
                 Integer curr = stack.pop();
-                if( visited[curr] == 0 ){
-                    
-                    visited[curr] = 1;
-                    
-                    visitor.visit(g, curr, visited);
-                    
-                    for(Integer vv : g.getAdjacent(curr)){
+
+                visited[curr] = 1;
+
+                visitor.visit(g, curr, visited);
+
+                for (Integer vv : g.getAdjacent(curr)) {
+                    if (visited[vv] == 0) {
                         stack.push(vv);
                     }
                 }
             }
         }
     }
-    
-    public static void traverse(Graph g, Visitor visitor, int from){
+
+    public static void traverse(Graph g, Visitor visitor, int from) {
         Deque<Integer> stack = new LinkedList<>();
         int[] visited = new int[g.V()];
-        
+
         stack.push(from);
-        
-        while(!stack.isEmpty()){
+
+        while (!stack.isEmpty()) {
             Integer curr = stack.pop();
-            if( visited[curr] == 0 ){
-                
-                visited[curr] = 1;
-                
-                visitor.visit(g, curr, visited);
-                
-                for(Integer vv : g.getAdjacent(curr)){
+
+            visited[curr] = 1;
+
+            visitor.visit(g, curr, visited);
+
+            for (Integer vv : g.getAdjacent(curr)) {
+                if (visited[vv] == 0) {
                     stack.push(vv);
                 }
             }
