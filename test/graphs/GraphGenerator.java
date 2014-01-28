@@ -62,7 +62,7 @@ public class GraphGenerator {
         DIGraph g = new DIGraph(verticies);
         
         for(int i = 0 ; i < verticies - 1; i++){
-            g.addEdge(i, i+1);
+            g.addEdge(i, i + 1);
         }
         
         return g;

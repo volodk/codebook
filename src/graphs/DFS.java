@@ -18,6 +18,8 @@ public class DFS {
                 Integer curr = stack.pop();
                 if( visited[curr] == 0 ){
                     
+                    visited[curr] = 1;
+                    
                     visitor.visit(g, curr, visited);
                     
                     for(Integer vv : g.getAdjacent(curr)){
@@ -37,6 +39,8 @@ public class DFS {
         while(!stack.isEmpty()){
             Integer curr = stack.pop();
             if( visited[curr] == 0 ){
+                
+                visited[curr] = 1;
                 
                 visitor.visit(g, curr, visited);
                 
