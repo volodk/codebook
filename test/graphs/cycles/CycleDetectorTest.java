@@ -1,7 +1,7 @@
 package graphs.cycles;
 
 import static org.junit.Assert.*;
-import graphs.DIGraph;
+import graphs.DirectedGraph;
 import graphs.GraphGenerator;
 import graphs.cycles.CycleDetector;
 
@@ -16,7 +16,7 @@ public class CycleDetectorTest {
         
 //        DIGraph g = GraphGenerator.generateDirected(6, 0.4f, false);
         
-        DIGraph g2 = GraphGenerator.generateDAG(10); 
+        DirectedGraph g2 = GraphGenerator.generateDAG(10); 
         
         g2.print();
         

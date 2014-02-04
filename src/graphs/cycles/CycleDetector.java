@@ -1,6 +1,6 @@
 package graphs.cycles;
 
-import graphs.DIGraph;
+import graphs.DirectedGraph;
 
 import java.util.Deque;
 import java.util.LinkedList;
@@ -9,7 +9,7 @@ import java.util.LinkedList;
 
 public class CycleDetector {
 
-    static boolean hasNoCycle(DIGraph dig) {
+    static boolean hasNoCycle(DirectedGraph dig) {
 
         Deque<Integer> stack = new LinkedList<>();
         int[] visited = new int[dig.V()];

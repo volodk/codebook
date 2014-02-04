@@ -10,12 +10,9 @@ import java.util.Set;
 
 public class Graph {
     
-    private int V;
-    
     protected final List<Set<Integer>> adjList;
     
-    public Graph(int v) {
-        V = v;
+    public Graph(int V) {
         adjList = new ArrayList<>(V);
         for( int i = 0; i < V; i++ ){
             adjList.add(new HashSet<Integer>());
@@ -34,19 +31,23 @@ public class Graph {
         return E / 2;
     }
     
-    public void addEdge(int v1, int v2){
-        if( v1 != v2 ){
-            adjList.get(v1).add(v2);
-            adjList.get(v2).add(v1);
+    public void addEdge(int from, int to){
+        if( from != to ){
+            adjList.get(from).add(to);
+            adjList.get(to).add(from);
         } 
     }
     
-    public void removeEdge(int v1, int v2){
-        adjList.get(v1).remove(v2);
-        adjList.get(v2).remove(v1);
+    public void addEdge(Edge e){
+        
     }
     
-    public boolean isEdge(int from, int to){
+    public void removeEdge(int from, int to){
+        adjList.get(from).remove(to);
+        adjList.get(to).remove(from);
+    }
+    
+    public boolean hasEdge(int from, int to){
         return adjList.get(from).contains(to);
     }
     
@@ -55,7 +56,7 @@ public class Graph {
     }
     
     public void print(){
-        for(int i = 0; i < V; i++){
+        for(int i = 0; i < adjList.size(); i++){
             System.out.format("%d -> %s\n", i, adjList.get(i));
         }
     }

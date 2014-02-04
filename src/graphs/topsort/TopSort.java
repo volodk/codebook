@@ -1,13 +1,13 @@
 package graphs.topsort;
 
-import graphs.DIGraph;
+import graphs.DirectedGraph;
 
 import java.util.Deque;
 import java.util.LinkedList;
 
 public class TopSort {
 
-    public static void printInOrder(DIGraph g){
+    public static void printInOrder(DirectedGraph g){
         
         Deque<Integer> stack = new LinkedList<>();
         

@@ -2,7 +2,7 @@ package graphs;
 
 import java.util.Random;
 
-import graphs.DIGraph;
+import graphs.DirectedGraph;
 import graphs.Graph;
 
 // Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 3:20:40 PM 
@@ -18,7 +18,7 @@ public class GraphGenerator {
         
         Graph g = generateUndirected(verticies, density);
         
-        DIGraph dig = generateDirected(verticies, density, true);
+        DirectedGraph dig = generateDirected(verticies, density, true);
         
 //        g.print();
         dig.print();
@@ -36,8 +36,8 @@ public class GraphGenerator {
         return g;
     }
     
-    public static DIGraph generateDirected(int verticies, float density, boolean loopsAllowed) {
-        DIGraph g = new DIGraph(verticies, loopsAllowed);
+    public static DirectedGraph generateDirected(int verticies, float density, boolean loopsAllowed) {
+        DirectedGraph g = new DirectedGraph(verticies, loopsAllowed);
         float max = verticies * (verticies - 1) * 0.5f;
         while( g.E() / max <= density){
             int from = rnd.nextInt(verticies);
@@ -47,8 +47,8 @@ public class GraphGenerator {
         return g;
     }
     
-    public static DIGraph generateWeightedDirectedGraph(int verticies, float density, boolean loopsAllowed) {
-        DIGraph g = new DIGraph(verticies, loopsAllowed);
+    public static DirectedGraph generateWeightedDirectedGraph(int verticies, float density, boolean loopsAllowed) {
+        DirectedGraph g = new DirectedGraph(verticies, loopsAllowed);
         float max = verticies * (verticies - 1) * 0.5f;
         while( g.E() / max <= density){
             int from = rnd.nextInt(verticies);
@@ -58,8 +58,8 @@ public class GraphGenerator {
         return g;
     }
     
-    public static DIGraph generateDAG(int verticies){
-        DIGraph g = new DIGraph(verticies);
+    public static DirectedGraph generateDAG(int verticies){
+        DirectedGraph g = new DirectedGraph(verticies);
         
         for(int i = 0 ; i < verticies - 1; i++){
             g.addEdge(i, i + 1);
@@ -68,8 +68,8 @@ public class GraphGenerator {
         return g;
     }
     
-    public static DIGraph generateWeightedDAG(int verticies){
-        DIGraph g = new DIGraph(verticies);
+    public static DirectedGraph generateWeightedDAG(int verticies){
+        DirectedGraph g = new DirectedGraph(verticies);
         
         
         return g;

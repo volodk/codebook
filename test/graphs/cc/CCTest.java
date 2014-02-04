@@ -1,6 +1,6 @@
 package graphs.cc;
 
-import graphs.DIGraph;
+import graphs.DirectedGraph;
 import graphs.Graph;
 import graphs.GraphGenerator;
 import graphs.cc.ConnectedComponents;
@@ -13,7 +13,7 @@ public class CCTest {
 
     @Test
     public void printCC() {
-       DIGraph gid = GraphGenerator.generateDirected(6, 0.4f, false);
+       DirectedGraph gid = GraphGenerator.generateDirected(6, 0.4f, false);
        
        gid.print();
        

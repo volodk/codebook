@@ -2,21 +2,21 @@ package graphs;
 
 // Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 2:57:14 PM 
 
-public class DIGraph extends Graph {
+public class DirectedGraph extends Graph {
     
     private boolean loopsAllowed;
     
-    public DIGraph(int v) {
-        super(v);
+    public DirectedGraph(int V) {
+        super(V);
     }
 
-    public DIGraph(int v, boolean loopsAllowed) {
-        super(v);
+    public DirectedGraph(int V, boolean loopsAllowed) {
+        super(V);
         this.loopsAllowed = loopsAllowed;
     }
     
-    public DIGraph reverse(){
-        DIGraph r = new DIGraph(V());
+    public DirectedGraph reverse(){
+        DirectedGraph r = new DirectedGraph(V());
         
         for( int from = 0; from < V(); from++ ){
             for( Integer to : getAdjacent(from) ){
