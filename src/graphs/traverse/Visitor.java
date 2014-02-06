@@ -1,4 +1,6 @@
-package graphs;
+package graphs.traverse;
+
+import graphs.Graph;
 
 // Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 6:48:58 PM 
 

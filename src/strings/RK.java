@@ -5,14 +5,8 @@ public class RK {
     public static void main(String[] args) {
         
         int B = 'z' - 'a' + 1;
-        int M = 179453731;
+        int M = 1000000007;
         
-//        baaaaababbaa
-//        abbab
-        
-//        aaaabaaaaabbaaaa
-//        aa
-
         char[] str = "aaaabaaaaabbaaaa".toCharArray();
         char[] p = "aa".toCharArray();
         
@@ -36,14 +30,14 @@ public class RK {
     }
     
     static int shift(char[] str, int H, int i, int m, int M, int B){
-        int tmp = mul(str[i-1], pow(B, m - 1), M);
-        return add( mul( (H - tmp), B, M), str[i + m - 1], M);
+        int tmp = modmul(str[i-1], modpow(B, m - 1, M), M);
+        return add( modmul( (H - tmp), B, M), str[i + m - 1], M);
     }
 
     static int hash(char[] str, int i, int m, int M, int B) {
         int H = 0;
         for(int k = 0; k < m; k++){
-            int H1 = mul( str[i + k], pow(B, m - k - 1), M );
+            int H1 = modmul( str[i + k], modpow(B, m - k - 1, M), M );
             H = add(H, H1, M);
         }
         return H;
@@ -53,8 +47,15 @@ public class RK {
         return (a % M + b % M) % M;
     }
 
-    private static int mul(int a, int b, int M) {
-        return (a % M * b % M) % M;
+    static int modmul(int a, int b, int M) {
+        int res = 0;
+        while (a > 0) {
+            if ((a & 1) == 1)
+                res = (res + b) % M;
+            a >>= 1;
+            b = (b << 1) % M;
+        }
+        return res;
     }
     
     static int modpow(int a, int n, int M) {
@@ -68,16 +69,5 @@ public class RK {
         }
         return result;
     }
-    
-    private static int pow(int a, int n){
-        if( n == 0 ) return 1;
-        if( n == 1 ) return a;
-        if( n % 2 > 0){
-            return a * pow(a, n - 1);
-        } else {
-            int t = pow(a, n/2);
-            return t * t;
-        }
-    }
-
+  
 }

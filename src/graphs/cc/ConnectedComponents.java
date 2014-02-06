@@ -24,7 +24,7 @@ public class ConnectedComponents {
             Integer v = stack.pop();
 
             marked[v] = 1;
-            for (Integer vv : g.getAdjacent(v)) {
+            for (Integer vv : g.adjacentTo(v)) {
                 if (marked[vv] == 0) {
                     stack.push(vv);
                 }
@@ -57,7 +57,7 @@ public class ConnectedComponents {
                 Integer v = stack.pop();
                 if (mark[v] == 0) {
                     mark[v] = color;
-                    for (Integer vv : g.getAdjacent(v)) {
+                    for (Integer vv : g.adjacentTo(v)) {
                         stack.push(vv);
                     }
                 }

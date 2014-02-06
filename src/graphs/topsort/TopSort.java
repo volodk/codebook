@@ -1,13 +1,13 @@
 package graphs.topsort;
 
-import graphs.DirectedGraph;
+import graphs.Directed;
 
 import java.util.Deque;
 import java.util.LinkedList;
 
 public class TopSort {
 
-    public static void printInOrder(DirectedGraph g){
+    public static void printInOrder(Directed g){
         
         Deque<Integer> stack = new LinkedList<>();
         
@@ -26,7 +26,7 @@ public class TopSort {
                     
                     inOrder.push(curr);
                     
-                    for(Integer vv : g.getAdjacent(curr)){
+                    for(Integer vv : g.adjacentTo(curr)){
                         stack.push(vv);
                     }
                 }

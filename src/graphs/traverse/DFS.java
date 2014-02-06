@@ -1,4 +1,6 @@
-package graphs;
+package graphs.traverse;
+
+import graphs.Graph;
 
 import java.util.Deque;
 import java.util.LinkedList;
@@ -21,7 +23,7 @@ public class DFS {
 
                 visitor.visit(g, curr, visited);
 
-                for (Integer vv : g.getAdjacent(curr)) {
+                for (Integer vv : g.adjacentTo(curr)) {
                     if (visited[vv] == 0) {
                         stack.push(vv);
                     }
@@ -43,7 +45,7 @@ public class DFS {
 
             visitor.visit(g, curr, visited);
 
-            for (Integer vv : g.getAdjacent(curr)) {
+            for (Integer vv : g.adjacentTo(curr) ) {
                 if (visited[vv] == 0) {
                     stack.push(vv);
                 }

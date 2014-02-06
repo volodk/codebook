@@ -1,4 +1,6 @@
-package graphs;
+package graphs.traverse;
+
+import graphs.Graph;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -23,7 +25,7 @@ public class BFS {
                 
                 visitor.visit(g, curr, visited);
                 
-                for( Integer vv : g.getAdjacent(curr) ){
+                for( int vv : g.adjacentTo(curr) ){
                     if( visited[vv] == 0 ){
                         q.offer(vv);
                     }
