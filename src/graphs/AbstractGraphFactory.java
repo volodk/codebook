@@ -10,17 +10,17 @@ public class AbstractGraphFactory {
         // TODO Auto-generated constructor stub
     }
 
-    public static GraphFactory byStorageType(StorageType type, int vertexCount) {
+    public static GraphFactory getFactory(StorageType type) {
         switch (type) {
 
         default: case ADJACENCY_MATRIX:
-            return new AdjacencyMatrixGF(vertexCount);
+            return new AdjacencyMatrixGF();
 
         case ADJACENCY_LIST:
-            return new AdjacencyListGF(vertexCount);
+            return new AdjacencyListGF();
 
         case EDGE_LIST:
-            return new EdgeListGF(vertexCount);
+            return new EdgeListGF();
 
         }
     }

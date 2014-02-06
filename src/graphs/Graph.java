@@ -6,6 +6,8 @@ public interface Graph {
     
     int V();
     
+    int E();
+    
     void addEdge(int from, int to);
     
     int[] adjacentTo(int v);

@@ -1,78 +1,125 @@
 package graphs;
 
-import java.util.Random;
+import graphs.GraphFactory.StorageType;
 
-import graphs.DirectedGraph;
-import graphs.Graph;
+import java.util.Random;
 
 // Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 3:20:40 PM 
 
 public class GraphGenerator {
-    
+
     static Random rnd = new Random();
+    
+    private static final int[] WEIGHTS = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}; 
+    
+    private static final GraphFactory ADJACENCY_MATRIX_GRAPH_FACTORY = AbstractGraphFactory.getFactory(StorageType.ADJACENCY_MATRIX);
+    private static final GraphFactory ADJACENCY_LIST_GRAPH_FACTORY = AbstractGraphFactory.getFactory(StorageType.ADJACENCY_LIST);
+    private static final GraphFactory EDGE_LIST_GRAPH_FACTORY = AbstractGraphFactory.getFactory(StorageType.EDGE_LIST);
+    
+    public static Graph regularAdjacencyMatrixGraph(int V, float density) {
 
-    public static void main(String[] args) {
-        
-        int verticies = 10;
-        float density = 0.4f;
-        
-        Graph g = generateUndirected(verticies, density);
-        
-        DirectedGraph dig = generateDirected(verticies, density, true);
-        
-//        g.print();
-        dig.print();
+        Graph g = ADJACENCY_MATRIX_GRAPH_FACTORY.regularGraph(V);
 
-    }
-
-    public static Graph generateUndirected(int verticies, float density) {
-        Graph g = new Graph(verticies);
-        float max = verticies * (verticies - 1) * 0.5f;
-        while( g.E() / max <= density){
-            int from = rnd.nextInt(verticies);
-            int to = rnd.nextInt(verticies);
-            g.addEdge(from, to);
-        }
-        return g;
-    }
-    
-    public static DirectedGraph generateDirected(int verticies, float density, boolean loopsAllowed) {
-        DirectedGraph g = new DirectedGraph(verticies, loopsAllowed);
-        float max = verticies * (verticies - 1) * 0.5f;
-        while( g.E() / max <= density){
-            int from = rnd.nextInt(verticies);
-            int to = rnd.nextInt(verticies);
-            g.addEdge(from, to);
-        }
-        return g;
-    }
-    
-    public static DirectedGraph generateWeightedDirectedGraph(int verticies, float density, boolean loopsAllowed) {
-        DirectedGraph g = new DirectedGraph(verticies, loopsAllowed);
-        float max = verticies * (verticies - 1) * 0.5f;
-        while( g.E() / max <= density){
-            int from = rnd.nextInt(verticies);
-            int to = rnd.nextInt(verticies);
-            g.addEdge(from, to);
-        }
-        return g;
-    }
-    
-    public static DirectedGraph generateDAG(int verticies){
-        DirectedGraph g = new DirectedGraph(verticies);
-        
-        for(int i = 0 ; i < verticies - 1; i++){
-            g.addEdge(i, i + 1);
-        }
-        
-        return g;
-    }
-    
-    public static DirectedGraph generateWeightedDAG(int verticies){
-        DirectedGraph g = new DirectedGraph(verticies);
-        
+        populate(V, density, g);
         
         return g;
     }
 
+    public static Graph regularAdjacencyListGraph(int V, float density) {
+
+        Graph g = ADJACENCY_LIST_GRAPH_FACTORY.regularGraph(V);
+
+        populate(V, density, g);
+        
+        return g;
+    }
+
+    public static Graph regularEdgeListGraph(int V, float density) {
+
+        Graph g = EDGE_LIST_GRAPH_FACTORY.regularGraph(V);
+
+        populate(V, density, g);
+        
+        return g;
+    }
+
+    public static Directed directedAdjacencyMatrixGraph(int V, float density) {
+
+        Directed g = ADJACENCY_MATRIX_GRAPH_FACTORY.directedGraph(V);
+
+        populate(V, density, g);
+        
+        return g;
+    }
+
+    public static Directed directedAdjacencyListGraph(int V, float density) {
+
+        Directed g = ADJACENCY_LIST_GRAPH_FACTORY.directedGraph(V);
+
+        populate(V, density, g);
+        return g;
+    }
+
+    public static Directed directedEdgeListGraph(int V, float density) {
+
+        Directed g = EDGE_LIST_GRAPH_FACTORY.directedGraph(V);
+
+        populate(V, density, g);
+        return g;
+    }
+
+   
+    
+    public static Weighted weightedAdjacencyMatrixGraph(int V, float density) {
+
+        Weighted g = ADJACENCY_MATRIX_GRAPH_FACTORY.weightedGraph(V);
+
+        populate(V, density, g, randomWeight() );
+        
+        return g;
+    }
+
+
+    public static Weighted weightedAdjacencyListGraph(int V, float density) {
+
+        Weighted g = ADJACENCY_LIST_GRAPH_FACTORY.weightedGraph(V);
+
+        populate(V, density, g, randomWeight() );
+        
+        return g;
+    }
+
+    public static Weighted weightedEdgeListGraph(int V, float density) {
+
+        Weighted g = EDGE_LIST_GRAPH_FACTORY.weightedGraph(V);
+
+        populate(V, density, g, randomWeight() );
+        
+        return g;
+    }
+    
+    private static int randomWeight(){
+        return WEIGHTS[rnd.nextInt( WEIGHTS.length )];
+    }
+    
+    private static void populate(int V, float density, Graph g) {
+        float max = V * (V - 1) * 0.5f;
+        while (g.E() / max <= density) {
+            int from = rnd.nextInt(V);
+            int to = rnd.nextInt(V);
+            if (from != to)
+                g.addEdge(from, to);
+        }
+    }
+    
+    private static void populate(int V, float density, Weighted g, int weight) {
+        float max = V * (V - 1) * 0.5f;
+        while (g.E() / max <= density) {
+            int from = rnd.nextInt(V);
+            int to = rnd.nextInt(V);
+            if (from != to)
+                g.addEdge(from, to, weight );
+        }
+    }
+    
 }

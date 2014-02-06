@@ -4,14 +4,8 @@ package graphs;
 
 public class AdjacencyListGF implements GraphFactory {
 
-    private final int V;
-
-    public AdjacencyListGF(int V) {
-        this.V = V;
-    }
-
     @Override
-    public Graph regularGraph() {
+    public Graph regularGraph(final int V) {
         
         return new Graph() {
             
@@ -38,11 +32,17 @@ public class AdjacencyListGF implements GraphFactory {
                 // TODO Auto-generated method stub
                 return 0;
             }
+
+            @Override
+            public int E() {
+                // TODO Auto-generated method stub
+                return 0;
+            }
         };
     }
 
     @Override
-    public Weighted weightedGraph() {
+    public Weighted weightedGraph(final int V) {
         return new Weighted() {
             
             @Override
@@ -80,11 +80,17 @@ public class AdjacencyListGF implements GraphFactory {
                 // TODO Auto-generated method stub
                 
             }
+
+            @Override
+            public int E() {
+                // TODO Auto-generated method stub
+                return 0;
+            }
         };
     }
 
     @Override
-    public Directed directedGraph() {
+    public Directed directedGraph(final int V) {
         return new Directed() {
             
             @Override
@@ -110,11 +116,17 @@ public class AdjacencyListGF implements GraphFactory {
                 // TODO Auto-generated method stub
                 return 0;
             }
+
+            @Override
+            public int E() {
+                // TODO Auto-generated method stub
+                return 0;
+            }
         };
     }
 
     @Override
-    public WeightedDirected weightedDirectedGraph() {
+    public WeightedDirected weightedDirectedGraph(final int V) {
         return new WeightedDirected() {
             
             @Override
@@ -151,6 +163,12 @@ public class AdjacencyListGF implements GraphFactory {
             public void addEdge(int from, int to, int w) {
                 // TODO Auto-generated method stub
                 
+            }
+
+            @Override
+            public int E() {
+                // TODO Auto-generated method stub
+                return 0;
             }
         };
     }
