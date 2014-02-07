@@ -10,6 +10,7 @@ public class AdjacencyMatrixGF implements GraphFactory {
         return new Graph() {
 
             private int[][] G = new int[V][V];
+            private int E = 0;
 
             {
                 for (int i = 0; i < V; i++) {
@@ -26,12 +27,12 @@ public class AdjacencyMatrixGF implements GraphFactory {
             public int[] adjacentTo(int v) {
                 int n = 0;
                 for (int j = 0; j < V; j++) {
-                    if (v != j && G[v][j] != Integer.MAX_VALUE)
+                    if (v != j && G[v][j] != 0)
                         n++;
                 }
                 int[] adj = new int[n];
                 for (int j = 0; j < V; j++) {
-                    if (v != j && G[v][j] != Integer.MAX_VALUE)
+                    if (v != j && G[v][j] != 0)
                         adj[adj.length - n--] = j;
                 }
                 return adj;
@@ -39,8 +40,11 @@ public class AdjacencyMatrixGF implements GraphFactory {
 
             @Override
             public void addEdge(int from, int to) {
-                G[from][to] = 1;
-                G[to][from] = 1;
+                if( G[from][to] == 0 ){
+                    E++;
+                    G[from][to] = 1;
+                    G[to][from] = 1;
+                }
             }
 
             @Override
@@ -50,8 +54,7 @@ public class AdjacencyMatrixGF implements GraphFactory {
 
             @Override
             public int E() {
-                // TODO Auto-generated method stub
-                return 0;
+                return E;
             }
         };
     }
@@ -61,11 +64,11 @@ public class AdjacencyMatrixGF implements GraphFactory {
         return new Weighted() {
 
             private int[][] G = new int[V][V];
-
+            private int E = 0;
             {
                 for (int i = 0; i < V; i++) {
                     for (int j = 0; j < V; j++) {
-                        G[i][i] = Integer.MAX_VALUE;
+                        G[i][j] = Integer.MAX_VALUE;
                     }
                     G[i][i] = 0;
                 }
@@ -93,14 +96,16 @@ public class AdjacencyMatrixGF implements GraphFactory {
 
             @Override
             public void addEdge(int from, int to, int w) {
-                G[from][to] = w;
-                G[to][from] = w;
+                if ( G[from][to] == Integer.MAX_VALUE ) {
+                    E++;
+                    G[from][to] = w;
+                    G[to][from] = w;
+                }
             }
 
             @Override
             public void addEdge(int from, int to) {
-                // TODO Auto-generated method stub
-
+                addEdge(from, to, 1);
             }
 
             @Override
@@ -116,7 +121,7 @@ public class AdjacencyMatrixGF implements GraphFactory {
             @Override
             public int E() {
                 // TODO Auto-generated method stub
-                return 0;
+                return E;
             }
 
         };
@@ -127,7 +132,8 @@ public class AdjacencyMatrixGF implements GraphFactory {
         return new Directed() {
 
             private int[][] G = new int[V][V];
-
+            private int E = 0;
+            
             {
                 for (int i = 0; i < V; i++) {
                     G[i][i] = 1;
@@ -143,12 +149,12 @@ public class AdjacencyMatrixGF implements GraphFactory {
             public int[] adjacentTo(int v) {
                 int n = 0;
                 for (int j = 0; j < V; j++) {
-                    if (v != j && G[v][j] != Integer.MAX_VALUE)
+                    if (v != j && G[v][j] != 0)
                         n++;
                 }
                 int[] adj = new int[n];
                 for (int j = 0; j < V; j++) {
-                    if (v != j && G[v][j] != Integer.MAX_VALUE)
+                    if (v != j && G[v][j] != 0)
                         adj[adj.length - n--] = j;
                 }
                 return adj;
@@ -156,7 +162,10 @@ public class AdjacencyMatrixGF implements GraphFactory {
 
             @Override
             public void addEdge(int from, int to) {
-                G[from][to] = 1;
+                if(G[from][to] == 0){
+                    E++;
+                    G[from][to] = 1;
+                }
             }
 
             @Override
@@ -166,8 +175,7 @@ public class AdjacencyMatrixGF implements GraphFactory {
 
             @Override
             public int E() {
-                // TODO Auto-generated method stub
-                return 0;
+                return E;
             }
         };
     }
@@ -177,11 +185,12 @@ public class AdjacencyMatrixGF implements GraphFactory {
         return new WeightedDirected() {
 
             private int[][] G = new int[V][V];
-
+            private int E;
+            
             {
                 for (int i = 0; i < V; i++) {
                     for (int j = i; j < V; j++) {
-                        G[i][i] = Integer.MAX_VALUE;
+                        G[i][j] = Integer.MAX_VALUE;
                     }
                     G[i][i] = 0;
                 }
@@ -209,13 +218,15 @@ public class AdjacencyMatrixGF implements GraphFactory {
 
             @Override
             public void addEdge(int from, int to, int w) {
-                G[from][to] = w;
+                if ( G[from][to] == Integer.MAX_VALUE ) {
+                    E++;
+                    G[from][to] = w;
+                }
             }
 
             @Override
             public void addEdge(int from, int to) {
-                // TODO Auto-generated method stub
-
+                addEdge(from, to, 1);
             }
 
             @Override
@@ -230,8 +241,7 @@ public class AdjacencyMatrixGF implements GraphFactory {
 
             @Override
             public int E() {
-                // TODO Auto-generated method stub
-                return 0;
+                return E;
             }
         };
     }

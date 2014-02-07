@@ -98,6 +98,35 @@ public class GraphGenerator {
         return g;
     }
     
+    
+    public static WeightedDirected weightedDirectedAdjacencyMatrixGraph(int V, float density) {
+
+        WeightedDirected g = ADJACENCY_MATRIX_GRAPH_FACTORY.weightedDirectedGraph(V);
+
+        populate(V, density, g, randomWeight() );
+        
+        return g;
+    }
+    
+    public static WeightedDirected weightedDirectedAdjacencyListGraph(int V, float density) {
+
+        WeightedDirected g = ADJACENCY_LIST_GRAPH_FACTORY.weightedDirectedGraph(V);
+
+        populate(V, density, g, randomWeight() );
+        
+        return g;
+    }
+    
+    public static WeightedDirected weightedDirectedEdgeListGraph(int V, float density) {
+
+        WeightedDirected g = EDGE_LIST_GRAPH_FACTORY.weightedDirectedGraph(V);
+
+        populate(V, density, g, randomWeight() );
+        
+        return g;
+    }
+    
+    
     private static int randomWeight(){
         return WEIGHTS[rnd.nextInt( WEIGHTS.length )];
     }

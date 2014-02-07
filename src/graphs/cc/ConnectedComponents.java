@@ -30,7 +30,7 @@ public class ConnectedComponents {
                 }
             }
         }
-
+        
         for (int i : marked) {
             if (i == 0)
                 return false;
