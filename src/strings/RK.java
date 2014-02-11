@@ -5,7 +5,7 @@ public class RK {
     public static void main(String[] args) {
         
         int B = 'z' - 'a' + 1;
-        int M = 1000000007;
+        int M = 46337;
         
         char[] str = "aaaabaaaaabbaaaa".toCharArray();
         char[] p = "aa".toCharArray();

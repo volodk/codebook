@@ -1,41 +1,57 @@
 package graphs;
 
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+
 // Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 6:27:37 PM 
 
 public class EdgeListGF implements GraphFactory {
 
+    private static int[] toArray(Collection<Integer> collection) {
+        int[] arr = new int[collection.size()];
+        int i = 0;
+        for (Integer o : collection) {
+            arr[i++] = o;
+        }
+        return arr;
+    }
+
     @Override
     public Graph regularGraph(final int V) {
         return new Graph() {
-            
+
+            private final List<Edge> edges = new LinkedList<>();
+
             @Override
             public boolean hasEdge(int from, int to) {
-                // TODO Auto-generated method stub
-                return false;
+                return edges.contains(new Edge(from, to));
             }
-            
+
             @Override
             public int[] adjacentTo(int v) {
-                // TODO Auto-generated method stub
-                return null;
+                List<Integer> l = new LinkedList<>();
+                for (Edge e : edges) {
+                    if (e.from == v) {
+                        l.add(e.to);
+                    }
+                }
+                return toArray(l);
             }
-            
+
             @Override
             public void addEdge(int from, int to) {
-                // TODO Auto-generated method stub
-                
+                edges.add(new Edge(from, to));
             }
-            
+
             @Override
             public int V() {
-                // TODO Auto-generated method stub
-                return 0;
+                return V;
             }
 
             @Override
             public int E() {
-                // TODO Auto-generated method stub
-                return 0;
+                return edges.size();
             }
         };
     }
@@ -44,46 +60,52 @@ public class EdgeListGF implements GraphFactory {
     public Weighted weightedGraph(final int V) {
         return new Weighted() {
             
+            private final List<Edge> edges = new LinkedList<>();
+
             @Override
             public boolean hasEdge(int from, int to) {
-                // TODO Auto-generated method stub
-                return false;
+                return edges.contains(new Edge(from, to));
             }
-            
+
             @Override
             public int[] adjacentTo(int v) {
-                // TODO Auto-generated method stub
-                return null;
+                List<Integer> l = new LinkedList<>();
+                for (Edge e : edges) {
+                    if (e.from == v) {
+                        l.add(e.to);
+                    }
+                }
+                return toArray(l);
             }
-            
+
             @Override
             public void addEdge(int from, int to) {
-                // TODO Auto-generated method stub
-                
+                addEdge(from, to, 1);
             }
-            
+
             @Override
             public int V() {
-                // TODO Auto-generated method stub
-                return 0;
+                return V;
             }
-            
+
             @Override
             public int weight(int from, int to) {
-                // TODO Auto-generated method stub
-                return 0;
+                for (Edge e : edges) {
+                    if (e.from == from && e.to == to) {
+                        return e.weight;
+                    }
+                }
+                return Integer.MAX_VALUE;
             }
-            
+
             @Override
             public void addEdge(int from, int to, int w) {
-                // TODO Auto-generated method stub
-                
+                edges.add(new Edge(from, to, w));
             }
 
             @Override
             public int E() {
-                // TODO Auto-generated method stub
-                return 0;
+                return edges.size();
             }
         };
     }
@@ -91,35 +113,38 @@ public class EdgeListGF implements GraphFactory {
     @Override
     public Directed directedGraph(final int V) {
         return new Directed() {
-            
+
+            private final List<Edge> edges = new LinkedList<>();
+
             @Override
             public boolean hasEdge(int from, int to) {
-                // TODO Auto-generated method stub
-                return false;
+                return edges.contains(new Edge(from, to));
             }
-            
+
             @Override
             public int[] adjacentTo(int v) {
-                // TODO Auto-generated method stub
-                return null;
+                List<Integer> l = new LinkedList<>();
+                for (Edge e : edges) {
+                    if (e.from == v) {
+                        l.add(e.to);
+                    }
+                }
+                return toArray(l);
             }
-            
+
             @Override
             public void addEdge(int from, int to) {
-                // TODO Auto-generated method stub
-                
+                edges.add(new Edge(from, to));
             }
-            
+
             @Override
             public int V() {
-                // TODO Auto-generated method stub
-                return 0;
+                return V;
             }
 
             @Override
             public int E() {
-                // TODO Auto-generated method stub
-                return 0;
+                return edges.size();
             }
         };
     }
@@ -127,47 +152,53 @@ public class EdgeListGF implements GraphFactory {
     @Override
     public WeightedDirected weightedDirectedGraph(final int V) {
         return new WeightedDirected() {
-            
+
+            private final List<Edge> edges = new LinkedList<>();
+
             @Override
             public boolean hasEdge(int from, int to) {
-                // TODO Auto-generated method stub
-                return false;
+                return edges.contains(new Edge(from, to));
             }
-            
+
             @Override
             public int[] adjacentTo(int v) {
-                // TODO Auto-generated method stub
-                return null;
+                List<Integer> l = new LinkedList<>();
+                for (Edge e : edges) {
+                    if (e.from == v) {
+                        l.add(e.to);
+                    }
+                }
+                return toArray(l);
             }
-            
+
             @Override
             public void addEdge(int from, int to) {
-                // TODO Auto-generated method stub
-                
+                addEdge(from, to, 1);
             }
-            
+
             @Override
             public int V() {
-                // TODO Auto-generated method stub
-                return 0;
+                return V;
             }
-            
+
             @Override
             public int weight(int from, int to) {
-                // TODO Auto-generated method stub
-                return 0;
+                for (Edge e : edges) {
+                    if (e.from == from && e.to == to) {
+                        return e.weight;
+                    }
+                }
+                return Integer.MAX_VALUE;
             }
-            
+
             @Override
             public void addEdge(int from, int to, int w) {
-                // TODO Auto-generated method stub
-                
+                edges.add(new Edge(from, to, w));
             }
 
             @Override
             public int E() {
-                // TODO Auto-generated method stub
-                return 0;
+                return edges.size();
             }
         };
     }

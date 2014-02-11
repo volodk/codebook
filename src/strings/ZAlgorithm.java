@@ -5,27 +5,51 @@ package strings;
 public class ZAlgorithm {
 
     public static void main(String[] args) {
-        
+
         String str = "aabadaabcaaba";
         String pat = "aab";
-        
+
         char[] s = str.toCharArray();
         char[] p = pat.toCharArray();
-        
+
         char[] S = (pat + '$' + str).toCharArray();
-        
-        int[] Z = zAlgorithmen(S);
-        
-        for( int offset = p.length + 1; offset < Z.length; offset++ ){
-            if(Z[offset] == p.length)
+
+        int[] Z = zFunction(S);
+
+        for (int offset = p.length + 1; offset < Z.length; offset++) {
+            if (Z[offset] == p.length)
                 System.out.println(offset);
         }
 
     }
 
-    private static int[] zAlgorithmen(char[] S) {
-        // TODO Auto-generated method stub
-        return null;
+    static int[] zFunction(char[] s) {
+        int N = s.length;
+        int[] Z = new int[N];
+
+        int L = 0, R = 0;
+        for (int i = 1; i < N; i++) {
+            if (i > R) {
+                L = R = i;
+                while (R < N && s[R - L] == s[R])
+                    R++;
+                Z[i] = R - L;
+                R--;
+            } else {
+                int k = i - L;
+                if (Z[k] < R - i + 1)
+                    Z[i] = Z[k];
+                else {
+                    L = i;
+                    while (R < N && s[R - L] == s[R])
+                        R++;
+                    Z[i] = R - L;
+                    R--;
+                }
+            }
+        }
+
+        return Z;
     }
 
 }
