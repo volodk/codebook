@@ -53,6 +53,12 @@ public class EdgeListGF implements GraphFactory {
             public int E() {
                 return edges.size();
             }
+
+            @Override
+            public Graph reverse() {
+                // TODO Auto-generated method stub
+                return null;
+            }
         };
     }
 
@@ -107,6 +113,12 @@ public class EdgeListGF implements GraphFactory {
             public int E() {
                 return edges.size();
             }
+
+            @Override
+            public Graph reverse() {
+                // TODO Auto-generated method stub
+                return null;
+            }
         };
     }
 
@@ -145,6 +157,12 @@ public class EdgeListGF implements GraphFactory {
             @Override
             public int E() {
                 return edges.size();
+            }
+
+            @Override
+            public Graph reverse() {
+                // TODO Auto-generated method stub
+                return null;
             }
         };
     }
@@ -199,6 +217,12 @@ public class EdgeListGF implements GraphFactory {
             @Override
             public int E() {
                 return edges.size();
+            }
+
+            @Override
+            public Graph reverse() {
+                // TODO Auto-generated method stub
+                return null;
             }
         };
     }

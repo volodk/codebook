@@ -1,5 +1,8 @@
 package graphs.shortestpath;
 
+import java.util.Arrays;
+import java.util.PriorityQueue;
+
 import graphs.AbstractGraphFactory;
 import graphs.GraphFactory;
 import graphs.GraphPrinter;
@@ -9,7 +12,18 @@ import graphs.GraphFactory.StorageType;
 public class Dijkstra {
     
     public static int[] distanceToAll(Weighted g, int from){
-        return null;
+        int[] dist = new int[g.V()];
+        
+        for(int v = 0; v < g.V(); v++){
+            dist[v] = Integer.MAX_VALUE;
+        }
+        
+        dist[from] = 0;
+        
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        
+        
+        return dist;
     }
 
     
@@ -32,6 +46,11 @@ public class Dijkstra {
         g.addEdge(5, 4, 9);
         
         GraphPrinter.print(g);
+        
+        int start = 0;
+        int[] dist = distanceToAll(g, start);
+        
+        System.out.println( Arrays.toString(dist) );
         
     }
 }

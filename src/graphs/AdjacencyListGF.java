@@ -61,6 +61,12 @@ public class AdjacencyListGF implements GraphFactory {
                 }
                 return E / 2;
             }
+
+            @Override
+            public Graph reverse() {
+                // TODO Auto-generated method stub
+                return null;
+            }
         };
     }
 
@@ -122,6 +128,12 @@ public class AdjacencyListGF implements GraphFactory {
                 }
                 return E / 2;
             }
+
+            @Override
+            public Graph reverse() {
+                // TODO Auto-generated method stub
+                return null;
+            }
         };
     }
 
@@ -163,6 +175,12 @@ public class AdjacencyListGF implements GraphFactory {
                     E += s.size();
                 }
                 return E;
+            }
+
+            @Override
+            public Graph reverse() {
+                // TODO Auto-generated method stub
+                return null;
             }
         };
     }
@@ -223,6 +241,12 @@ public class AdjacencyListGF implements GraphFactory {
                     E += s.size();
                 }
                 return E;
+            }
+
+            @Override
+            public Graph reverse() {
+                // TODO Auto-generated method stub
+                return null;
             }
         };
     }

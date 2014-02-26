@@ -13,4 +13,6 @@ public interface Graph {
     int[] adjacentTo(int v);
     
     boolean hasEdge(int from, int to);
+    
+    Graph reverse();
 }

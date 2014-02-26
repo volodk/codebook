@@ -1,13 +1,15 @@
 package graphs.shortestpath;
 
 import static java.lang.Math.min;
-import graphs.Graph;
+import graphs.Weighted;
 
 import java.util.Arrays;
 
 public class FloydWarshall {
     
-    public static int[][] findShortestPaths(int V, Graph G){
+    public static int[][] findShortestPaths(Weighted G){
+        
+        int V = G.V();
         
         int[][] dist = new int[V][V];
         for(int[] arr : dist){
@@ -16,10 +18,6 @@ public class FloydWarshall {
         
         for(int i = 0; i < V; i++)
             dist[i][i] = 0;
-        
-        for(int i = 0; i < V; i++){
-            
-        }
         
         for(int k = 0; k < V; k++){
             for(int i = 0; i < V; i++){

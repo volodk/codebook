@@ -56,6 +56,12 @@ public class AdjacencyMatrixGF implements GraphFactory {
             public int E() {
                 return E;
             }
+
+            @Override
+            public Graph reverse() {
+                // TODO Auto-generated method stub
+                return null;
+            }
         };
     }
 
@@ -124,6 +130,12 @@ public class AdjacencyMatrixGF implements GraphFactory {
                 return E;
             }
 
+            @Override
+            public Graph reverse() {
+                // TODO Auto-generated method stub
+                return null;
+            }
+
         };
     }
 
@@ -176,6 +188,12 @@ public class AdjacencyMatrixGF implements GraphFactory {
             @Override
             public int E() {
                 return E;
+            }
+
+            @Override
+            public Graph reverse() {
+                // TODO Auto-generated method stub
+                return null;
             }
         };
     }
@@ -242,6 +260,12 @@ public class AdjacencyMatrixGF implements GraphFactory {
             @Override
             public int E() {
                 return E;
+            }
+
+            @Override
+            public Graph reverse() {
+                // TODO Auto-generated method stub
+                return null;
             }
         };
     }
