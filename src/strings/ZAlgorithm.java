@@ -9,7 +9,6 @@ public class ZAlgorithm {
         String str = "aabadaabcaaba";
         String pat = "aab";
 
-        char[] s = str.toCharArray();
         char[] p = pat.toCharArray();
 
         char[] S = (pat + '$' + str).toCharArray();

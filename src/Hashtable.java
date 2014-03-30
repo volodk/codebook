@@ -3,7 +3,7 @@ import java.util.Arrays;
 
 public class Hashtable<K,V> {
     
-    static class Entry{
+    static class Entry {
         Object key, value;
         Entry next;
         public Entry(Object key, Object value, Entry next) {
@@ -13,10 +13,10 @@ public class Hashtable<K,V> {
         }
     }
     
-    private static final int DEFAULT = 16;
+    private static final int DEFAULT_SIZE = 16;
     private static final float LOAD_FACTOR = 0.75f;
     
-    private Entry[] table = new Entry[DEFAULT];
+    private Entry[] table = new Entry[DEFAULT_SIZE];
     
     private int size;
     
@@ -49,18 +49,18 @@ public class Hashtable<K,V> {
         table[idx] = new Entry(key, value, table[idx]);
         size++;
         
-        V oldValue = null;
+        Object oldValue = null;
         
         for( Entry e = table[idx]; e != null && oldValue == null; e = e.next ){
             Entry next = e.next;
             if( next != null && next.key.equals(key) ){
-                oldValue = (V) next.value;
+                oldValue = next.value;
                 e.next = next.next;
                 size--;
             }
         }
         
-        return oldValue;
+        return (V) oldValue;
     }
     
     public void remove(K key){
@@ -80,9 +80,7 @@ public class Hashtable<K,V> {
         }
     }
     
-    public int size(){
-        return size;
-    }
+    public int size(){ return size; }
     
     private int indexOf(K key, int M){
         return ( key.hashCode() & 0x7FFFFFFF ) % M;
