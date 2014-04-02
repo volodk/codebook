@@ -18,6 +18,14 @@ public interface GraphFactory {
         public Edge(int from, int to, int weight) {
             this.from = from;  this.to = to;  this.weight = weight;
         }
+        
+        public static Edge valueOf(int from, int to){
+            return new Edge(from, to);
+        }
+        
+        public static Edge valueOf(int from, int to, int weight){
+            return new Edge(from, to, weight);
+        }
 
         @Override
         public int hashCode() {
