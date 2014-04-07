@@ -6,39 +6,37 @@ public class AdjacencyMatrixGF implements GraphFactory {
     
     @Override
     public Graph regularGraph(final int V) {
-        return new RegularGraph(V, 1);
+        return new RegularGraph(V);
     }
 
     @Override
     public Weighted weightedGraph(final int V) {
-        return new RegularWeightedGraph(V, Integer.MAX_VALUE);
+        return new RegularWeightedGraph(V);
     }
 
     @Override
     public Directed directedGraph(final int V) {
-        return new RegularDirectedGraph(V, 1);
+        return new RegularDirectedGraph(V);
     }
 
     @Override
     public WeightedDirected weightedDirectedGraph(final int V) {
-        return new RegularWeightedDirectedGraph(V, Integer.MAX_VALUE);
+        return new RegularWeightedDirectedGraph(V);
     }
     
     class RegularGraph implements Graph{
-        protected int[][] G;
-        protected int V, E;
-        protected int defaultWeight;
-        public RegularGraph(int V, int defaultWeight){
+        int[][] G;
+        int V, E;
+        public RegularGraph(int V){
             this.V = V;
-            this.defaultWeight = defaultWeight;
             G = new int[V][V];
-            for (int i = 0; i < V; i++) {
-                G[i][i] = defaultWeight;
+            for(int i = 0; i < V; i++){
+                G[i][i] = 1;
             }
         }
         @Override
         public boolean hasEdge(int from, int to) {
-            return G[from][to] == defaultWeight;
+            return G[from][to] == 1;
         }
         @Override
         public int[] adjacentTo(int v) {
@@ -57,8 +55,8 @@ public class AdjacencyMatrixGF implements GraphFactory {
         @Override
         public void addEdge(int from, int to) {
             if( G[from][to] == 0 ){
+                G[from][to] = G[to][from] = 1;
                 E++;
-                G[from][to] = G[to][from] = defaultWeight;
             }
         }
         @Override
@@ -71,7 +69,7 @@ public class AdjacencyMatrixGF implements GraphFactory {
         }
         @Override
         public Graph reverse() {
-            RegularGraph copy = new RegularGraph(V, defaultWeight);
+            RegularGraph copy = new RegularGraph(V);
             for( int i = 0; i < V; i++ ){
                 System.arraycopy(G[i], 0, copy.G[i], 0, V);
             }
@@ -80,21 +78,25 @@ public class AdjacencyMatrixGF implements GraphFactory {
     }
     
     class RegularWeightedGraph extends RegularGraph implements Weighted{
-        public RegularWeightedGraph(int V, int defaultWeight) {
-            super(V, defaultWeight);
+        public RegularWeightedGraph(int V) {
+            super(V);
             for (int i = 0; i < V; i++) {
                 for (int j = 0; j < V; j++) {
-                    G[i][j] = defaultWeight;
+                    G[i][j] = Integer.MAX_VALUE;
                 }
                 G[i][i] = 0;
             }
         }
         @Override
         public void addEdge(int from, int to, int w) {
-            if ( G[from][to] == defaultWeight ) {
-                E++;
+            if ( G[from][to] == Integer.MAX_VALUE ) {
                 G[from][to] = G[to][from] = w;
+                E++;
             }
+        }
+        @Override
+        public boolean hasEdge(int from, int to) {
+            return G[to][from] != Integer.MAX_VALUE;
         }
         @Override
         public int weight(int from, int to) {
@@ -102,7 +104,7 @@ public class AdjacencyMatrixGF implements GraphFactory {
         }
         @Override
         public Graph reverse() {
-            RegularWeightedGraph copy = new RegularWeightedGraph(V, defaultWeight);
+            RegularWeightedGraph copy = new RegularWeightedGraph(V);
             for( int i = 0; i < V; i++ ){
                 System.arraycopy(G[i], 0, copy.G[i], 0, V);
             }
@@ -111,28 +113,46 @@ public class AdjacencyMatrixGF implements GraphFactory {
     }
     
     class RegularDirectedGraph extends RegularGraph implements Directed{
-        public RegularDirectedGraph(int V, int defaultWeight) {
-            super(V, defaultWeight);
+        public RegularDirectedGraph(int V) {
+            super(V);
+        }
+        @Override
+        public void addEdge(int from, int to) {
+            if ( G[from][to] == 0 ) {
+                G[from][to] = 1;
+                E++;
+            }
         }
         @Override
         public Graph reverse() {
-            RegularDirectedGraph copy = new RegularDirectedGraph(V, defaultWeight);
+            RegularDirectedGraph copy = new RegularDirectedGraph(V);
             for( int i = 0; i < V; i++ ){
-                System.arraycopy(G[i], 0, copy.G[i], 0, V);
+                for(int j = 0; j < V; j++){
+                    copy.G[i][j] = G[j][i];
+                }
             }
             return copy;
         }
     }
     
     class RegularWeightedDirectedGraph extends RegularWeightedGraph implements WeightedDirected {
-        public RegularWeightedDirectedGraph(int V, int defaultWeight) {
-            super(V, defaultWeight);
+        public RegularWeightedDirectedGraph(int V) {
+            super(V);
+        }
+        @Override
+        public void addEdge(int from, int to, int w) {
+            if ( G[from][to] == Integer.MAX_VALUE ) {
+                G[from][to] = w;
+                E++;
+            }
         }
         @Override
         public Graph reverse() {
-            RegularWeightedDirectedGraph copy = new RegularWeightedDirectedGraph(V, defaultWeight);
+            RegularDirectedGraph copy = new RegularDirectedGraph(V);
             for( int i = 0; i < V; i++ ){
-                System.arraycopy(G[i], 0, copy.G[i], 0, V);
+                for(int j = 0; j < V; j++){
+                    copy.G[i][j] = G[j][i];
+                }
             }
             return copy;
         }

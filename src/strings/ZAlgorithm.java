@@ -12,6 +12,7 @@ public class ZAlgorithm {
         char[] p = pat.toCharArray();
 
         char[] S = (pat + '$' + str).toCharArray();
+        // aab$aabadaabcaaba
 
         int[] Z = zFunction(S);
 
@@ -36,7 +37,7 @@ public class ZAlgorithm {
                 R--;
             } else {
                 int k = i - L;
-                if (Z[k] < R - i + 1)
+                if (k < R - i + 1)
                     Z[i] = Z[k];
                 else {
                     L = i;

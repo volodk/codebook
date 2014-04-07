@@ -6,9 +6,7 @@ import graphs.GraphFactory.StorageType;
 
 public class AbstractGraphFactory {
     
-    private AbstractGraphFactory() {
-        // TODO Auto-generated constructor stub
-    }
+    private AbstractGraphFactory() {}
 
     public static GraphFactory getFactory(StorageType type) {
         switch (type) {
