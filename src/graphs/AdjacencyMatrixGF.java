@@ -5,26 +5,26 @@ package graphs;
 public class AdjacencyMatrixGF implements GraphFactory {
     
     @Override
-    public Graph regularGraph(final int V) {
+    public Graph undirectedGraph(final int V) {
         return new RegularGraph(V);
     }
 
     @Override
-    public Weighted weightedGraph(final int V) {
+    public Graph weightedGraph(final int V) {
         return new RegularWeightedGraph(V);
     }
 
     @Override
-    public Directed directedGraph(final int V) {
+    public Graph directedGraph(final int V) {
         return new RegularDirectedGraph(V);
     }
 
     @Override
-    public WeightedDirected weightedDirectedGraph(final int V) {
+    public Graph weightedDirectedGraph(final int V) {
         return new RegularWeightedDirectedGraph(V);
     }
     
-    class RegularGraph implements Graph{
+    class RegularGraph implements Graph, Undirected{
         int[][] G;
         int V, E;
         public RegularGraph(int V){
@@ -135,7 +135,7 @@ public class AdjacencyMatrixGF implements GraphFactory {
         }
     }
     
-    class RegularWeightedDirectedGraph extends RegularWeightedGraph implements WeightedDirected {
+    class RegularWeightedDirectedGraph extends RegularWeightedGraph implements Weighted, Directed {
         public RegularWeightedDirectedGraph(int V) {
             super(V);
         }

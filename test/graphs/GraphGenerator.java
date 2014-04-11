@@ -18,7 +18,7 @@ public class GraphGenerator {
     
     public static Graph regularAdjacencyMatrixGraph(int V, float density) {
 
-        Graph g = ADJACENCY_MATRIX_GRAPH_FACTORY.regularGraph(V);
+        Graph g = ADJACENCY_MATRIX_GRAPH_FACTORY.undirectedGraph(V);
 
         populate(V, density, g);
         
@@ -27,7 +27,7 @@ public class GraphGenerator {
 
     public static Graph regularAdjacencyListGraph(int V, float density) {
 
-        Graph g = ADJACENCY_LIST_GRAPH_FACTORY.regularGraph(V);
+        Graph g = ADJACENCY_LIST_GRAPH_FACTORY.undirectedGraph(V);
 
         populate(V, density, g);
         
@@ -36,7 +36,7 @@ public class GraphGenerator {
 
     public static Graph regularEdgeListGraph(int V, float density) {
 
-        Graph g = EDGE_LIST_GRAPH_FACTORY.regularGraph(V);
+        Graph g = EDGE_LIST_GRAPH_FACTORY.undirectedGraph(V);
 
         populate(V, density, g);
         

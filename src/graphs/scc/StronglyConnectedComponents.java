@@ -1,15 +1,16 @@
 package graphs.scc;
 
-import java.util.Arrays;
-
 import graphs.AbstractGraphFactory;
 import graphs.Directed;
+import graphs.Graph;
 import graphs.GraphFactory;
 import graphs.GraphFactory.StorageType;
 
+import java.util.Arrays;
+
 public class StronglyConnectedComponents {
     
-    public static int[] findSCC(Directed G){
+    public static int[] findSCC(Graph G){
         int[] scc = new int[G.V()];
         
         return scc;
@@ -18,7 +19,7 @@ public class StronglyConnectedComponents {
     public static void main(String[] args) {
         
         GraphFactory EDGE_LIST_GRAPH_FACTORY = AbstractGraphFactory.getFactory(StorageType.EDGE_LIST);
-        Directed g = EDGE_LIST_GRAPH_FACTORY.directedGraph(6);
+        Graph g = EDGE_LIST_GRAPH_FACTORY.directedGraph(6);
         
         g.addEdge(0, 1);
         g.addEdge(1, 2);

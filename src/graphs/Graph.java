@@ -8,8 +8,6 @@ public interface Graph {
     
     int E();
     
-    void addEdge(int from, int to);
-    
     int[] adjacentTo(int v);
     
     boolean hasEdge(int from, int to);

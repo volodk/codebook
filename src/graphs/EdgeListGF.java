@@ -1,8 +1,6 @@
 package graphs;
 
 import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
 
 // Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 6:27:37 PM 
 
@@ -18,213 +16,103 @@ public class EdgeListGF implements GraphFactory {
     }
 
     @Override
-    public Graph regularGraph(final int V) {
-        return new Graph() {
-
-            private final List<Edge> edges = new LinkedList<>();
-
-            @Override
-            public boolean hasEdge(int from, int to) {
-                return edges.contains(new Edge(from, to));
-            }
-
-            @Override
-            public int[] adjacentTo(int v) {
-                List<Integer> l = new LinkedList<>();
-                for (Edge e : edges) {
-                    if (e.from == v) {
-                        l.add(e.to);
-                    }
-                }
-                return toArray(l);
-            }
-
-            @Override
-            public void addEdge(int from, int to) {
-                edges.add(new Edge(from, to));
-            }
-
-            @Override
-            public int V() {
-                return V;
-            }
-
-            @Override
-            public int E() {
-                return edges.size();
-            }
-
-            @Override
-            public Graph reverse() {
-                // TODO Auto-generated method stub
-                return null;
-            }
-        };
+    public Graph undirectedGraph(final int V) {
+        return new RegularGraph(V);
     }
 
     @Override
-    public Weighted weightedGraph(final int V) {
-        return new Weighted() {
+    public Graph weightedGraph(final int V) {
+        return new RegularWeightedGraph(V);
+    }
+
+    @Override
+    public Graph directedGraph(final int V) {
+        return new RegularDirectedGraph(V);
+    }
+
+    @Override
+    public Graph weightedDirectedGraph(final int V) {
+        return new RegularWeightedDirectedGraph(V);
+    }
+
+    class RegularGraph implements Graph, Undirected {
+
+        public RegularGraph(int V) {
+            // TODO Auto-generated constructor stub
+        }
+
+        @Override
+        public void addEdge(int from, int to) {
+            // TODO Auto-generated method stub
             
-            private final List<Edge> edges = new LinkedList<>();
+        }
 
-            @Override
-            public boolean hasEdge(int from, int to) {
-                return edges.contains(new Edge(from, to));
-            }
+        @Override
+        public int V() {
+            // TODO Auto-generated method stub
+            return 0;
+        }
 
-            @Override
-            public int[] adjacentTo(int v) {
-                List<Integer> l = new LinkedList<>();
-                for (Edge e : edges) {
-                    if (e.from == v) {
-                        l.add(e.to);
-                    }
-                }
-                return toArray(l);
-            }
+        @Override
+        public int E() {
+            // TODO Auto-generated method stub
+            return 0;
+        }
 
-            @Override
-            public void addEdge(int from, int to) {
-                addEdge(from, to, 1);
-            }
+        @Override
+        public int[] adjacentTo(int v) {
+            // TODO Auto-generated method stub
+            return null;
+        }
 
-            @Override
-            public int V() {
-                return V;
-            }
+        @Override
+        public boolean hasEdge(int from, int to) {
+            // TODO Auto-generated method stub
+            return false;
+        }
 
-            @Override
-            public int weight(int from, int to) {
-                for (Edge e : edges) {
-                    if (e.from == from && e.to == to) {
-                        return e.weight;
-                    }
-                }
-                return Integer.MAX_VALUE;
-            }
-
-            @Override
-            public void addEdge(int from, int to, int w) {
-                edges.add(new Edge(from, to, w));
-            }
-
-            @Override
-            public int E() {
-                return edges.size();
-            }
-
-            @Override
-            public Graph reverse() {
-                // TODO Auto-generated method stub
-                return null;
-            }
-        };
+        @Override
+        public Graph reverse() {
+            // TODO Auto-generated method stub
+            return null;
+        }
+        
     }
+    
+    class RegularWeightedGraph extends RegularGraph implements Weighted{
 
-    @Override
-    public Directed directedGraph(final int V) {
-        return new Directed() {
+        public RegularWeightedGraph(int V) {
+            super(V);
+        }
 
-            private final List<Edge> edges = new LinkedList<>();
+        @Override
+        public void addEdge(int from, int to, int w) {
+            // TODO Auto-generated method stub
+            
+        }
 
-            @Override
-            public boolean hasEdge(int from, int to) {
-                return edges.contains(new Edge(from, to));
-            }
-
-            @Override
-            public int[] adjacentTo(int v) {
-                List<Integer> l = new LinkedList<>();
-                for (Edge e : edges) {
-                    if (e.from == v) {
-                        l.add(e.to);
-                    }
-                }
-                return toArray(l);
-            }
-
-            @Override
-            public void addEdge(int from, int to) {
-                edges.add(new Edge(from, to));
-            }
-
-            @Override
-            public int V() {
-                return V;
-            }
-
-            @Override
-            public int E() {
-                return edges.size();
-            }
-
-            @Override
-            public Graph reverse() {
-                // TODO Auto-generated method stub
-                return null;
-            }
-        };
+        @Override
+        public int weight(int from, int to) {
+            // TODO Auto-generated method stub
+            return 0;
+        }
+        
     }
+    
+    class RegularDirectedGraph extends RegularGraph implements Directed {
 
-    @Override
-    public WeightedDirected weightedDirectedGraph(final int V) {
-        return new WeightedDirected() {
-
-            private final List<Edge> edges = new LinkedList<>();
-
-            @Override
-            public boolean hasEdge(int from, int to) {
-                return edges.contains(new Edge(from, to));
-            }
-
-            @Override
-            public int[] adjacentTo(int v) {
-                List<Integer> l = new LinkedList<>();
-                for (Edge e : edges) {
-                    if (e.from == v) {
-                        l.add(e.to);
-                    }
-                }
-                return toArray(l);
-            }
-
-            @Override
-            public void addEdge(int from, int to) {
-                addEdge(from, to, 1);
-            }
-
-            @Override
-            public int V() {
-                return V;
-            }
-
-            @Override
-            public int weight(int from, int to) {
-                for (Edge e : edges) {
-                    if (e.from == from && e.to == to) {
-                        return e.weight;
-                    }
-                }
-                return Integer.MAX_VALUE;
-            }
-
-            @Override
-            public void addEdge(int from, int to, int w) {
-                edges.add(new Edge(from, to, w));
-            }
-
-            @Override
-            public int E() {
-                return edges.size();
-            }
-
-            @Override
-            public Graph reverse() {
-                // TODO Auto-generated method stub
-                return null;
-            }
-        };
+        public RegularDirectedGraph(int V) {
+            super(V);
+        }
+        
     }
+    
+    class RegularWeightedDirectedGraph extends RegularWeightedGraph implements Weighted, Directed{
 
+        public RegularWeightedDirectedGraph(int V) {
+            super(V);
+            // TODO Auto-generated constructor stub
+        }
+        
+    }
 }
