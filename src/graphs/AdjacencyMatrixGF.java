@@ -1,8 +1,5 @@
 package graphs;
 
-import graphs.repr.directed.AMDirectedGraph;
-import graphs.repr.undirected.AMUndirectedGraph;
-import graphs.repr.weighted.AMWeightedGraph;
 
 
 // Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 6:26:55 PM 
@@ -10,18 +7,18 @@ import graphs.repr.weighted.AMWeightedGraph;
 public class AdjacencyMatrixGF implements GraphFactory {
     
     @Override
-    public Undirected undirectedGraph(final int V) {
-        return new AMUndirectedGraph(V);
+    public UndirectedGraph undirectedGraph(final int V) {
+        return new AdjacencyMatrixUndirectedGraph(V);
     }
 
     @Override
-    public Weighted weightedGraph(final int V) {
-        return new AMWeightedGraph(V);
+    public WeightedGraph weightedGraph(final int V) {
+        return new AdjacencyMatrixWeightedGraph(V);
     }
 
     @Override
-    public Directed directedGraph(final int V) {
-        return new AMDirectedGraph(V);
+    public DirectedGraph directedGraph(final int V) {
+        return new AdjacencyMatrixDirectedGraph(V);
     }
 
 }

@@ -14,8 +14,8 @@ public class UndirectedGraphPrinterTest {
     
     @Test
     public void printAMUndirectedGraph(){
-        Undirected ug = ADJACENCY_MATRIX_GRAPH_FACTORY.undirectedGraph(N);
-        GraphUtils.test(ug);
+        UndirectedGraph ug = ADJACENCY_MATRIX_GRAPH_FACTORY.undirectedGraph(N);
+        PredefinedGraphs.test(ug);
         
         ug.print();
         
@@ -24,8 +24,8 @@ public class UndirectedGraphPrinterTest {
     
     @Test
     public void printALUndirectedGraph(){
-        Undirected ug = ADJACENCY_LIST_GRAPH_FACTORY.undirectedGraph(N);
-        GraphUtils.test(ug);
+        UndirectedGraph ug = ADJACENCY_LIST_GRAPH_FACTORY.undirectedGraph(N);
+        PredefinedGraphs.test(ug);
         
         ug.print();
         System.out.println();
@@ -33,8 +33,8 @@ public class UndirectedGraphPrinterTest {
     
     @Test
     public void printELUndirectedGraph(){
-        Undirected ug = EDGE_LIST_GRAPH_FACTORY.undirectedGraph(N);
-        GraphUtils.test(ug);
+        UndirectedGraph ug = EDGE_LIST_GRAPH_FACTORY.undirectedGraph(N);
+        PredefinedGraphs.test(ug);
         
         ug.print();
         

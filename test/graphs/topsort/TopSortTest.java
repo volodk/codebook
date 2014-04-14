@@ -1,9 +1,10 @@
 package graphs.topsort;
 
 import graphs.AbstractGraphFactory;
-import graphs.Directed;
+import graphs.DirectedGraph;
 import graphs.GraphFactory;
 import graphs.GraphFactory.StorageType;
+import graphs.alg.topsort.TopSort;
 import graphs.UndirectedGraphPrinterTest;
 
 import org.junit.Test;
@@ -17,7 +18,7 @@ public class TopSortTest {
     @Test
     public void liniarity() {
         
-        Directed g = ADJACENCY_MATRIX_GRAPH_FACTORY.directedGraph(4);
+        DirectedGraph g = ADJACENCY_MATRIX_GRAPH_FACTORY.directedGraph(4);
         g.addEdge(0, 1);
         g.addEdge(1, 2);
         g.addEdge(2, 3);
@@ -29,7 +30,7 @@ public class TopSortTest {
     @Test
     public void test() {
         
-        Directed g = ADJACENCY_MATRIX_GRAPH_FACTORY.directedGraph(4);
+        DirectedGraph g = ADJACENCY_MATRIX_GRAPH_FACTORY.directedGraph(4);
         g.addEdge(0, 1);
         g.addEdge(0, 2);
         g.addEdge(1, 3);

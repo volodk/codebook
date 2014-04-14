@@ -14,8 +14,8 @@ public class DirectedGraphPrinterTest {
     
     @Test
     public void printAMDirectedGraph(){
-        Directed ug = ADJACENCY_MATRIX_GRAPH_FACTORY.directedGraph(N);
-        GraphUtils.test(ug);
+        DirectedGraph ug = ADJACENCY_MATRIX_GRAPH_FACTORY.directedGraph(N);
+        PredefinedGraphs.test(ug);
         
         ug.print();
         
@@ -24,8 +24,8 @@ public class DirectedGraphPrinterTest {
     
     @Test
     public void printALDirectedGraph(){
-        Directed ug = ADJACENCY_LIST_GRAPH_FACTORY.directedGraph(N);
-        GraphUtils.test(ug);
+        DirectedGraph ug = ADJACENCY_LIST_GRAPH_FACTORY.directedGraph(N);
+        PredefinedGraphs.test(ug);
         
         ug.print();
         
@@ -35,8 +35,8 @@ public class DirectedGraphPrinterTest {
     
     @Test
     public void printELDirectedGraph(){
-        Directed ug = EDGE_LIST_GRAPH_FACTORY.directedGraph(N);
-        GraphUtils.test(ug);
+        DirectedGraph ug = EDGE_LIST_GRAPH_FACTORY.directedGraph(N);
+        PredefinedGraphs.test(ug);
         
         ug.print();
         

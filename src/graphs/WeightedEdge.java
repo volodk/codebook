@@ -2,9 +2,9 @@ package graphs;
 
 // Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 2:34:36 PM 
 
-public class WeightedEdge{
+class WeightedEdge{
     
-    public int from, to, weight;
+    int from, to, weight;
     
     public WeightedEdge(int from, int to, int w) {
         this.from = from;

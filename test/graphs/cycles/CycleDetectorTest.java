@@ -1,9 +1,10 @@
 package graphs.cycles;
 
 import graphs.AbstractGraphFactory;
-import graphs.Directed;
+import graphs.DirectedGraph;
 import graphs.GraphFactory;
 import graphs.GraphFactory.StorageType;
+import graphs.alg.cycles.CycleDetector;
 import graphs.UndirectedGraphPrinterTest;
 
 import org.junit.Assert;
@@ -14,7 +15,7 @@ import org.junit.Test;
 
 public class CycleDetectorTest {
     
-    Directed g1, g2;
+    DirectedGraph g1, g2;
     
     @Before
     public void setUp(){

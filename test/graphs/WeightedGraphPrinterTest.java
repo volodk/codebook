@@ -14,8 +14,8 @@ public class WeightedGraphPrinterTest {
     
     @Test
     public void printAMUndirectedGraph(){
-        Weighted ug = ADJACENCY_MATRIX_GRAPH_FACTORY.weightedGraph(N);
-        GraphUtils.test(ug);
+        WeightedGraph ug = ADJACENCY_MATRIX_GRAPH_FACTORY.weightedGraph(N);
+        PredefinedGraphs.test(ug);
         
         ug.print();
         
@@ -24,8 +24,8 @@ public class WeightedGraphPrinterTest {
     
     @Test
     public void printALUndirectedGraph(){
-        Weighted ug = ADJACENCY_LIST_GRAPH_FACTORY.weightedGraph(N);
-        GraphUtils.test(ug);
+        WeightedGraph ug = ADJACENCY_LIST_GRAPH_FACTORY.weightedGraph(N);
+        PredefinedGraphs.test(ug);
         
         ug.print();
         
@@ -35,8 +35,8 @@ public class WeightedGraphPrinterTest {
     
     @Test
     public void printELUndirectedGraph(){
-        Weighted ug = EDGE_LIST_GRAPH_FACTORY.weightedGraph(N);
-        GraphUtils.test(ug);
+        WeightedGraph ug = EDGE_LIST_GRAPH_FACTORY.weightedGraph(N);
+        PredefinedGraphs.test(ug);
         
         ug.print();
         
