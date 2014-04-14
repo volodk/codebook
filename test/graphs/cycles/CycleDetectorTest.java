@@ -4,7 +4,7 @@ import graphs.AbstractGraphFactory;
 import graphs.Directed;
 import graphs.GraphFactory;
 import graphs.GraphFactory.StorageType;
-import graphs.GraphPrinter;
+import graphs.UndirectedGraphPrinterTest;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -39,10 +39,8 @@ public class CycleDetectorTest {
     @Test
     public void test() {
         
-        GraphPrinter.print(g1);
         Assert.assertTrue( CycleDetector.hasNoCycle(g1) );
         
-        GraphPrinter.print(g2);
         Assert.assertFalse( CycleDetector.hasNoCycle(g2) );
     }
 

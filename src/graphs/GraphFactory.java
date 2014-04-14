@@ -8,11 +8,11 @@ public interface GraphFactory {
         ADJACENCY_MATRIX, ADJACENCY_LIST, EDGE_LIST
     }
         
-    Graph undirectedGraph(final int V);
+    Undirected undirectedGraph(final int V);
     
-    Graph weightedGraph(final int V);
+    Weighted weightedGraph(final int V);
     
-    Graph directedGraph(final int V);
+    Directed directedGraph(final int V);
     
-    Graph weightedDirectedGraph(final int V);
+//    Graph weightedDirectedGraph(final int V);
 }

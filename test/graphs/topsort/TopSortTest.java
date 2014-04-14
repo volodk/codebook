@@ -4,7 +4,7 @@ import graphs.AbstractGraphFactory;
 import graphs.Directed;
 import graphs.GraphFactory;
 import graphs.GraphFactory.StorageType;
-import graphs.GraphPrinter;
+import graphs.UndirectedGraphPrinterTest;
 
 import org.junit.Test;
 
@@ -22,7 +22,6 @@ public class TopSortTest {
         g.addEdge(1, 2);
         g.addEdge(2, 3);
                 
-        GraphPrinter.print(g);
         
         TopSort.printInOrder(g);
     }
@@ -36,7 +35,6 @@ public class TopSortTest {
         g.addEdge(1, 3);
         g.addEdge(2, 1);
         
-        GraphPrinter.print(g);
         
         TopSort.printInOrder(g);
     }

@@ -4,7 +4,7 @@ package graphs;
 
 public class Edge {
     
-    int from, to;
+    public int from, to;
     
     public Edge(int from, int to) {
         this.from = from;  this.to = to;
@@ -20,6 +20,11 @@ public class Edge {
 
     public static Edge reverse(Edge e) {
         return Edge.of(e.to, e.from);
+    }
+    
+    @Override
+    public String toString() {
+        return from + "-" + to;
     }
    
 }

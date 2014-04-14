@@ -13,4 +13,6 @@ public interface Graph {
     boolean hasEdge(int from, int to);
     
     Graph reverse();
+    
+    void print();
 }
