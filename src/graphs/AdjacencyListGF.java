@@ -6,22 +6,22 @@ package graphs;
 public class AdjacencyListGF implements GraphFactory {
 
     @Override
-    public UndirectedGraph undirectedGraph(final int V) {
+    public AdjacencyListUndirectedGraph undirectedGraph(final int V) {
         return new AdjacencyListUndirectedGraph(V);
     }
 
     @Override
-    public WeightedGraph weightedGraph(final int V) {
+    public AdjacencyListWeightedGraph weightedGraph(final int V) {
         return new AdjacencyListWeightedGraph(V);
     }
 
     @Override
-    public DirectedGraph directedGraph(final int V) {
+    public AdjacencyListDirectedGraph directedGraph(final int V) {
         return new AdjacencyListDirectedGraph(V);
     }
 
     @Override
-    public DirectedWeightedGraph directedWeightedGraph(int V) {
+    public AdjacencyListDirectedWeightedGraph directedWeightedGraph(int V) {
         return new AdjacencyListDirectedWeightedGraph(V);
     }
 

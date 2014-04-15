@@ -81,7 +81,7 @@ public class EdgeListWeightedGraph implements WeightedGraph{
     public int weight(int from, int to) {
         for( WeightedEdge e : edges ){
             if(e.from == from && e.to == to){
-                return e.weight;
+                return e.weight();
             }
         }
         return Integer.MAX_VALUE;

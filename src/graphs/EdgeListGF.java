@@ -6,22 +6,22 @@ package graphs;
 public class EdgeListGF implements GraphFactory {
 
     @Override
-    public UndirectedGraph undirectedGraph(final int V) {
+    public EdgeListUndirectedGraph undirectedGraph(final int V) {
         return new EdgeListUndirectedGraph(V);
     }
 
     @Override
-    public WeightedGraph weightedGraph(final int V) {
+    public EdgeListWeightedGraph weightedGraph(final int V) {
         return new EdgeListWeightedGraph(V);
     }
 
     @Override
-    public DirectedGraph directedGraph(final int V) {
+    public EdgeListDirectedGraph directedGraph(final int V) {
         return new EdgeListDirectedGraph(V);
     }
 
     @Override
-    public DirectedWeightedGraph directedWeightedGraph(int V) {
+    public EdgeListDirectedWeightedGraph directedWeightedGraph(int V) {
         return new EdgeListDirectedWeightedGraph(V);
     }
     

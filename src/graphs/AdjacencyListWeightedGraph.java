@@ -35,7 +35,7 @@ public class AdjacencyListWeightedGraph implements WeightedGraph {
     public int weight(int from, int to) {
         for( WeightedEdge e : adjList.get(from) ){
             if(e.from == from && e.to == to){
-                return e.weight;
+                return e.weight();
             }
         }
         return Integer.MAX_VALUE;
