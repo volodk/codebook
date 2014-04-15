@@ -14,5 +14,5 @@ public interface GraphFactory {
     
     DirectedGraph directedGraph(final int V);
     
-//    Graph weightedDirectedGraph(final int V);
+    DirectedWeightedGraph directedWeightedGraph(final int V);
 }

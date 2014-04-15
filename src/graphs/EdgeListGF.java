@@ -19,5 +19,10 @@ public class EdgeListGF implements GraphFactory {
     public DirectedGraph directedGraph(final int V) {
         return new EdgeListDirectedGraph(V);
     }
+
+    @Override
+    public DirectedWeightedGraph directedWeightedGraph(int V) {
+        return new EdgeListDirectedWeightedGraph(V);
+    }
     
 }

@@ -5,12 +5,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class AdjacencyListWeightedGraph implements WeightedGraph {
+// Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 12:01:25 PM 
 
-    protected int V, E;
-    private List< Set<WeightedEdge> > adjList;
+public class AdjacencyListDirectedWeightedGraph implements DirectedWeightedGraph {
+    
+    int V, E;
+    List< Set<WeightedEdge> > adjList;
 
-    public AdjacencyListWeightedGraph(int V) {
+    public AdjacencyListDirectedWeightedGraph(int V) {
         this.V = V;
         adjList = new ArrayList<>(V);
         for (int i = 0; i < V; i++) {
@@ -18,27 +20,13 @@ public class AdjacencyListWeightedGraph implements WeightedGraph {
         }
     }
 
-    public AdjacencyListWeightedGraph(int v, int e, List<Set<WeightedEdge>> adjList) {
-        V = v;
-        E = e;
-        this.adjList = adjList;
+    public AdjacencyListDirectedWeightedGraph(int V, int E, List<Set<WeightedEdge>> reversedAdjList) {
+        this.V = V; this.E = E; this.adjList = reversedAdjList;
     }
 
     @Override
-    public void addEdge(int from, int to, int w) {
-        adjList.get(from).add(WeightedEdge.of(from, to, w));
-        adjList.get(to).add(WeightedEdge.of(to, from, w));
-        E += 1;
-    }
-    
-    @Override
-    public int weight(int from, int to) {
-        for( WeightedEdge e : adjList.get(from) ){
-            if(e.from == from && e.to == to){
-                return e.weight;
-            }
-        }
-        return Integer.MAX_VALUE;
+    public void addEdge(int from, int to) {
+        throw new UnsupportedOperationException("use weigthed method ");
     }
 
     @Override
@@ -81,13 +69,30 @@ public class AdjacencyListWeightedGraph implements WeightedGraph {
                 adjSet.add(WeightedEdge.reverse(e));
             }
         }
-        return new AdjacencyListWeightedGraph(V, E, reversedAdjList);
+        return new AdjacencyListDirectedWeightedGraph(V, E, reversedAdjList);
     }
-    
+
     @Override
     public void print() {
         for(int v = 0; v < V; v++){
             System.out.println(v + " -> " + adjList.get(v));
         }
     }
+
+    @Override
+    public void addEdge(int from, int to, int w) {
+        adjList.get(from).add(WeightedEdge.of(from, to, w));
+        E += 1;
+    }
+
+    @Override
+    public int weight(int from, int to) {
+        for( WeightedEdge e : adjList.get(from) ){
+            if(e.from == from && e.to == to){
+                return e.weight;
+            }
+        }
+        return Integer.MAX_VALUE;
+    }
+
 }

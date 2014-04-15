@@ -21,4 +21,9 @@ public class AdjacencyMatrixGF implements GraphFactory {
         return new AdjacencyMatrixDirectedGraph(V);
     }
 
+    @Override
+    public DirectedWeightedGraph directedWeightedGraph(int V) {
+        return new AdjacencyMatrixDirectedWeightedGraph(V);
+    }
+
 }

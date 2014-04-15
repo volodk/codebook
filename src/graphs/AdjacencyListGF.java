@@ -20,4 +20,9 @@ public class AdjacencyListGF implements GraphFactory {
         return new AdjacencyListDirectedGraph(V);
     }
 
+    @Override
+    public DirectedWeightedGraph directedWeightedGraph(int V) {
+        return new AdjacencyListDirectedWeightedGraph(V);
+    }
+
 }
