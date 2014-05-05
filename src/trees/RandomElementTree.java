@@ -37,7 +37,7 @@ public class RandomElementTree {
         Queue<Node> q = new LinkedList<>();
         q.offer(root);
         
-        int toPrint = 1, next = 0;
+        int leftover = 1, next = 0;
 
         while(!q.isEmpty()){
             Node n = q.poll();
@@ -47,9 +47,9 @@ public class RandomElementTree {
             
             System.out.print(n);
             System.out.print(" ");
-            if( --toPrint == 0){
+            if( --leftover == 0){
                 System.out.println();
-                toPrint = next;
+                leftover = next;
                 next = 0;
             }
             

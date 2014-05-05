@@ -2,13 +2,15 @@ package trees.avl;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Queue;
 
 // Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 6:48:23 PM 
 
-public class AVLTree<K extends Comparable<K>, V> {
+public class AVLTree<K extends Comparable<? super K>, V> {
 
     class Node {
+        int height = 1;
         K key;
         V value;
         Node left, right;
@@ -60,12 +62,13 @@ public class AVLTree<K extends Comparable<K>, V> {
 
     Node insert(Node curr, K key, V value) {
         if (curr == null) {
-            Node n = new Node(key, value);
-            return n;
+            return new Node(key, value);
         } else {
             if (curr.key.compareTo(key) < 0) {
+                curr.height += 1;
                 curr.right = insert(curr.right, key, value);
             } else if (curr.key.compareTo(key) > 0) {
+                curr.height += 1;
                 curr.left = insert(curr.left, key, value);
             } else {
                 curr.value = value; // replace old value
@@ -76,25 +79,23 @@ public class AVLTree<K extends Comparable<K>, V> {
 
     Node delete(Node curr, K key) {
         if (curr == null) return null;
-        if( curr.key.compareTo(key) < 0)
+        if( curr.key.compareTo(key) < 0){
+            curr.height -= 1; 
             return curr.right = delete(curr.right, key);
-        else if(curr.key.compareTo(key) > 0)
+        } else if(curr.key.compareTo(key) > 0){
+            curr.height -= 1; 
             return curr.left = delete(curr.left, key);
-        else
-            return delete(curr);
-    }
-
-    Node delete(Node curr) {
-        if( curr.left == null && curr.right == null ) return null;
-        else {
-            Node replace = successor(curr);
-            if( replace == null ) replace = predecessor(curr);
-            
-            curr.key = replace.key;
-            curr.value = replace.value;
-            
-            delete(replace);    // <- must be a leaf
-            return curr;
+        } else {
+            if( curr.left == null && curr.right == null ) return null;
+            else {
+                if( curr.left != null && curr.right != null ){
+                    Node replace = max(curr.left);
+                    curr.key = replace.key;
+                    curr.left = delete(curr.left, replace.key);
+                    return curr;
+                } else if(curr.left != null){ return curr.left; 
+                } else /*if(curr.right != null)*/ { return curr.right; }
+            }
         }
     }
 
@@ -107,9 +108,8 @@ public class AVLTree<K extends Comparable<K>, V> {
             return find(curr.left, key);
     }
 
-    void inorderKeysDump(Node tree, List<K> buffer) {
-        if (buffer == null)
-            throw new NullPointerException();
+    void inorderKeysDump(Node tree, List<? super K> buffer) {
+        Objects.requireNonNull(buffer);
         if (tree != null) {
             inorderKeysDump(tree.left, buffer);
             buffer.add(tree.key);
@@ -123,8 +123,7 @@ public class AVLTree<K extends Comparable<K>, V> {
     }
 
     int height(Node tree) {
-        if (tree == null) return 0;
-        else return 1 + Math.max(height(tree.left), height(tree.right));
+        return tree.height;
     }
 
     Node min(Node tree) {
@@ -151,15 +150,5 @@ public class AVLTree<K extends Comparable<K>, V> {
         oldRoot.left = newRoot.right;
         newRoot.right = oldRoot;
         return newRoot;
-    }
-
-    Node successor(Node node) { // is not an in-order successor
-        if (node == null) return null;
-        return min(node.right);
-    }
-
-    Node predecessor(Node node) { // is not an in-order predecessor
-        if (node == null) return null;
-        return max(node.left);
     }
 }

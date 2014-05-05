@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 
-public class BST<K extends Comparable<K>, V> {
+public class BST<K extends Comparable<? super K>, V> {
     
     class Node{
         K key;
@@ -63,6 +63,14 @@ public class BST<K extends Comparable<K>, V> {
         }
     }
     
+    Node predecessor(Node n){
+        return null;
+    }
+    
+    Node successor(Node n){
+        return null;
+    }
+    
     // utility method
     
     public void print(){
@@ -71,7 +79,7 @@ public class BST<K extends Comparable<K>, V> {
         Queue<Node> q = new LinkedList<>();
         q.offer(root);
         
-        int toPrint = 1, next = 0;
+        int leftover = 1, next = 0;
 
         while(!q.isEmpty()){
             Node n = q.poll();
@@ -81,9 +89,9 @@ public class BST<K extends Comparable<K>, V> {
             
             System.out.print(n);
             System.out.print(" ");
-            if( --toPrint == 0){
+            if( --leftover == 0){
                 System.out.println();
-                toPrint = next;
+                leftover = next;
                 next = 0;
             }
             
