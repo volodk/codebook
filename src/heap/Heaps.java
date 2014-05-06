@@ -9,7 +9,7 @@ import java.util.Random;
 @SuppressWarnings("unchecked")
 public class Heaps {
     
-    public interface Heap <T> {
+    public interface Heap <T extends Comparable<? super T>> {
         void push(T elem);
         T pop();
         T peek();
@@ -18,7 +18,7 @@ public class Heaps {
     
     private Heaps(){}
     
-    private static class ArrayHeap<T> implements Heap<T>{
+    private static class ArrayHeap<T extends Comparable<? super T>> implements Heap<T>{
         
         private int N = 256;
         private int head = 1, tail = 0;
@@ -35,7 +35,8 @@ public class Heaps {
             ensureSize();
             arr[++tail] = elem;
             int i = tail;
-            while( i > head && gt( arr[i/2], arr[i] )  ){
+            while( i > head && gt( arr[i/2], arr[i] )  )
+            {
                 swap(arr, i, i/2);
                 i = i / 2;
             }
@@ -43,25 +44,27 @@ public class Heaps {
 
         @Override
         public T pop() {
-            checkIndex();
-            Object top = arr[head];
             
-            arr[head] = arr[tail];
-            arr[tail] = null;   // prevent memory leaks 
-            tail -= 1;
+            if (hasMoreElements()) {
             
-            int i = head;
-            T val;
-            while (2 * i < tail && gt(arr[i], val = min(arr[2 * i], arr[2 * i + 1])) || 2 * i <= tail
-                    && gt(arr[i], val = min(arr[i], arr[2 * i]))) {
-                if( gt( arr[i], val) ){
-                    int j = 2 * i + ( eq( arr[2*i], val) ? 0 : 1 );
-                    swap(arr, i, j);
-                    i = j;
+                Object top = arr[head];
+
+                arr[head] = arr[tail];
+                arr[tail] = null; // prevent memory leaks
+                tail = tail - 1;
+
+                int i = head, j, k;
+                while ( 2*i <= tail && gt(arr[i], min( arr[ j = Math.min(2 * i, tail)], arr[ k = Math.min(2 * i + 1, tail)])))
+                {
+                    int l = lt(arr[j], arr[k]) ? j : k;
+                    swap(arr, i, l);
+                    i = l;
                 }
-            } 
-            
-            return (T) top;
+
+                return (T) top;
+            } else {
+                throw new NoSuchElementException();
+            }
         }
 
         @Override
@@ -72,8 +75,8 @@ public class Heaps {
         @Override
         public int size() { return tail; }
         
-        private void checkIndex() {
-            if ( tail < 1 ) throw new NoSuchElementException();
+        private boolean hasMoreElements() {
+            return tail > 0;  
         }
         
         private void ensureSize(){
@@ -91,12 +94,13 @@ public class Heaps {
         
         private T min(Object obj1, Object obj2){ return comparator.compare( (T)obj1, (T)obj2) < 0 ? (T)obj1 : (T)obj2; }
         
+        private boolean lt(Object obj1, Object obj2){  return comparator.compare((T)obj1, (T)obj2) < 0;  }
         private boolean gt(Object obj1, Object obj2){  return comparator.compare((T)obj1, (T)obj2) > 0;  }
         private boolean eq(Object obj1, Object obj2){  return comparator.compare((T)obj1, (T)obj2) == 0; }
         
     }
     
-    public static <T extends Comparable<? super T>> Heap<T> minHeap(){
+    public static <T extends Comparable<? super T>> Heap<T> newMinHeap(){
         return new ArrayHeap<T>(new Comparator<T>() {
             @Override
             public int compare(T o1, T o2) {
@@ -105,7 +109,7 @@ public class Heaps {
         });
     }
     
-    public static <T extends Comparable<? super T>> Heap<T> maxHeap(){
+    public static <T extends Comparable<? super T>> Heap<T> newMaxHeap(){
         return new ArrayHeap<T>(new Comparator<T>() {
             @Override
             public int compare(T o1, T o2) {
@@ -115,7 +119,7 @@ public class Heaps {
     }
     
     public static void main(String[] args) {
-        Heap<Integer> heap = Heaps.minHeap();
+        Heap<Integer> heap = Heaps.newMinHeap();
         
         Random rnd = new Random();
 
