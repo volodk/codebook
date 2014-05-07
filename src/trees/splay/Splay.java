@@ -2,6 +2,7 @@ package trees.splay;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Queue;
 
 // Volodymyr_Krasnikov <vkrasnikov@gmail.com> 6:48:13 PM 
@@ -13,6 +14,11 @@ public class Splay<K extends Comparable<K>, V> {
         V value;
         Node left, right, parent;
         public Node(K key, V value) {  this.key = key;  this.value = value;  }
+        public Node(K key, V value, Node parent, Node left, Node right)
+        {  
+            this.key = key;  this.value = value;
+            this.parent = parent; this.left = left; this.right = right;
+        }
         @Override public String toString() { return String.format("%s:%s", key, value); }
     }
     
@@ -21,51 +27,20 @@ public class Splay<K extends Comparable<K>, V> {
     // interface
     
     public void insert(K key, V value){
-        root = splay(insert(root, null, key, value));
+        root = insert(root, null, key, value);
     }
     
     public void delete(K key){
-        root = splay(delete(root, key));
+        root = delete(root, key);
     }
     
     public V find(K key){
         Node n = find(root, key);
         if( n == null )
             return null;
-        else{
+        else {
             root = splay(n);
             return root.value;
-        }
-    }
-    
-    public void print(){
-        Queue<Node> q = new LinkedList<>();
-        q.offer(root);
-        int toPrint = 1, next = 0;
-        while(!q.isEmpty()){
-            Node n = q.poll();
-            if(n.left != null){ q.offer(n.left); next++; }
-            if(n.right != null ){ q.offer(n.right); next++; }
-            System.out.print(n);
-            System.out.print(" ");
-            if( --toPrint == 0){
-                System.out.println();
-                toPrint = next;
-                next = 0;
-            }
-        }
-        System.out.print("\n");
-    }
-    
-    // helper BST stuff
-    
-    void inorderKeysDump( Node tree, List<K> buffer){
-        if( buffer == null )
-            throw new NullPointerException();
-        if( tree != null ){
-            inorderKeysDump(tree.left, buffer);
-            buffer.add(tree.key);
-            inorderKeysDump(tree.right, buffer);
         }
     }
     
@@ -80,15 +55,15 @@ public class Splay<K extends Comparable<K>, V> {
     }
     
     Node splay(Node curr){
-        if(curr == null)
-            return root;
+        if( curr == null ) return null;
+        
         if( curr.parent == null )
             return curr;
         else {
             if( curr.parent.left == curr ){ // in the left sub-tree
-                return splay(rotateRight(curr.parent));
+                return splay( rotateRight(curr.parent) );
             } else{  // in the right sub-tree 
-                return splay(rotateLeft(curr.parent));
+                return splay( rotateLeft(curr.parent) );
             }
         }
     }
@@ -96,10 +71,10 @@ public class Splay<K extends Comparable<K>, V> {
     Node find(Node curr, K key){
         if(curr == null || curr.key.equals(key))
             return curr;
-        if( curr.key.compareTo(key) < 0)
-            return find(curr.right, key);
-        else 
+        if( less(key, curr.key))
             return find(curr.left, key);
+        else 
+            return find(curr.right, key);
     }
     
     Node min(Node tree){
@@ -116,45 +91,70 @@ public class Splay<K extends Comparable<K>, V> {
     
     Node insert(Node curr, Node parent, K key, V value){
         if( curr == null ){
-            Node n = new Node(key, value); n.parent = parent;
-            return n; 
+            return new Node(key, value, parent, null, null); 
         } else {
-            if( curr.key.compareTo(key) < 0){
-                curr.right = insert(curr.right, curr, key, value);
-            } else if( curr.key.compareTo(key) > 0){
+            if( less(key, curr.key) )
+            {
                 curr.left = insert(curr.left, curr, key, value);
-            } else {
-                curr.value = value; // replace old value
+                return splay(curr.left);
+            } 
+            else if( greater(key, curr.key) )
+            {
+                curr.right = insert(curr.right, curr, key, value);
+                return splay(curr.right);
+            } 
+            else 
+            {
+                curr.value = value;
+                return curr;
             }
-            return curr;
         }
     }
     
     Node delete(Node curr, K key){
        if( curr != null )
            do {
-               if( curr.key.compareTo(key) < 0)
-                   curr = curr.right;
-               else if( curr.key.compareTo(key) > 0)
+               if( less(key, curr.key) )
                    curr = curr.left;
+               else if( greater(key, curr.key))
+                   curr = curr.right;
                else { 
-                  return delete(curr);
+                  return splay( delete(curr) );
                }
            } while(curr != null);
        return null;
     }
     
-    Node delete(Node curr){
-        if( curr.left == null && curr.right == null ){
+    Node delete(Node curr)
+    {
+        if( curr.left == null && curr.right == null )
+        {
             Node p = curr.parent;
             if(p.left == curr) p.left = null;
             if(p.right == curr) p.right = null;
             return p;
-        } else {
-            Node replacement = successor(curr);
-            if(replacement == null) replacement = predecessor(curr);
-            curr.key = replacement.key; curr.value = replacement.value;
-            return delete(replacement);    // must be a leaf
+        } 
+        else if( curr.left == null && curr.right != null)
+        {
+            Node p = curr.parent;
+            if(p.left == curr) p.left = curr.right;
+            if(p.right == curr) p.right = curr.right;
+            return p;
+        } 
+        else if(curr.left != null && curr.right == null)
+        {
+            Node p = curr.parent;
+            if(p.left == curr) p.left = curr.left;
+            if(p.right == curr) p.right = curr.left;
+            return p;
+        } 
+        else
+        {
+            Node repl = max(curr.left);
+            curr.key = repl.key;
+            curr.value = repl.value;
+            delete(repl);
+            return curr;
         }
     }
     
@@ -191,31 +191,39 @@ public class Splay<K extends Comparable<K>, V> {
         return newRoot;
     }
     
-    Node successor(Node node){
-        if(node == null)
-            return node;
-        if(node.right != null)
-            return min(node.right);
-        else {
-            Node p = node.parent;
-            while( p != null && node.key.compareTo(p.key) > 0){
-                p = p.parent;
-            }
-            return p;
-        }
+    private boolean less(K key1, K key2){
+        return key1.compareTo(key2) < 0;
     }
     
-    Node predecessor(Node node){
-        if(node == null)
-            return node;
-        if(node.left != null)
-            return max(node.left);
-        else {
-            Node p = node.parent;
-            while( p != null && node.key.compareTo(p.key) < 0){
-                p = p.parent;
+    private boolean greater(K key1, K key2){
+        return key1.compareTo(key2) > 0;
+    }
+    
+    public void print(){
+        Queue<Node> q = new LinkedList<>();
+        q.offer(root);
+        int toPrint = 1, next = 0;
+        while(!q.isEmpty()){
+            Node n = q.poll();
+            if(n.left != null){ q.offer(n.left); next++; }
+            if(n.right != null ){ q.offer(n.right); next++; }
+            System.out.print(n);
+            System.out.print(" ");
+            if( --toPrint == 0){
+                System.out.println();
+                toPrint = next;
+                next = 0;
             }
-            return p;
+        }
+        System.out.print("\n");
+    }
+    
+    void inorderKeysDump( Node tree, List<? super K> buffer){
+        Objects.requireNonNull(buffer);
+        if( tree != null ){
+            inorderKeysDump(tree.left, buffer);
+            buffer.add(tree.key);
+            inorderKeysDump(tree.right, buffer);
         }
     }
 }

@@ -21,11 +21,11 @@ public class AVLTree<K extends Comparable<? super K>, V> {
     Node root;
     
     public void insert(K key, V value) {
-        root = balance( insert(root, key, value) );
+        root = insert(root, key, value);
     }
     
     public void delete(K key) {
-        root = balance( delete(root, key) );
+        root = delete(root, key);
     }
     
     public V find(K key) {
@@ -73,9 +73,7 @@ public class AVLTree<K extends Comparable<? super K>, V> {
     }
 
     private void updateHeight(Node n) {
-        int lh = n.left != null ? n.left.height : 0;
-        int rh = n.right != null ? n.right.height : 0;
-        n.height = 1 + Math.max(lh, rh);
+        n.height = 1 + Math.max( height(n.left), height(n.right) );
     }
 
     Node delete(Node curr, K key)
@@ -85,13 +83,15 @@ public class AVLTree<K extends Comparable<? super K>, V> {
         {
             curr.left = delete(curr.left, key);
             updateHeight(curr);
-            return curr;
+
+            return balance(curr);
         } 
         else if ( gt(key, curr.key) )
         {
             curr.right = delete(curr.right, key);
             updateHeight(curr);
-            return curr;
+            
+            return balance(curr);
         } 
         else 
         {
