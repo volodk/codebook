@@ -10,7 +10,7 @@ import org.junit.Test;
 
 // Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 2:44:35 PM 
 
-public class SplayLoadTest {
+public class SplayTreeVSHashMapTest {
 
     SplayTree<Integer, Integer> splayTree;
     Map<Integer, Integer> rbTree;
@@ -35,7 +35,7 @@ public class SplayLoadTest {
     }
     
     @Test
-    public void testTreeRandomSample() {
+    public void valuesFromNarrowRangeForHashMap() {
         
         System.out.println("\nRandom sample range : tree map");
         System.out.println("SIZE TIME");
@@ -44,17 +44,16 @@ public class SplayLoadTest {
         
         Random rnd = new Random();
         
-        while(size <= MAX){
+        while ( size <= MAX ){
             
             int[] arr = randomArray(size);
-            int sample[] = getRandomSample(arr, rnd, size);
-                        
             constructTreeMap(arr, size);
+            
+            int sample[] = getRandomSample(arr, rnd, (int)( size * 0.05f ) );
             
             long start_t = System.currentTimeMillis();
             for( int i = 0; i < Queries; i++){
-                int index = rnd.nextInt(sample.length);
-                assertNotNull( rbTree.get( sample[ index ] ) );
+                assertNotNull( rbTree.get( sample[ rnd.nextInt(sample.length) ] ) );
             }
             long end_t = System.currentTimeMillis();
             System.out.format("%d %d\n", size, end_t - start_t );
@@ -65,7 +64,7 @@ public class SplayLoadTest {
     }
     
     @Test
-    public void testSplayRandomSample() {
+    public void valuesFromNarrowRangeForSplay() {
         
         System.out.println("\nRandom sample range : splay");
         System.out.println("SIZE TIME");
@@ -77,14 +76,13 @@ public class SplayLoadTest {
         while(size <= MAX){
             
             int[] arr = randomArray(size);
-            int sample[] = getRandomSample(arr, rnd, size);
-                        
             constructSplayTree(arr, size);
+            
+            int sample[] = getRandomSample(arr, rnd, (int)( size * 0.05f ) );
             
             long start_t = System.currentTimeMillis();
             for( int i = 0; i < Queries; i++){
-                int index = rnd.nextInt(sample.length);
-                assertNotNull( splayTree.find( sample[ index ] ) );
+                assertNotNull( splayTree.find( sample[ rnd.nextInt(sample.length) ] ) );
             }
             long end_t = System.currentTimeMillis();
             System.out.format("%d %d\n", size, end_t - start_t );
@@ -95,12 +93,11 @@ public class SplayLoadTest {
     }
 
     private int[] getRandomSample(int[] arr, Random rnd, int size) {
-        int fraction = 10;
-        int[] range = new int[ size/fraction ];
+        int[] range = new int[ size ];
         
-        System.arraycopy(arr, 0, range, 0, size/fraction);
+        System.arraycopy(arr, 0, range, 0, size);
         
-        for(int i = 0, j = 0; i < size && j < size / fraction; i++){
+        for(int i = 0, j = 0; i < size && j < size; i++){
             if( rnd.nextInt(i + 1) == 0 ){
                 range[j++] = arr[i];
             }

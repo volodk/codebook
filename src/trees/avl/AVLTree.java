@@ -33,18 +33,35 @@ public class AVLTree<K extends Comparable<? super K>, V> {
         return n == null ? null : n.value;
     }
     
-    Node balance(Node tree){
-        
+    Node balance(Node tree)
+    {
         if(tree == null) return null;
         
-        if( Math.abs( height(tree.left) - height(tree.right)) <= 1 )
+        if ( Math.abs( height(tree.left) - height(tree.right) ) <= 1 )
+        {
             return tree;
+        }
         else
         {
-            
+            if( height(tree.left) > height(tree.right) )
+            {
+                Node n = tree.left;
+                if( n.left == null && n.right != null )
+                {
+                    n.left = rotateLeft(n.left);
+                }
+                return rotateRight(tree);
+            } 
+            else    // height(tree.left) < height(tree.right)
+            {
+                Node n = tree.right;
+                if( n.left != null && n.right == null )
+                {
+                    n.right = rotateRight(n.right);
+                }
+                return rotateLeft(tree);
+            }
         }
-        
-        return null;
     }
 
     Node insert(Node curr, K key, V value)
@@ -58,15 +75,19 @@ public class AVLTree<K extends Comparable<? super K>, V> {
             {
                 curr.left = insert(curr.left, key, value);
                 updateHeight(curr);
+                
+                return balance(curr);
             } 
             else if ( gt(key, curr.key) )
             {
                 curr.right = insert(curr.right, key, value);
                 updateHeight(curr);
+                
+                return balance(curr);
             } 
             else
             {
-                curr.value = value; // replace old value
+                curr.value = value;
             }
             return curr;
         }

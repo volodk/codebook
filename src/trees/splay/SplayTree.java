@@ -7,7 +7,7 @@ import java.util.Queue;
 
 // Volodymyr_Krasnikov <vkrasnikov@gmail.com> 6:48:13 PM 
 
-public class Splay<K extends Comparable<K>, V> {
+public class SplayTree<K extends Comparable<K>, V> {
     
     class Node {
         K key;
@@ -36,22 +36,12 @@ public class Splay<K extends Comparable<K>, V> {
     
     public V find(K key){
         Node n = find(root, key);
-        if( n == null )
+        if( n == null ){
             return null;
-        else {
+        } else {
             root = splay(n);
-            return root.value;
+            return n.value; 
         }
-    }
-    
-    int size(Node tree){
-        if(tree == null) return 0;
-        else return 1 + size(tree.left) + size(tree.right);
-    }
-    
-    int height(Node tree){
-        if(tree == null) return 0;
-        else return 1 + Math.max(height(tree.left), height(tree.right));
     }
     
     Node splay(Node curr){
@@ -66,6 +56,16 @@ public class Splay<K extends Comparable<K>, V> {
                 return splay( rotateLeft(curr.parent) );
             }
         }
+    }
+    
+    int size(Node tree){
+        if(tree == null) return 0;
+        else return 1 + size(tree.left) + size(tree.right);
+    }
+    
+    int height(Node tree){
+        if(tree == null) return 0;
+        else return 1 + Math.max(height(tree.left), height(tree.right));
     }
     
     Node find(Node curr, K key){
@@ -98,15 +98,15 @@ public class Splay<K extends Comparable<K>, V> {
                 curr.left = insert(curr.left, curr, key, value);
                 return splay(curr.left);
             } 
-            else if( greater(key, curr.key) )
+            else if( eq(key, curr.key) )
             {
-                curr.right = insert(curr.right, curr, key, value);
-                return splay(curr.right);
+                curr.value = value;
+                return curr;                
             } 
             else 
             {
-                curr.value = value;
-                return curr;
+                curr.right = insert(curr.right, curr, key, value);
+                return splay(curr.right);
             }
         }
     }
@@ -119,9 +119,9 @@ public class Splay<K extends Comparable<K>, V> {
                else if( greater(key, curr.key))
                    curr = curr.right;
                else { 
-                  return splay( delete(curr) );
+                  return delete( splay(curr) );
                }
-           } while(curr != null);
+           } while ( curr != null );
        return null;
     }
     
@@ -197,6 +197,10 @@ public class Splay<K extends Comparable<K>, V> {
     
     private boolean greater(K key1, K key2){
         return key1.compareTo(key2) > 0;
+    }
+    
+    private boolean eq(K key1, K key2){
+        return key1.compareTo(key2) == 0;
     }
     
     public void print(){
