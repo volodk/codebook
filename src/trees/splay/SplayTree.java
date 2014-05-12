@@ -18,7 +18,7 @@ public class SplayTree<K extends Comparable<K>, V> {
             this.key = key;  this.value = value;
             this.parent = parent; this.left = left; this.right = right;
         }
-        @Override public String toString() { return String.format("%s:%s", key, value); }
+        @Override public String toString() { return String.format("%s", key); }
     }
     
     Node root;
@@ -34,10 +34,12 @@ public class SplayTree<K extends Comparable<K>, V> {
     }
     
     public V find(K key){
-        if( find(root, key) == null ){
+    		Node n = find(root, key); 
+        if( n == null ){
             return null;
         } else {
-           return root.value;
+        	 root = n;
+           return n.value;
         }
     }
     
@@ -60,18 +62,21 @@ public class SplayTree<K extends Comparable<K>, V> {
         
         if( lt(key, curr.key)){
             Node n = find(curr.left, key);
-            if( n != null ){
-                curr.left = rotateRight(curr);
+            if( n != null ){	// splay up
+                curr.left = n;
+                return rotateRight(curr);
             }
-            return n;
+            return null;
         }
         else { 
             Node n = find(curr.right, key);
-            if(n != null){
-                curr.right = rotateLeft(curr);
+            if(n != null){ // splay up
+                curr.right = n;
+                return rotateLeft(curr);
             }
-            return n;
+            return null;
         }
+        
     }
     
     boolean isBST(Node curr){
@@ -99,7 +104,7 @@ public class SplayTree<K extends Comparable<K>, V> {
             if( lt(key, curr.key) )
             {
                 curr.left = insert(curr.left, curr, key, value);
-                return rotateRight(curr);
+                return rotateRight(curr); // splay up
             } 
             else if( eq(key, curr.key) )
             {
@@ -109,7 +114,7 @@ public class SplayTree<K extends Comparable<K>, V> {
             else 
             {
                 curr.right = insert(curr.right, curr, key, value);
-                return rotateLeft(curr);
+                return rotateLeft(curr); // splay up
             }
         }
     }

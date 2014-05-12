@@ -1,7 +1,6 @@
 package trees.splay;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -26,31 +25,31 @@ public class SplayTest {
         }
     }
 
-//    @Test
+    @Test
     public void print() {
         splay.print();
         assertTrue( splay.isBST( splay.root) );
     }
     
-//    @Test
+    @Test
     public void find() {
-        assertNotNull(splay.find(7));
+        assertEquals(7, (int)splay.find(7));
         assertTrue( splay.isBST( splay.root) );
     }
     
-//    @Test
+    @Test
     public void findNull() {
         assertNull(splay.find(8));
         assertTrue( splay.isBST( splay.root) );
     }
     
-//    @Test
+    @Test
     public void delete() {
-        splay.delete(splay.root, 1);
+        splay.delete(1);
         assertTrue( splay.isBST( splay.root) );
     }
     
-//    @Test
+    @Test
     public void deleteRoot() {
         splay.delete(splay.root, 5);
         assertTrue( splay.isBST( splay.root) );
@@ -58,20 +57,11 @@ public class SplayTest {
     
     @Test
     public void testSplayProperty(){
-
         assertTrue( splay.size() > 0);
         
         for(int a : arr){
-            
-            splay.print();
-            
-            splay.find(a);
-            
-            splay.print();
-            
-            break;
-            
-//            assertEquals(a, (int)splay.root.value);
+            int out = splay.find(a);
+            assertEquals(a, out);
         }
     }
 }

@@ -34,7 +34,7 @@ public class SplayTreeVSHashMapTest {
         }
     }
     
-    @Test
+//    @Test
     public void valuesFromNarrowRangeForHashMap() {
         
         System.out.println("\nRandom sample range : tree map");
