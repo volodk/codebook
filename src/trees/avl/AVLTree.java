@@ -15,17 +15,17 @@ public class AVLTree<K extends Comparable<? super K>, V> {
         V value;
         Node left, right;
         public Node(K key, V value) { this.key = key; this.value = value; }
-        @Override public String toString() { return String.format("%s:%s", key, value); }
+        @Override public String toString() { return String.format("%s", key); }
     }
 
     Node root;
     
     public void insert(K key, V value) {
-        root = insert(root, key, value);
+        root = balance( insert(root, key, value) );
     }
     
     public void delete(K key) {
-        root = delete(root, key);
+        root = balance( delete(root, key) );
     }
     
     public V find(K key) {
@@ -74,14 +74,14 @@ public class AVLTree<K extends Comparable<? super K>, V> {
             if ( lt(key, curr.key) )
             {
                 curr.left = insert(curr.left, key, value);
-                updateHeight(curr);
+//                updateHeight(curr);
                 
                 return balance(curr);
             } 
             else if ( gt(key, curr.key) )
             {
                 curr.right = insert(curr.right, key, value);
-                updateHeight(curr);
+//                updateHeight(curr);
                 
                 return balance(curr);
             } 
@@ -103,14 +103,14 @@ public class AVLTree<K extends Comparable<? super K>, V> {
         if( lt(key, curr.key) )
         {
             curr.left = delete(curr.left, key);
-            updateHeight(curr);
+//            updateHeight(curr);
 
             return balance(curr);
         } 
         else if ( gt(key, curr.key) )
         {
             curr.right = delete(curr.right, key);
-            updateHeight(curr);
+//            updateHeight(curr);
             
             return balance(curr);
         } 
@@ -157,7 +157,7 @@ public class AVLTree<K extends Comparable<? super K>, V> {
 
     int height(Node tree) {
         if (tree == null) return 0;
-        return tree.height;
+        return 1 + Math.max(height(tree.left), height(tree.right));
     }
 
     Node min(Node tree) {
@@ -186,13 +186,41 @@ public class AVLTree<K extends Comparable<? super K>, V> {
         return newRoot;
     }
     
-    boolean lt(K key1, K key2){
-        return key1.compareTo(key2) < 0;
-    }
-    
-    boolean gt(K key1, K key2){
-        return key1.compareTo(key2) > 0;
-    }
+    boolean lt(Node n1, Node n2){
+      return n2 == null ? true : lt(n1.key, n2.key);
+  }
+  
+  boolean lt(K key1, K key2){
+      return key1.compareTo(key2) < 0;
+  }
+  
+  boolean le(Node n1, Node n2){
+      return n2 == null ? true : le(n1.key, n2.key);
+  }
+  
+  boolean le(K key1, K key2){
+      return key1.compareTo(key2) <= 0;
+  }
+  
+  boolean gt(Node n1, Node n2){
+      return n2 == null ? true : gt(n1.key, n2.key);
+  }
+  
+  boolean gt(K key1, K key2){
+      return key1.compareTo(key2) > 0;
+  }
+  
+  boolean ge(Node n1, Node n2){
+      return n2 == null ? true : ge(n1.key, n2.key);
+  }
+  
+  boolean ge(K key1, K key2){
+      return key1.compareTo(key2) >= 0;
+  }
+  
+  boolean eq(K key1, K key2){
+      return key1.compareTo(key2) == 0;
+  }
     
     void inorderKeysDump(Node tree, List<? super K> buffer) {
         Objects.requireNonNull(buffer);
@@ -201,6 +229,11 @@ public class AVLTree<K extends Comparable<? super K>, V> {
             buffer.add(tree.key);
             inorderKeysDump(tree.right, buffer);
         }
+    }
+    
+    boolean isBST(Node curr){
+    	if(curr == null) return true;
+    	return isBST(curr.left) && ( gt(curr, curr.left) && le(curr, curr.right)) && isBST(curr.right);
     }
     
     public void print() {
