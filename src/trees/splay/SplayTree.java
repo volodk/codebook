@@ -13,7 +13,6 @@ public class SplayTree<K extends Comparable<K>, V> {
         K key;
         V value;
         Node left, right, parent;
-        public Node(K key, V value) {  this.key = key;  this.value = value;  }
         public Node(K key, V value, Node parent, Node left, Node right)
         {  
             this.key = key;  this.value = value;
@@ -35,30 +34,16 @@ public class SplayTree<K extends Comparable<K>, V> {
     }
     
     public V find(K key){
-        Node n = find(root, key);
-        if( n == null ){
+        if( find(root, key) == null ){
             return null;
         } else {
-            root = splay(n);
-            return n.value; 
+           return root.value;
         }
     }
     
-    Node splay(Node curr){
-        if( curr == null ) return null;
-        
-        if( curr.parent == null )
-            return curr;
-        else {
-            if( curr.parent.left == curr ){ // in the left sub-tree
-                return splay( rotateRight(curr.parent) );
-            } else{  // in the right sub-tree 
-                return splay( rotateLeft(curr.parent) );
-            }
-        }
-    }
+    public int size(){ return size(root); }
     
-    int size(Node tree){
+    public int size(Node tree){
         if(tree == null) return 0;
         else return 1 + size(tree.left) + size(tree.right);
     }
@@ -69,12 +54,30 @@ public class SplayTree<K extends Comparable<K>, V> {
     }
     
     Node find(Node curr, K key){
-        if(curr == null || curr.key.equals(key))
-            return curr;
-        if( less(key, curr.key))
-            return find(curr.left, key);
-        else 
-            return find(curr.right, key);
+        if( curr == null ) return null;
+        
+        if( eq(key, curr.key) ) return curr;
+        
+        if( lt(key, curr.key)){
+            Node n = find(curr.left, key);
+            if( n != null ){
+                curr.left = rotateRight(curr);
+            }
+            return n;
+        }
+        else { 
+            Node n = find(curr.right, key);
+            if(n != null){
+                curr.right = rotateLeft(curr);
+            }
+            return n;
+        }
+    }
+    
+    boolean isBST(Node curr){
+        if( curr == null )
+            return true;
+        return isBST(curr.left) && ( gt(curr, curr.left) && le(curr, curr.right) ) && isBST(curr.right);
     }
     
     Node min(Node tree){
@@ -93,36 +96,30 @@ public class SplayTree<K extends Comparable<K>, V> {
         if( curr == null ){
             return new Node(key, value, parent, null, null); 
         } else {
-            if( less(key, curr.key) )
+            if( lt(key, curr.key) )
             {
                 curr.left = insert(curr.left, curr, key, value);
-                return splay(curr.left);
+                return rotateRight(curr);
             } 
             else if( eq(key, curr.key) )
             {
                 curr.value = value;
-                return curr;                
+                return curr;
             } 
             else 
             {
                 curr.right = insert(curr.right, curr, key, value);
-                return splay(curr.right);
+                return rotateLeft(curr);
             }
         }
     }
     
     Node delete(Node curr, K key){
-       if( curr != null )
-           do {
-               if( less(key, curr.key) )
-                   curr = curr.left;
-               else if( greater(key, curr.key))
-                   curr = curr.right;
-               else { 
-                  return delete( splay(curr) );
-               }
-           } while ( curr != null );
-       return null;
+       if( find(root, key) == null){
+           return null;
+       } else {
+           return root = delete(root);
+       }
     }
     
     Node delete(Node curr)
@@ -158,48 +155,71 @@ public class SplayTree<K extends Comparable<K>, V> {
         }
     }
     
-    
-    Node rotateLeft(Node oldRoot){
-        Node newRoot = oldRoot.right;
-        oldRoot.right = newRoot.left;
-        if (oldRoot.right != null) oldRoot.right.parent = oldRoot;
+    Node rotateLeft(Node old){
+        Node newRoot = old.right;
+        old.right = newRoot.left;
+        if (old.right != null) old.right.parent = old;
         
-        newRoot.parent = oldRoot.parent;
-        if( oldRoot.parent != null ){
-            if( oldRoot.parent.left == oldRoot ) oldRoot.parent.left = newRoot;
-            if( oldRoot.parent.right == oldRoot ) oldRoot.parent.right = newRoot;
+        newRoot.parent = old.parent;
+        if( old.parent != null ){
+            if( old.parent.left == old ) old.parent.left = newRoot;
+            if( old.parent.right == old ) old.parent.right = newRoot;
         }
-        newRoot.left = oldRoot;
-        newRoot.left.parent = newRoot;
+        newRoot.left = old;
+        old.parent = newRoot;
         
         return newRoot;
     }
     
-    Node rotateRight(Node oldRoot){
-        Node newRoot = oldRoot.left;
-        oldRoot.left = newRoot.right;
-        if (oldRoot.left != null) oldRoot.left.parent = oldRoot;
+    Node rotateRight(Node old){
+        Node newRoot = old.left;
+        old.left = newRoot.right;
+        if (old.left != null) old.left.parent = old;
         
-        newRoot.parent = oldRoot.parent;
-        if( oldRoot.parent != null ){
-            if( oldRoot.parent.left == oldRoot ) oldRoot.parent.left = newRoot;
-            if( oldRoot.parent.right == oldRoot ) oldRoot.parent.right = newRoot;
+        newRoot.parent = old.parent;
+        if( old.parent != null ){
+            if( old.parent.left == old ) old.parent.left = newRoot;
+            if( old.parent.right == old ) old.parent.right = newRoot;
         }
-        newRoot.right = oldRoot;
-        newRoot.right.parent = newRoot;
+        newRoot.right = old;
+        old.parent = newRoot;
         
         return newRoot;
     }
     
-    private boolean less(K key1, K key2){
+    boolean lt(Node n1, Node n2){
+        return n2 == null ? true : lt(n1.key, n2.key);
+    }
+    
+    boolean lt(K key1, K key2){
         return key1.compareTo(key2) < 0;
     }
     
-    private boolean greater(K key1, K key2){
+    boolean le(Node n1, Node n2){
+        return n2 == null ? true : le(n1.key, n2.key);
+    }
+    
+    boolean le(K key1, K key2){
+        return key1.compareTo(key2) <= 0;
+    }
+    
+    boolean gt(Node n1, Node n2){
+        return n2 == null ? true : gt(n1.key, n2.key);
+    }
+    
+    boolean gt(K key1, K key2){
         return key1.compareTo(key2) > 0;
     }
     
-    private boolean eq(K key1, K key2){
+    boolean ge(Node n1, Node n2){
+        return n2 == null ? true : ge(n1.key, n2.key);
+    }
+    
+    boolean ge(K key1, K key2){
+        return key1.compareTo(key2) >= 0;
+    }
+    
+    boolean eq(K key1, K key2){
         return key1.compareTo(key2) == 0;
     }
     
