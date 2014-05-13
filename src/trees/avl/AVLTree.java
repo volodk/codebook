@@ -10,7 +10,7 @@ import java.util.Queue;
 public class AVLTree<K extends Comparable<? super K>, V> {
 
     class Node {
-        int bFactor;
+        int h = 1;
         K key;
         V value;
         Node left, right;
@@ -37,29 +37,31 @@ public class AVLTree<K extends Comparable<? super K>, V> {
     {
         if(tree == null) return null;
         
-        if ( Math.abs(tree.bFactor) <= 1 )
+        if ( Math.abs(height(tree.left) - height(tree.right)) <= 1 )
         {
             return tree;
         }
         else
         {
-            if( tree.bFactor == -2 )
+            if( height(tree.left) > height(tree.right))
             {
                 Node n = tree.left;
-                if( n.bFactor == 1 )
+                if( height(n.left) < height(n.right) )
                 {
                     tree.left = rotateLeft(tree.left);
+                    updateHeight(tree);
                 }
-                return rotateRight(tree);
+                return rotateRight( updateHeight(tree) );
             } 
-            else    // tree.bFactor == 2 
+            else    
             {
                 Node n = tree.right;
-                if( n.bFactor == -1 )
+                if( height(n.left) > height(n.right) )
                 {
                     tree.right = rotateRight(tree.right);
+                    updateHeight(tree);
                 }
-                return rotateLeft(tree);
+                return rotateLeft( updateHeight(tree) );
             }
         }
     }
@@ -74,14 +76,12 @@ public class AVLTree<K extends Comparable<? super K>, V> {
             if ( lt(key, curr.key) )
             {
                 curr.left = insert(curr.left, key, value);
-                curr.bFactor -= 1;
-                return balance(curr);
+                return balance( updateHeight(curr) );
             } 
             else if ( gt(key, curr.key) )
             {
                 curr.right = insert(curr.right, key, value);
-                curr.bFactor += 1;
-                return balance(curr);
+                return balance( updateHeight(curr) );
             } 
             else
             {
@@ -91,20 +91,23 @@ public class AVLTree<K extends Comparable<? super K>, V> {
         }
     }
 
+    private Node updateHeight(Node curr) {
+        curr.h = 1 + Math.max( height(curr.left), height(curr.right) );
+        return curr;
+    }
+
     Node delete(Node curr, K key)
     {
         if (curr == null) return null;
         if( lt(key, curr.key) )
         {
             curr.left = delete(curr.left, key);
-            curr.bFactor += 1;
-            return balance(curr);
+            return balance( updateHeight(curr) );
         } 
         else if ( gt(key, curr.key) )
         {
             curr.right = delete(curr.right, key);
-            curr.bFactor -= 1;
-            return balance(curr);
+            return balance(updateHeight(curr));
         } 
         else 
         {
@@ -149,7 +152,7 @@ public class AVLTree<K extends Comparable<? super K>, V> {
 
     int height(Node tree) {
         if (tree == null) return 0;
-        return 1 + Math.max(height(tree.left), height(tree.right));
+        return tree.h;
     }
 
     Node min(Node tree) {
@@ -172,9 +175,6 @@ public class AVLTree<K extends Comparable<? super K>, V> {
         oldRoot.right = newRoot.left;
         newRoot.left = oldRoot;
         
-        oldRoot.bFactor -= 1;
-        newRoot.bFactor -= 1;
-        
         return newRoot;
     }
 
@@ -185,10 +185,7 @@ public class AVLTree<K extends Comparable<? super K>, V> {
         Node newRoot = oldRoot.left;
         oldRoot.left = newRoot.right;
         newRoot.right = oldRoot;
-        
-        oldRoot.bFactor += 1;
-        newRoot.bFactor += 1;
-        
+
         return newRoot;
     }
     
