@@ -10,7 +10,7 @@ import java.util.Queue;
 public class AVLTree<K extends Comparable<? super K>, V> {
 
     class Node {
-        int height = 1;
+//        int height = 1;
         K key;
         V value;
         Node left, right;
@@ -21,11 +21,11 @@ public class AVLTree<K extends Comparable<? super K>, V> {
     Node root;
     
     public void insert(K key, V value) {
-        root = balance( insert(root, key, value) );
+        root = insert(root, key, value) ;
     }
     
     public void delete(K key) {
-        root = balance( delete(root, key) );
+        root = delete(root, key);
     }
     
     public V find(K key) {
@@ -48,7 +48,7 @@ public class AVLTree<K extends Comparable<? super K>, V> {
                 Node n = tree.left;
                 if( n.left == null && n.right != null )
                 {
-                    n.left = rotateLeft(n.left);
+                    tree.left = rotateLeft(tree.left);
                 }
                 return rotateRight(tree);
             } 
@@ -57,7 +57,7 @@ public class AVLTree<K extends Comparable<? super K>, V> {
                 Node n = tree.right;
                 if( n.left != null && n.right == null )
                 {
-                    n.right = rotateRight(n.right);
+                    tree.right = rotateRight(tree.right);
                 }
                 return rotateLeft(tree);
             }
@@ -74,15 +74,11 @@ public class AVLTree<K extends Comparable<? super K>, V> {
             if ( lt(key, curr.key) )
             {
                 curr.left = insert(curr.left, key, value);
-//                updateHeight(curr);
-                
                 return balance(curr);
             } 
             else if ( gt(key, curr.key) )
             {
                 curr.right = insert(curr.right, key, value);
-//                updateHeight(curr);
-                
                 return balance(curr);
             } 
             else
@@ -93,25 +89,17 @@ public class AVLTree<K extends Comparable<? super K>, V> {
         }
     }
 
-    private void updateHeight(Node n) {
-        n.height = 1 + Math.max( height(n.left), height(n.right) );
-    }
-
     Node delete(Node curr, K key)
     {
         if (curr == null) return null;
         if( lt(key, curr.key) )
         {
             curr.left = delete(curr.left, key);
-//            updateHeight(curr);
-
             return balance(curr);
         } 
         else if ( gt(key, curr.key) )
         {
             curr.right = delete(curr.right, key);
-//            updateHeight(curr);
-            
             return balance(curr);
         } 
         else 
@@ -173,17 +161,23 @@ public class AVLTree<K extends Comparable<? super K>, V> {
     }
 
     Node rotateLeft(Node oldRoot) {
-        Node newRoot = oldRoot.right;
-        oldRoot.right = newRoot.left;
-        newRoot.left = oldRoot;
-        return newRoot;
+        if ( oldRoot.right != null ){
+            Node newRoot = oldRoot.right;
+            oldRoot.right = newRoot.left;
+            newRoot.left = oldRoot;
+            return newRoot;
+        }
+        return null;
     }
 
     Node rotateRight(Node oldRoot) {
-        Node newRoot = oldRoot.left;
-        oldRoot.left = newRoot.right;
-        newRoot.right = oldRoot;
-        return newRoot;
+        if( oldRoot.left != null ){
+            Node newRoot = oldRoot.left;
+            oldRoot.left = newRoot.right;
+            newRoot.right = oldRoot;
+            return newRoot;
+        }
+        return oldRoot;
     }
     
     boolean lt(Node n1, Node n2){
@@ -234,6 +228,12 @@ public class AVLTree<K extends Comparable<? super K>, V> {
     boolean isBST(Node curr){
     	if(curr == null) return true;
     	return isBST(curr.left) && ( gt(curr, curr.left) && le(curr, curr.right)) && isBST(curr.right);
+    }
+    
+    boolean isBalanced(Node curr){
+        if(curr == null) return true;
+        return isBalanced(curr.left) && (Math.abs(height(curr.left) - height(curr.right)) <= 1)
+                && isBalanced(curr.right); 
     }
     
     public void print() {

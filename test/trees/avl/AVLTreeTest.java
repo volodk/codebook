@@ -25,10 +25,7 @@ public class AVLTreeTest {
 		}
 		
 		assertTrue(tree.isBST(tree.root));
-		
-		tree.print();
-		
-		assertTrue(Math.abs( tree.height(tree.root.left) - tree.height(tree.root.right) ) <= 1);
+		assertTrue(tree.isBalanced(tree.root));
 		
 	}
 	
@@ -36,14 +33,20 @@ public class AVLTreeTest {
 	public void massInsert(){
 		Random rnd = new Random();
 		
-		int N = 100000;
+		int N = 20;
 		
 		for(int i = 0; i < N; i++)
-			tree.insert( rnd.nextInt(), 1);
+			tree.insert( rnd.nextInt(N), 1);
 		
 		assertTrue(tree.isBST(tree.root));
-		
-		
+		if (tree.isBalanced(tree.root) == false){
+		    tree.print();
+		    
+		    System.out.println(tree.height(tree.root));
+		    System.out.println(tree.height(tree.root.left));
+		    System.out.println(tree.height(tree.root.right));
+		}
+				
 	}
 	
 	@Test
@@ -56,6 +59,7 @@ public class AVLTreeTest {
 		}
 		
 		assertTrue(tree.isBST(tree.root));
+		assertTrue(tree.isBalanced(tree.root));
 		
 	}
 
