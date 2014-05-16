@@ -49,11 +49,11 @@ public class SparseTable<T> {
             }
         };
         
-        SparseTable<Integer> st = new SparseTable<Integer>( fun, 1,2,3,4,5 );
+        SparseTable<Integer> st = new SparseTable<Integer>( fun, 2,5,0,6,8,-1,9,3,4 );
         
         st.print();
         
-        System.out.println( st.query(1, 4) );
+        System.out.println( st.query(1, 5) );
     }
     
     private static int log2(int n) {
