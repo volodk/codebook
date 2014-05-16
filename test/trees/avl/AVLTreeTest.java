@@ -26,29 +26,30 @@ public class AVLTreeTest {
 		
 		assertTrue(tree.isBST(tree.root));
 		
-		tree.print();
+//		tree.print();
 		
 		assertTrue(tree.isBalanced(tree.root));
 		
 	}
 	
-//	@Test
+	@Test
 	public void massInsert(){
 		Random rnd = new Random();
 		
-		int N = 100000;
+		int N = 1000000;
 		
 		for(int i = 0; i < N; i++)
 			tree.insert( rnd.nextInt(N), 1);
 		
 		assertTrue(tree.isBST(tree.root));
+		assertTrue(tree.isBalanced(tree.root));
 				
 	}
 	
-//	@Test
+	@Test
 	public void delete() {
 		
-		int[] arr = {5,2,7,1};
+	    int[] arr = {5,2,7,1,3,4,0};
 		
 		for(int a : arr){
 			tree.delete(a);
