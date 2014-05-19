@@ -250,7 +250,8 @@ public class AVLTree<K extends Comparable<? super K>, V> {
     
     public void print() {
         Queue<Node> q = new LinkedList<>();
-        q.offer(root);
+        if( root != null )
+            q.offer(root);
         int toPrint = 1, next = 0;
         while (!q.isEmpty()) {
             Node n = q.poll();
