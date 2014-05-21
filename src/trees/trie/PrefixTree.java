@@ -3,11 +3,13 @@ package trees.trie;
 import java.util.Set;
 
 public class PrefixTree {
+	
+	private static final int ALPHABET_SIZE = 'z' - 'A' + 1;
 
-    class Node{
-        char ch;
-        boolean isTerminate;
-        Node[] next = new Node['z'];
+    class Node {
+        char[] text;
+        boolean terminal;
+        Node[] next = new Node[ ALPHABET_SIZE] ;
     }
     
     Node root = new Node();
