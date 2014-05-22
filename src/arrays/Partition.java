@@ -1,4 +1,4 @@
-package kth;
+package arrays;
 
 public class Partition {
     
