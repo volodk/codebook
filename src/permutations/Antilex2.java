@@ -8,14 +8,15 @@ public class Antilex2 {
 
     public static void main(String[] args) {
         
-        int[] p = {1,2,3};
+        char[] p = {'a', 'b', 'c', 'd'};
+                
         int m = p.length;
         
         antilex(p, m-1);
 
     }
     
-    static void antilex(int[] p, int m) {
+    static void antilex(char[] p, int m) {
         if(m == 0) {
           System.out.println( Arrays.toString(p) );  
         } else {
@@ -29,11 +30,11 @@ public class Antilex2 {
         }
     }
 
-    static void swap(int[] arr, int i, int j){
-        int ch = arr[i]; arr[i] = arr[j]; arr[j] = ch;
+    static void swap(char[] arr, int i, int j){
+        char ch = arr[i]; arr[i] = arr[j]; arr[j] = ch;
     }
     
-	static void reverse(int[] str, int i, int j){
+	static void reverse(char[] str, int i, int j){
 		for(; i < j; i++, j--){swap(str, i, j);}
 	}
 
