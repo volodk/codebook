@@ -2,6 +2,8 @@ package sorts;
 
 import java.util.Arrays;
 
+import arrays.Partition;
+
 public class QuickSort {
 
     public static void main(String[] args) {
@@ -16,7 +18,8 @@ public class QuickSort {
     private static void qsort(int[] arr, int l, int r) {
         
         if( l < r){
-            int p = partitioning(arr, l, r);
+//            int p = partitioning(arr, l, r);
+            int p = Partition.random(arr, l, r);
             qsort(arr, l, p);
             qsort(arr, p + 1, r);
         }

@@ -21,7 +21,16 @@ public class Rotate {
         
         System.out.println(isRotated(arr2, 0, arr2.length-1));
         
-        System.out.println( gcd(7,21) );
+        
+        int[] arr3 = {1,2,3,4,5,6,7,8,9};
+        rol2(arr3, 3);
+        
+        System.out.println(Arrays.toString(arr3));
+        
+        int[] arr4 = {1,2,3,4,5,6,7,8,9};
+        rol2(arr4, 3);
+        
+        System.out.println(Arrays.toString(arr4));
     }
     
     private static int isRotated(int[] arr, int l, int r){
@@ -53,19 +62,28 @@ public class Rotate {
         }
     }
     
-//    private static rol2(int[] arr, int k){
-//        int N = arr.length;
-//        
-//        for( int i = 0; i < gcd(k, N); i++ ){
-//            int j = 0, t = arr[j];
-//            while( true ){
-//                
-//                if(j + k < N){
-//                    arr[j] = arr[j+k];
-//                }
-//            }
-//        }
-//    }
+    private static void rol2(int[] arr, int k){
+        int N = arr.length;
+        for( int i = 0; i < gcd(N,k); i++ ){
+            int j = i;
+            int t = arr[j];
+            for( int c = 0; c < N / gcd(N,k) - 1;  c++){
+                int m = (j+k) % N;
+                arr[j] = arr[m];
+                j = m;
+            }
+            arr[j] = t;
+        }
+    }
+    
+    private static void rol3(int[] arr, int k){
+        int N = arr.length;
+        int[] brr = Arrays.copyOf(arr, N);
+        for(int i = 0; i < N; i++){
+            brr[i] = arr[ (i+k) % N ];
+        }
+        System.arraycopy(brr, 0, arr, 0, N);
+    }
     
     private static void ror(int[] arr, int k) {
         if(k < 0) throw new IllegalArgumentException();
