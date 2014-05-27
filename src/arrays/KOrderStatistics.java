@@ -3,7 +3,26 @@ package arrays;
 public class KOrderStatistics {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		
+	    int[] A = {2,3,1,7,5,6,8,4};
+	    
+	    int k = 5;
+	    
+	    if( k > A.length - 1 ) throw new IllegalArgumentException();
+	    
+	    int p = -1, l = 0, r = A.length;
+	    do {
+//	       p = Partition.simple(A, l, r);
+	       p = Partition.random(A, l, r);
+	       if(p > k){
+	           r = p;
+	       }
+	       if( p < k ){
+               l = p + 1;
+           }
+	    } while( k != p );
+	    
+	    System.out.println( A[p] );
 
 	}
 

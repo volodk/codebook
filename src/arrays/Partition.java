@@ -11,28 +11,28 @@ public class Partition {
     public static int simple(int[] a, int l, int r){
         int pivot = a[l];
         int i = l+1, j = r-1;
-        while( i < j ){
-            while( i < j && a[i] <= pivot ) i++;
-            while( i < j && a[j] >= pivot ) j--;
+        while( i <= j ){
+            while( i < r && a[i] <= pivot ) i++;
+            while( j > l && a[j] >= pivot ) j--;
             if(i < j){
                 swap(a, i++, j--);
             }
         }
-        swap( a, l, j-1 );
-        return j-1;
+        swap( a, l, j );
+        return j;
     }
     
     public static int random(int[] a, int l, int r){
         Random rnd = new Random();
-        swap(a, l, rnd.nextInt( r-l ) );
+        swap(a, l, l + rnd.nextInt(r-l) );
         int pivot = a[l];
         
-        int i = l+1, j = r-1;
-        while( i < j ){
+        int i = l + 1, j = r - 1;
+        while( i <= j ){
             while( i < r && a[i] < pivot ) i++;
             while( j > l && a[j] >= pivot ) j--;
             if(i < j){
-                swap(a, i, j);
+                swap(a, i++, j--);
             }
         }
         swap(a, l, j);
@@ -50,15 +50,15 @@ public class Partition {
         swap(a, l, pIndex);
         
         int i = l+1, j = r-1;
-        while( i < j ){
-            while( i < j && a[i] < pivot ) i++;
-            while( i < j && a[j] >= pivot ) j--;
+        while( i <= j ){
+            while( i < r && a[i] < pivot ) i++;
+            while( j > l && a[j] >= pivot ) j--;
             if(i < j){
                 swap(a, i++, j--);
             }
         }
-        swap(a, l, j-1);
-        return j-1;
+        swap(a, l, j);
+        return j;
     }
     
     public static void dijkstra3way(int[] a, int l, int r){
@@ -80,18 +80,35 @@ public class Partition {
     public static void main(String[] args) {
         int[] arr = {2,1,1,1,1,1,3,3,3,3};
         simple(arr, 0, arr.length);
-//        System.out.println(Arrays.toString(arr));
+        System.out.println(Arrays.toString(arr));
         
-//        int[] arr2 = { 4, 3, 5, 2, 1, 6, 0, 9 };
-        int[] arr2 = { 4, 3, 5, 2, 1 };
+        int[] arr2 = { 4, 3, 5, 2, 1, 6, 0, 9 };
         int p = random(arr2, 0, arr2.length);
-        System.out.format("%d: %d ", p, arr2[p]);
-        System.out.println(Arrays.toString(arr2));
         
+        
+        int [] A = new int[100];
+        Random rnd = new Random();
+        for( int s = 0; s < 100; s++ ){
+            for(int i = 0; i < 100; i++){
+                A[i] = rnd.nextInt(100);
+            }
+            int par = random(A, 0, A.length);
+            for( int i = 0; i < par; i++ ){
+                if(A[i] > A[par] ){
+                    System.out.println("Alarm!");
+                }
+            }
+            for( int i = par; i < A.length; i++ ){
+                if(A[i] < A[par] ){
+                    System.out.println("Alarm!");
+                }
+            }
+            
+        }
         
         int[] arr3 = {2,1,1,1,1,1,3,3,3,3};
         middleOfThree(arr3, 0, arr.length);
-//        System.out.println(Arrays.toString(arr3));
+        System.out.println(Arrays.toString(arr3));
     }
     
 }
