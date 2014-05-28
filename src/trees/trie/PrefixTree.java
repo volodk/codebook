@@ -9,10 +9,11 @@ public class PrefixTree {
     class Node {
         char[] text;
         boolean terminal;
-        Node[] next = new Node[ ALPHABET_SIZE] ;
+        Node[] next = new Node[ ALPHABET_SIZE ] ;
+        Node(char[] text, boolean terminal){ this.text = text; this.terminal = terminal; }
     }
     
-    Node root = new Node();
+    Node root = new Node( new char[]{}, true);
     
     public void insert(char[] word){
         

@@ -1,5 +1,6 @@
 package trees;
 
+
 public class MorrisPostorderTraversal {
     
     static class Node {
@@ -12,7 +13,35 @@ public class MorrisPostorderTraversal {
     
     public static void visitPostorder(Node n){
         
-       
+        Node curr = n;
+        while( curr != null )
+        {
+            
+            if( curr.left == null )
+            {
+                visit(curr);
+                curr = curr.right;
+            } 
+            else
+            {
+                Node pred = curr.left;
+                while( pred.right != null && pred.right != curr)
+                {
+                    pred = pred.right;
+                }
+                
+                if( pred.right == null ){
+                    pred.right = curr;
+                    curr = curr.left;
+                } 
+                else
+                {
+                    visit(curr);
+                    pred.right = null;
+                    curr = curr.right;
+                }
+            }
+        }
         
     }
     
