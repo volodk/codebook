@@ -67,7 +67,7 @@ public class Rotate {
         for( int i = 0; i < gcd(N,k); i++ ){
             int j = i;
             int t = arr[j];
-            for( int c = 0; c < N / gcd(N,k) - 1;  c++){
+            for( int c = 0; c < N / gcd(N,k) - 1; c++){
                 int m = (j+k) % N;
                 arr[j] = arr[m];
                 j = m;

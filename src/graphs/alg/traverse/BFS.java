@@ -13,7 +13,7 @@ public class BFS {
         
         int[] visited = new int[g.V()];
         
-        for( int v = 0; v < g.V() && visited[v] == 0; v++ ){
+        for( int v = 0; v < g.V(); v++ ){
             
             q.offer(v);
             
