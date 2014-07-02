@@ -42,7 +42,7 @@ public class Lex {
 	}
 	
 	static void reverse(int[] str, int i, int j){
-        for(; i < j; i++, j--){swap(str, i, j);}
+        for(; i < j; i++, j--){ swap(str, i, j); }
     }
 
 

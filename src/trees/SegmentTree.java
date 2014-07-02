@@ -1,4 +1,5 @@
 package trees;
+import java.lang.reflect.Array;
 import java.util.Objects;
 
 
@@ -6,32 +7,37 @@ import java.util.Objects;
 
 public class SegmentTree<T> {
 
-    interface Function<T> {
-        T call(T a, T b);  // any associative function like min, max, mul, avg, gcd ... 
+    interface Function<T> { // associative function
+        T call(T a, T b);   
     }  
     
     private final Function<T> function;
+    private final Class<T> elemClass;
     
-    private int[] segments;
+    private T[] tree;
     
-    public SegmentTree(Function<T> function) {
+    public SegmentTree(Class<T> clazz, Function<T> function) {
         this.function = function;
+        elemClass = clazz;
     }
     
+    @SuppressWarnings("unchecked")
     public void build(T ... values){
         Objects.requireNonNull(values);
+        
         int N = values.length;
-        segments = new int[ N + 1];
+        tree = (T[]) Array.newInstance(elemClass, N);
+        
         int node = 1;
         int i = 0, j = N-1;
         
-        build( node, i, j, values, segments );
+        build( node, i, j, values, tree );
     }
     
-    private void build(int node, int b, int e, T[] values, int[] segments){
+    private void build(int node, int b, int e, T[] values, T[] segments){
         
-        if(b == e)
-            segments[node] = b;
+//        if(b == e)
+//            segments[node] = b;
         
         build( node * 2, b, (b + e)/2, values, segments);
         build( node * 2 + 1, (b + e)/2 + 1, e, values, segments);
@@ -47,7 +53,7 @@ public class SegmentTree<T> {
         
     public static void main(String[] args) {
         
-        SegmentTree<Integer> st = new SegmentTree<Integer>(new Function<Integer>() {
+        SegmentTree<Integer> st = new SegmentTree<Integer>( Integer.class, new Function<Integer>() {
             @Override
             public Integer call(Integer a, Integer b) {
                 return Math.min(a, b);
