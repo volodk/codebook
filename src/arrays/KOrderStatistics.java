@@ -10,14 +10,12 @@ public class KOrderStatistics {
 	    
 	    if( k > A.length - 1 ) throw new IllegalArgumentException();
 	    
-	    int p = -1, l = 0, r = A.length;
+	    int p, l = 0, r = A.length;
 	    do {
-//	       p = Partition.simple(A, l, r);
 	       p = Partition.random(A, l, r);
-	       if(p > k){
+	       if ( p > k ){
 	           r = p;
-	       }
-	       if( p < k ){
+	       } else if( p < k ){
                l = p + 1;
            }
 	    } while( k != p );

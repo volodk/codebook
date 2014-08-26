@@ -1,4 +1,4 @@
-package trees.btree;
+package trees;
 
 public class BalancedTree {
 

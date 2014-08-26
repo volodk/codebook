@@ -1,4 +1,4 @@
-package trees.splay;
+package trees;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -8,9 +8,11 @@ import java.util.TreeMap;
 
 import org.junit.Test;
 
+import trees.SplayTree;
+
 // Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 2:44:35 PM 
 
-public class SplayTreeVSHashMapTest {
+public class Splay_TreeMap_Test {
 
     SplayTree<Integer, Integer> splayTree;
     Map<Integer, Integer> rbTree;

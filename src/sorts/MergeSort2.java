@@ -22,7 +22,7 @@ public class MergeSort2 {
             buff[l] = arr[l];
         } else {
         
-            int m = (l + r) /2;
+            int m = l + (r - l) /2;
         
             mergesort(arr, buff, l, m);
             mergesort(arr, buff, m + 1, r);

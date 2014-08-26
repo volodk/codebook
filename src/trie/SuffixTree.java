@@ -1,4 +1,4 @@
-package trees.trie;
+package trie;
 
 public class SuffixTree {
 

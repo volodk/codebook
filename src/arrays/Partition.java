@@ -62,9 +62,38 @@ public class Partition {
     }
     
     public static void dijkstra3way(int[] a, int l, int r){
+        int pivot = a[l];
+        int lt = l+1, gt = r-1, i = l+1;
+        while (i < gt)
+        {
+            if( a[i] < pivot ){
+                swap(a, lt++, i++);
+            } else if( a[i] > pivot){
+                swap(a, gt--, i);
+            } else {
+                i++;
+            }
+        }
+        swap(a, l, lt-1);
     }
     
-    public static void sedwik3way(int[] a, int l, int r){
+    public static void sedgwick3way(int[] a, int l, int r){
+        int p = a[l];
+        int lo = l + 1, hi = r - 1;
+        int i = lo, j = hi;
+        while( i < j ){
+            while( a[i] < p ) i++;
+            while( a[j] > p ) j--;
+            if( a[i] == p ) { swap(a, lo++, i); }
+            if( a[j] == p ) { swap(a, hi--, j); }
+            if( i < j )
+                swap(a, i, j);
+        }
+        if( j == i ){
+           j++;
+        }
+        while(i > l) swap(a, i--, l++);
+        while(j < r) swap(a, j++, --r);
     }
     
     static int mean(int a, int b, int c){
@@ -84,7 +113,6 @@ public class Partition {
         
         int[] arr2 = { 4, 3, 5, 2, 1, 6, 0, 9 };
         int p = random(arr2, 0, arr2.length);
-        
         
         int [] A = new int[100];
         Random rnd = new Random();
@@ -109,6 +137,14 @@ public class Partition {
         int[] arr3 = {2,1,1,1,1,1,3,3,3,3};
         middleOfThree(arr3, 0, arr.length);
         System.out.println(Arrays.toString(arr3));
+        
+        int[] arr4 = {2,1,3,2,1,3,2,1,3,2,1,3,2,1,3,2,1,3,2,1,3,2,1,3,2,1,3,2,1,3};
+        sedgwick3way(arr4, 0, arr4.length);
+        System.out.println(Arrays.toString(arr4));
+        
+        int[] arr5 = {2,1,3,2,1,3,2,1,3,2,1,3,2,1,3,2,1,3,2,1,3,2,1,3,2,1,3,2,1,3};
+        dijkstra3way(arr5, 0, arr5.length);
+        System.out.println(Arrays.toString(arr5));
     }
     
 }

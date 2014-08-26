@@ -7,8 +7,9 @@ public class SelectionSort {
 	public static void main(String[] args) {
 	    
 	    int[] arr = { 4, 3, 5, 2, 1, 6, 0, 9 };
+	    int n = arr.length;
 	    
-	    for(int i = arr.length -1 ; i >= 0; i--){
+	    for( int i = n-1 ; i > 0; i-- ){
 	        int max = arr[i];
 	        int pos = i;
 	        for( int j = 0; j < i; j++){

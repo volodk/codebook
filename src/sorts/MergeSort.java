@@ -21,7 +21,7 @@ public class MergeSort {
         if( l == r)
             return new int[]{ arr[l]  };
         
-        int m = (l + r) /2;
+        int m = l + (r-l) /2;
         
         int[] left = mergesort(arr, l, m);
         int[] right = mergesort(arr, m + 1, r);
