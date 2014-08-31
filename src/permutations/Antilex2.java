@@ -18,7 +18,7 @@ public class Antilex2 {
     
     static void antilex(char[] p, int m) {
         if(m == 0) {
-          System.out.println( Arrays.toString(p) );  
+          System.out.println( String.valueOf(p) );  
         } else {
             for(int i = 0; i <= m; i++){
                 antilex(p, m-1);

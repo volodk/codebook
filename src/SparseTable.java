@@ -3,7 +3,7 @@ import java.util.Arrays;
 public class SparseTable<T> {
     
     interface Function<T> {
-        T call(T a, T b);  // commutative function
+        T call(T a, T b); 
     }
     
     Object[][] t;
