@@ -92,7 +92,7 @@ public class Partition {
         if( j == i ){
            j++;
         }
-        while(i > l) swap(a, i--, l++);
+        while(i >= l) swap(a, i--, l++);
         while(j < r) swap(a, j++, --r);
     }
     

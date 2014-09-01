@@ -1,5 +1,6 @@
+package lists;
 
-public class CircularBuffer {
+public class CircularList {
     
     class Node {
         Object value;
@@ -12,7 +13,7 @@ public class CircularBuffer {
     private int total;
     private Node current;
     
-    public CircularBuffer(int total) {
+    public CircularList(int total) {
         this.total = total;
         Node prev = new Node(null);
         current = prev;
@@ -46,7 +47,7 @@ public class CircularBuffer {
 
     public static void main(String[] args) {
         
-        CircularBuffer ringBuff = new CircularBuffer(10);
+        CircularList ringBuff = new CircularList(10);
         for (int i = 0; i < 15; i++) {
             ringBuff.add(i);
         }

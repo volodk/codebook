@@ -45,7 +45,7 @@ public class Heaps {
         @Override
         public T pop() {
             
-            if (hasMoreElements()) {
+            if ( hasMoreElements() ) {
             
                 Object top = arr[head];
 
