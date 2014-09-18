@@ -42,7 +42,7 @@ public class KMP {
         int[] skip = new int[p.length];
         
         int k = 0;
-        skip[0] = 0;
+        skip[k] = 0;
         
         for( int j = 1; j < p.length; j++ ){
              while( k > 0 && p[k] != p[j]){

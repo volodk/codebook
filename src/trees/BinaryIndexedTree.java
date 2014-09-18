@@ -13,7 +13,7 @@ public class BinaryIndexedTree {    // a.k.a Fenwick tree
     
     int sum(int k){
         int ans = 0;
-        for(; k >= 0; k = (k&(k+1)) - 1)
+        for(; k >= 0; k = ( k & (k+1) ) - 1)
             ans += t[k];
         return ans;
     }
@@ -23,7 +23,7 @@ public class BinaryIndexedTree {    // a.k.a Fenwick tree
     }
     
     void update(int k, int delta){
-        for(; k < N; k = k | (k+1))
+        for(; k < N; k = k | (k+1) )
             t[k] += delta;
     }
 

@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class SegmentTree<T> {
 
-    interface Function<T> { // associative function
+    interface Function<T> { // commutative function
         T call(T a, T b);   
     }  
     

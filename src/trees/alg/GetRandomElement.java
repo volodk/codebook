@@ -1,4 +1,4 @@
-package trees.traverse;
+package trees.alg;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -7,7 +7,7 @@ import java.util.Random;
 
 // Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 12:41:09 PM 
 
-public class RandomElementTree {
+public class GetRandomElement {
     
     class Node{
         int value;
@@ -29,7 +29,7 @@ public class RandomElementTree {
     
     private Random rnd = new Random(System.currentTimeMillis());
     
-    public RandomElementTree() {
+    public GetRandomElement() {
         root = new Node(0, new Node(1, new Node(3, null, null), new Node(4, null, null)), new Node(2, null, new Node(5, null, null)));
     }
     
@@ -85,7 +85,7 @@ public class RandomElementTree {
     }
     
     public static void main(String[] args) {
-        RandomElementTree t = new RandomElementTree();
+        GetRandomElement t = new GetRandomElement();
         
         t.printSliceBySlice();
         
