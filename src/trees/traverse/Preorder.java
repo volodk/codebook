@@ -1,7 +1,10 @@
 package trees.traverse;
 
 
-public class MorrisPostorderTraversal {
+
+// Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 12:52:24 PM 
+
+public class Preorder {
     
     static class Node {
         int value;
@@ -11,12 +14,27 @@ public class MorrisPostorderTraversal {
         }
     }
     
-    public static void visitPostorder(Node n){
+    void visit(Node n){
+        System.out.println(n.value);
+    }
+    
+    void print(Node node){
         
-        Node curr = n;
+    }
+    
+    void printRec(Node node){
+        if( node != null ){
+            visit(node);
+            printRec(node.left);
+            printRec(node.right);
+        }
+    }
+    
+    
+    void printMorris(Node node){
+        Node curr = node;
         while( curr != null )
         {
-            
             if( curr.left == null )
             {
                 visit(curr);
@@ -31,31 +49,22 @@ public class MorrisPostorderTraversal {
                 }
                 
                 if( pred.right == null ){
+                    visit(curr);
                     pred.right = curr;
                     curr = curr.left;
                 } 
                 else
                 {
-                    visit(curr);
                     pred.right = null;
                     curr = curr.right;
                 }
             }
         }
-        
     }
-    
-    static void visit(Node n){
-        System.out.println(n.value);
-    }
-    
-    
+
     public static void main(String[] args) {
-        
-//        Node tree = new Node(1, new Node(2, new Node(4, null, null), new Node(5, null, null)), new Node(3, null, null));
-        
-        Node tree = new Node(2, new Node(1, null, null), new Node(5, null, null));
-        
-        visitPostorder(tree);
+        // TODO Auto-generated method stub
+
     }
+
 }

@@ -6,11 +6,13 @@ public class ThreadedTree {
     
     static class Tree{
         int value;
+        boolean isLeaf = true;
         Tree left, right;
         public Tree(int value, Tree left, Tree right) {
             this.value = value;
             this.left = left;
             this.right = right;
+            isLeaf = left != null || right != null;
         }
     }
     
@@ -25,7 +27,7 @@ public class ThreadedTree {
     }
     
     
-    void print(){
+    void printNoStackNorRecursion(){
         
     }
 
@@ -38,7 +40,7 @@ public class ThreadedTree {
         
         ThreadedTree tt = new ThreadedTree(t);
         
-        tt.print();
+        tt.printNoStackNorRecursion();
     }
 
 }

@@ -81,6 +81,7 @@ public class Tree {
 	    
 	    int value, childrenCount;
 	    
+	    // extract value
 	    StringBuilder sb = new StringBuilder();
 	    char ch;
 	    do{
@@ -89,6 +90,7 @@ public class Tree {
 	    } while( ch != '[');
 	    value = Integer.parseInt(sb.toString());
 	    
+	    // extract children count
 	    sb = new StringBuilder();
 	    do{
             ch = (char) r.read();
