@@ -48,7 +48,8 @@ public class AVLTree<K extends Comparable<? super K>, V> {
                 Node n = tree.left;
                 if( height(n.left) < height(n.right) )
                 {
-                    tree.left = updateHeight( rotateLeft(tree.left) );
+                    tree.left = rotateLeft(tree.left);
+                    updateHeight(tree.left);
                 }
                 return rotateRight( updateHeight(tree) );
             } 
@@ -57,7 +58,8 @@ public class AVLTree<K extends Comparable<? super K>, V> {
                 Node n = tree.right;
                 if( height(n.left) > height(n.right) )
                 {
-                    tree.right = updateHeight(rotateRight(tree.right));
+                    tree.right = rotateRight(tree.right);
+                    updateHeight( tree.right );
                 }
                 return rotateLeft( updateHeight(tree) );
             }
@@ -105,7 +107,7 @@ public class AVLTree<K extends Comparable<? super K>, V> {
         else if ( gt(key, curr.key) )
         {
             curr.right = delete(curr.right, key);
-            return balance(updateHeight(curr));
+            return balance( updateHeight(curr) );
         } 
         else 
         {

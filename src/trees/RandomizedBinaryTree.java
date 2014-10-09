@@ -1,5 +1,7 @@
 package trees;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Random;
 
 // Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 2:11:30 PM 
@@ -10,12 +12,13 @@ public class RandomizedBinaryTree {
 
     static class Tree {
         int key;
+        int size;
         Tree left, right;
-
         public Tree(int key, Tree left, Tree right) {
             this.key = key;
             this.left = left;
             this.right = right;
+            this.size = 1 + (left != null ? left.size : 0 ) + (right != null ? right.size : 0); 
         }
     }
 
@@ -27,12 +30,14 @@ public class RandomizedBinaryTree {
 
     private Tree insert(Tree t, int key) {
         float p = rnd.nextFloat();
-        if (p < 1.0 / (size(t) + 1)) {
+        if (p < 1.0 / ( size(t) + 1)) {
             return insertAsRoot(t, key);
         } else if (key < t.key) {
-            return t.left = insert(t.left, key);
+            t.left = insert(t.left, key);
+            return t;
         } else {
-            return t.right = insert(t.right, key);
+            t.right = insert(t.right, key);
+            return t;
         }
     }
 
@@ -44,6 +49,10 @@ public class RandomizedBinaryTree {
             Tree left = ts[0], right = ts[1];
             return merge(key, left, right);
         }
+    }
+    
+    public boolean contains(int key){
+        return contains(root, key);
     }
 
     private boolean contains(Tree tree, int key) {
@@ -63,11 +72,13 @@ public class RandomizedBinaryTree {
         if (tree == null)
             return new Tree(key, null, null);
         else {
-            if (key < tree.key)
+            if (key < tree.key){
                 tree.left = bstInsert(tree.left, key);
-            else if (key > tree.key)
+                tree.size += 1;
+            } else if (key > tree.key){
                 tree.right = bstInsert(tree.right, key);
-            else {
+                tree.size += 1;
+            } else {
                 // already there, do nothing
             }
             return tree;
@@ -88,7 +99,7 @@ public class RandomizedBinaryTree {
         }
         return null;
     }
-
+    
     private Tree[] split(Tree tree, int partition) {
         if (!contains(tree, partition)) {
             tree = bstInsert(tree, partition);
@@ -122,10 +133,7 @@ public class RandomizedBinaryTree {
     }
 
     private int size(Tree t) {
-        if (t != null) {
-            return 1 + size(t.left) + size(t.right);
-        }
-        return 0;
+        return t == null ? 0 : t.size;
     }
 
     private void printInorder() {
@@ -137,6 +145,29 @@ public class RandomizedBinaryTree {
             print(t.left);
             System.out.println(t.key);
             print(t.right);
+        }
+    }
+    
+    void printLevelorder(){
+        printLevelorder(root);
+    }
+    
+    void printLevelorder(Tree t){
+        if( t != null ){
+            Queue<Tree> q = new LinkedList<>();
+            q.offer(t);
+            int next = 0, print = 1;
+            while(!q.isEmpty()){
+                Tree tr = q.poll();
+                System.out.print(tr.key + " ");
+                if(tr.left != null) {q.offer(tr.left); next += 1;}
+                if(tr.right != null){q.offer(tr.right); next += 1;}
+                if( --print == 0 ){
+                    System.out.println();
+                    print = next;
+                    next = 0;
+                }
+            }
         }
     }
 
@@ -154,6 +185,8 @@ public class RandomizedBinaryTree {
         rbt.insert(8);
         rbt.insert(9);
 
-        rbt.printInorder();
+//        rbt.printInorder();
+        
+        rbt.printLevelorder();
     }
 }
