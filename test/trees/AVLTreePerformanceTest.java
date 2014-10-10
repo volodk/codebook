@@ -2,73 +2,32 @@ package trees;
 
 import static org.junit.Assert.assertNotNull;
 
-import java.util.Map;
 import java.util.Random;
-import java.util.TreeMap;
 
 import org.junit.Test;
 
-import trees.SplayTree;
-
 // Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 2:44:35 PM 
 
-public class Splay_TreeMap_Test {
+public class AVLTreePerformanceTest {
 
-    SplayTree<Integer, Integer> splayTree;
-    Map<Integer, Integer> rbTree;
+    AVLTree<Integer, Integer> avl;
     
     int MAX = 1000000;
     int factor = 2;
     int step = 1000;
     int Queries = 100000;
     
-    public void constructTreeMap(int[] arr, int size) {
-        rbTree = new TreeMap<Integer, Integer>();
-        for(int a : arr){
-            rbTree.put(a, a);
-        }
-    }
-    
     public void constructSplayTree(int[] arr, int size) {
-        splayTree = new SplayTree<Integer, Integer>();
-        for(int a : arr){
-            splayTree.insert(a, a);
-        }
-    }
-    
-//    @Test
-    public void valuesFromNarrowRangeForHashMap() {
-        
-        System.out.println("\nRandom sample range : tree map");
-        System.out.println("SIZE TIME");
-        
-        int size = 1000;
-        
-        Random rnd = new Random();
-        
-        while ( size <= MAX ){
-            
-            int[] arr = randomArray(size);
-            constructTreeMap(arr, size);
-            
-            int sample[] = getRandomSample(arr, rnd, (int)( size * 0.05f ) );
-            
-            long start_t = System.currentTimeMillis();
-            for( int i = 0; i < Queries; i++){
-                assertNotNull( rbTree.get( sample[ rnd.nextInt(sample.length) ] ) );
-            }
-            long end_t = System.currentTimeMillis();
-            System.out.format("%d %d\n", size, end_t - start_t );
-
-            size += step;
-            
+        avl = new AVLTree<Integer, Integer>();
+        for( int a : arr ){
+            avl.insert(a, a);
         }
     }
     
     @Test
-    public void valuesFromNarrowRangeForSplay() {
+    public void valuesFromNarrowRange() {
         
-        System.out.println("\nRandom sample range : splay");
+        System.out.println("Random sample range : AVL Tree");
         System.out.println("SIZE TIME");
         
         int size = 1000;
@@ -84,7 +43,7 @@ public class Splay_TreeMap_Test {
             
             long start_t = System.currentTimeMillis();
             for( int i = 0; i < Queries; i++){
-                assertNotNull( splayTree.find( sample[ rnd.nextInt(sample.length) ] ) );
+                assertNotNull( avl.find( sample[ rnd.nextInt(sample.length) ] ) );
             }
             long end_t = System.currentTimeMillis();
             System.out.format("%d %d\n", size, end_t - start_t );

@@ -117,6 +117,9 @@ public class RandomizedBinaryTree {
             Tree newRoot = t.right;
             t.right = newRoot.left;
             newRoot.left = t;
+            
+            int temp = newRoot.size; newRoot.size = t.size; t.size = temp;
+            
             return newRoot;
         }
         return t;
@@ -127,6 +130,9 @@ public class RandomizedBinaryTree {
             Tree newRoot = t.left;
             t.left = newRoot.right;
             newRoot.right = t;
+            
+            int temp = newRoot.size; newRoot.size = t.size; t.size = temp;
+            
             return newRoot;
         }
         return t;
