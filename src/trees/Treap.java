@@ -6,6 +6,25 @@ import java.util.Random;
 
 // Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 12:53:38 PM 
 
+/**
+ * In computer science, the treap and the randomized binary search tree are two
+ * closely related forms of binary search tree data structures that maintain a
+ * dynamic set of ordered keys and allow binary searches among the keys. After
+ * any sequence of insertions and deletions of keys, the shape of the tree is a
+ * random variable with the same probability distribution as a random binary
+ * tree; in particular, with high probability its height is proportional to the
+ * logarithm of the number of keys, so that each search, insertion, or deletion
+ * operation takes logarithmic time to perform.
+ * 
+ */
+
+/**
+ * Blelloch and Reid-Miller[4] describe an application of treaps to a problem of
+ * maintaining sets of items and performing set union, set intersection, and set
+ * difference operations, using a treap to represent each set.
+ * 
+ */
+
 public class Treap {
     
     static int TOP = 1000;
@@ -20,12 +39,17 @@ public class Treap {
             this.key = key;
             this.priority = priority;
         }
+        public Node(int key, int priority, Node left, Node right) {
+            this(key, priority);
+            this.left = left; this.right = right;
+        }
     }
     
     Node root;
     
     public void insert(int key){
-        root = insert(root, key, rnd.nextInt(TOP));
+        int randomPriority = rnd.nextInt(TOP);
+        root = insert(root, key, randomPriority );
     }
     
     /*
@@ -36,26 +60,27 @@ public class Treap {
      * number than its parent z, perform a tree rotation that reverses the
      * parent-child relation between x and z.
      */
-    private Node insert(Node n, int key, int priority){
+    Node insert(Node n, int key, int priority){
         if( n == null ) return new Node(key, priority);
         else {
             if( key < n.key ){
                 n.left = insert(n.left, key, priority);
                 if( n.priority < n.left.priority){
-                    n = rotl(n);
-                }
-            }
-            else { 
-                n.right = insert(n.right, key, priority);
-                if( n.priority < n.right.priority){
                     n = rotr(n);
                 }
+            } else if( key > n.key ) { 
+                n.right = insert(n.right, key, priority);
+                if( n.priority < n.right.priority){
+                    n = rotl(n);
+                }
+            } else {
+                // do nothing
             }
             return n;
         }
     }
     
-    private Node rotl(Node n) {
+    Node rotl(Node n) {
         if ( n == null ) return null;
         if ( n.right == null ) return n;
         Node r = n.right;
@@ -64,7 +89,7 @@ public class Treap {
         return r;
     }
     
-    private Node rotr(Node n) {
+    Node rotr(Node n) {
         if ( n == null ) return null;
         if ( n.left == null ) return n;
         Node l = n.left;
@@ -76,7 +101,7 @@ public class Treap {
 // ============================================================================
     
     public void delete(int key){
-        
+        root = delete(root, key);
     }
 
     /*
@@ -89,12 +114,8 @@ public class Treap {
      * violate the heap-ordering property for z, so additional rotations may
      * need to be performed to restore this property.
      */
-    private Node delete(Node n, int key){
+    Node delete(Node n, int key){
         return n;
-    }
-    
-    private void printNode(Node n) {
-        System.out.format("%d(%d)", n.key, n.priority);
     }
     
     /*
@@ -127,8 +148,9 @@ public class Treap {
      * into the treap.
      */
     
-    public static Treap[] split(Treap t, int priority){
-        return null;
+    Node[] split(Node t, int priority){
+        t = insert(t, 0, TOP);
+        return new Node[]{ t.left, t.right };
     }
     
     /*
@@ -141,11 +163,16 @@ public class Treap {
      * is one treap merged from the two original treaps. This is effectively
      * "undoing" a split, and costs the same.
      */
-    public static Treap merge( Treap[] treaps ){
-        return null;
+    Node merge( Node[] treaps ){
+        Node n = new Node( 0, -TOP, treaps[0], treaps[1] );
+        return balance(n);
     }
     
- // ============================================================================
+    Node balance(Node n) {
+        return null;
+    }
+
+// ============================================================================
     
     public void print(){
         Queue<Node> q = new LinkedList<>();
@@ -153,13 +180,13 @@ public class Treap {
         int inLayer = 1, next = 0;
         while( !q.isEmpty()){
             Node n = q.poll();
-            inLayer -= 1;
-            printNode(n);
+            
+            System.out.print(String.format("%d[%d]", n.key, n.priority));
 
             if(n.left != null) { q.offer(n.left); next +=1; }
             if(n.right != null) { q.offer(n.right); next +=1; }
             
-            if( inLayer == 0) {
+            if( --inLayer == 0) {
                 System.out.println();
                 inLayer = next; next = 0;
             }

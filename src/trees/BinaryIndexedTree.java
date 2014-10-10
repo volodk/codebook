@@ -2,6 +2,20 @@ package trees;
 
 // Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 12:16:38 PM 
 
+/**
+ * A Fenwick tree or binary indexed tree is a data structure providing efficient
+ * methods for calculation and manipulation of the prefix sums of a table of
+ * values. It was proposed by Peter Fenwick in 1994.[1] Fenwick trees primarily
+ * solve the problem of balancing prefix sum calculation efficiency with element
+ * modification efficiency. The efficiency of these operations comes as a
+ * trade-off - greater efficiency in prefix sum calculation is achieved by
+ * pre-calculating values, but as more values are pre-calculated more must be
+ * re-calculated upon any modification to the underlying value table. Fenwick
+ * trees both calculate prefix sums and modify the table in O(\log n) time,
+ * where n is the size of the table.
+ * 
+ */
+
 public class BinaryIndexedTree {    // a.k.a Fenwick tree
     
     int[] t;

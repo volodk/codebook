@@ -1,4 +1,7 @@
 package trees;
+
+import java.util.List;
+
 // Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 4:51:53 PM 
 
 public class IntervalTree {
@@ -57,7 +60,7 @@ public class IntervalTree {
         }
     }
     
-    Interval intersectsWith(Interval intvl){
+    List<Interval> query(Interval intvl){
         return null;
     }
     

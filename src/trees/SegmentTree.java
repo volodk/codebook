@@ -1,68 +1,78 @@
 package trees;
-import java.lang.reflect.Array;
-import java.util.Objects;
+import java.util.List;
 
 
 // Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 5:38:23 PM 
 
-public class SegmentTree<T> {
-
-    interface Function<T> { // commutative function
-        T call(T a, T b);   
-    }  
+public class SegmentTree {
     
-    private final Function<T> function;
-    private final Class<T> elemClass;
-    
-    private T[] tree;
-    
-    public SegmentTree(Class<T> clazz, Function<T> function) {
-        this.function = function;
-        elemClass = clazz;
+    static class Interval implements Comparable<Interval>{
+        int from, to;
+        public Interval(int from, int to) {
+            if( to < from ) throw new IllegalArgumentException();
+            this.from = from;
+            this.to = to;
+        }
+        @Override
+        public int compareTo(Interval o) {
+            return from - o.from;
+        }
+        @Override
+        public String toString() { return String.format("%d:%d", from, to); }
+        public static Interval valueOf(int from, int to){ return new Interval(from, to);}
     }
     
-    @SuppressWarnings("unchecked")
-    public void build(T ... values){
-        Objects.requireNonNull(values);
-        
-        int N = values.length;
-        tree = (T[]) Array.newInstance(elemClass, N);
-        
-        int node = 1;
-        int i = 0, j = N-1;
-        
-        build( node, i, j, values, tree );
+    static boolean lt(Interval i1, Interval i2){ return i1.compareTo(i2) < 0; }
+    static boolean le(Interval i1, Interval i2){ return i1.compareTo(i2) <= 0; }
+    static boolean ge(Interval i1, Interval i2){ return i1.compareTo(i2) >= 0; }
+    static boolean gt(Interval i1, Interval i2){ return i1.compareTo(i2) > 0; }
+    static boolean eq(Interval i1, Interval i2){ return i1.compareTo(i2) == 0; }
+    
+    // ==============================================================================
+    
+    class Node{
+        int top;
+        Interval i;
+        Node left, right;
     }
     
-    private void build(int node, int b, int e, T[] values, T[] segments){
-        
-//        if(b == e)
-//            segments[node] = b;
-        
-        build( node * 2, b, (b + e)/2, values, segments);
-        build( node * 2 + 1, (b + e)/2 + 1, e, values, segments);
-        
-        // calc function over child nodes
-        
+    Node root;
+    
+    void add(Interval intvl){
+        root = add(intvl, root);
     }
     
-    public T query(int i, int j){
+    Node add(Interval intvl, Node n){
+        if( n == null ){
+            Node r = new Node();
+            r.i = intvl;
+            r.top = intvl.to;
+            return r;
+        } else {
+            if( lt(intvl, n.i) ){
+                n.left = add(intvl, n.left);
+                n.top = Math.max( n.left.top, n.right == null ? n.left.top : n.right.top);
+            } else {
+                n.right = add(intvl, n.right);
+                n.top = Math.max( n.left == null ? n.right.top : n.left.top, n.right.top);
+            }
+            return n;
+        }
+    }
+    
+    List<Interval> query(int point){
         return null;
     }
-    
         
     public static void main(String[] args) {
         
-        SegmentTree<Integer> st = new SegmentTree<Integer>( Integer.class, new Function<Integer>() {
-            @Override
-            public Integer call(Integer a, Integer b) {
-                return Math.min(a, b);
-            }
-        });
+        SegmentTree st = new SegmentTree();
         
-        st.build( 3,1,4,5,2,6,3,7,4 );
-        
-        System.out.println( st.query(1,5) );
+        System.out.println( st.query(5) );
     }
     
 }
+
+//
+//build( node * 2, b, (b + e)/2, values, segments);
+//build( node * 2 + 1, (b + e)/2 + 1, e, values, segments);
