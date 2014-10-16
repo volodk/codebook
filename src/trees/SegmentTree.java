@@ -4,6 +4,19 @@ import java.util.List;
 
 // Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 5:38:23 PM 
 
+/**
+ * In computer science, a segment tree is a tree data structure for storing
+ * intervals, or segments. It allows querying which of the stored segments
+ * contain a given point. It is, in principle, a static structure; that is, its
+ * content cannot be modified once the structure is built. A similar data
+ * structure is the interval tree. A segment tree for a set I of n intervals
+ * uses O(n log n) storage and can be built in O(n log n) time. Segment trees
+ * support searching for all the intervals that contain a query point in O(log n
+ * + k), k being the number of retrieved intervals or segments.[1] Applications
+ * of the segment tree are in the areas of computational geometry, and
+ * geographic information systems. The segment tree can be generalized to higher
+ * dimension spaces as well.
+ */
 public class SegmentTree {
     
     static class Interval implements Comparable<Interval>{
