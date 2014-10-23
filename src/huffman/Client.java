@@ -6,7 +6,18 @@ public class Client {
 
     public static void main(String[] args) {
         
-        char[] text = "encode me".toCharArray();
+        String original = "encode me";
+        
+        char[] text = original.toCharArray();
+        
+        EncodingTree tree = Encode.createHuffmanTree(text); 
+        
+        String cipherText = Encode.obfuscate(tree, text);
+        
+        String rawText = Decode.illuminate(tree, cipherText);
+        
+        System.out.println("Original text : " + original);
+        System.out.println("Text after encode/decode ops : " + rawText);
 
     }
 

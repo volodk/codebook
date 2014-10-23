@@ -8,4 +8,14 @@ public class Encode {
 
     }
 
+    public static EncodingTree createHuffmanTree(char[] text) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public static String obfuscate(EncodingTree tree, char[] text) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }
