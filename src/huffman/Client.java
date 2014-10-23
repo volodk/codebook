@@ -6,7 +6,7 @@ public class Client {
 
     public static void main(String[] args) {
         
-        String original = "encode me";
+        String original = "creating a huffman tree is simple. sort this list by frequency";
         
         char[] text = original.toCharArray();
         
