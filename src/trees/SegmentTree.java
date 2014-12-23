@@ -1,4 +1,6 @@
 package trees;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -22,24 +24,16 @@ public class SegmentTree {
     static class Interval implements Comparable<Interval>{
         int from, to;
         public Interval(int from, int to) {
-            if( to < from ) throw new IllegalArgumentException();
-            this.from = from;
-            this.to = to;
+            if( from > to ) throw new IllegalArgumentException();
+            this.from = from; this.to = to;
         }
         @Override
         public int compareTo(Interval o) {
             return from - o.from;
         }
         @Override
-        public String toString() { return String.format("%d:%d", from, to); }
-        public static Interval valueOf(int from, int to){ return new Interval(from, to);}
+        public String toString() { return String.format("[%d,%d]", from, to); }
     }
-    
-    static boolean lt(Interval i1, Interval i2){ return i1.compareTo(i2) < 0; }
-    static boolean le(Interval i1, Interval i2){ return i1.compareTo(i2) <= 0; }
-    static boolean ge(Interval i1, Interval i2){ return i1.compareTo(i2) >= 0; }
-    static boolean gt(Interval i1, Interval i2){ return i1.compareTo(i2) > 0; }
-    static boolean eq(Interval i1, Interval i2){ return i1.compareTo(i2) == 0; }
     
     // ==============================================================================
     
@@ -49,31 +43,40 @@ public class SegmentTree {
         Node left, right;
     }
     
-    Node root;
+    private Node root;
     
-    void add(Interval intvl){
-        root = add(intvl, root);
+    public void add(Interval i){
+        if( i != null )
+            root = add(root, i);
     }
     
-    Node add(Interval intvl, Node n){
+    private Node add(Node n, final Interval intvl){
         if( n == null ){
             Node r = new Node();
             r.i = intvl;
             r.top = intvl.to;
             return r;
         } else {
-            if( lt(intvl, n.i) ){
-                n.left = add(intvl, n.left);
-                n.top = Math.max( n.left.top, n.right == null ? n.left.top : n.right.top);
+            if( intvl.compareTo(n.i) < 0 ){ // less than
+                n.left = add(n.left, intvl);
+                if( n.right != null ){
+                    n.top = Math.max( n.left.top, n.right.top);
+                } else { 
+                    n.top = n.left.top;
+                }
             } else {
-                n.right = add(intvl, n.right);
-                n.top = Math.max( n.left == null ? n.right.top : n.left.top, n.right.top);
+                n.right = add(n.right, intvl);
+                if (n.left != null){
+                    n.top = Math.max(n.left.top, n.right.top);
+                } else {
+                    n.top = n.right.top;
+                }
             }
             return n;
         }
     }
     
-    List<Interval> query(int point){
+    public List<Interval> query(int point){
         return null;
     }
         
@@ -81,11 +84,20 @@ public class SegmentTree {
         
         SegmentTree st = new SegmentTree();
         
-        System.out.println( st.query(5) );
+        List<Interval> intervals = Arrays.asList(new Interval(-10, 0), new Interval(2, 6), new Interval(7, 9),
+                new Interval(-2, 4), new Interval(3, 8));
+        
+        Collections.sort(intervals);
+        
+        for(Interval i : intervals){
+            st.add(i);
+        }
+        
+        System.out.println( "Must be 1 selected -> " + st.query(-9) );
+        System.out.println( "Must be 1 selected -> " + st.query(1) );
+        System.out.println( "Must be 3 selected -> " + st.query(3) );
+        System.out.println( "Must be 2 selected -> " + st.query(5) );
+        System.out.println( "Must be 0 selected -> " + st.query(10) );
     }
     
 }
-
-//
-//build( node * 2, b, (b + e)/2, values, segments);
-//build( node * 2 + 1, (b + e)/2 + 1, e, values, segments);

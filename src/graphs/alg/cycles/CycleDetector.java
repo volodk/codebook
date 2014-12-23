@@ -1,32 +1,35 @@
 package graphs.alg.cycles;
 
 import graphs.DirectedGraph;
-import graphs.Graph;
 
-import java.util.Deque;
-import java.util.LinkedList;
+import java.util.Stack;
 
 // Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 12:37:16 PM 
 
 public class CycleDetector {
 
-    public static boolean hasNoCycle(Graph g) {
+    public static boolean hasNoCycle(final DirectedGraph g) {
+
+        Stack<Integer> stack = new Stack<>();
+        int[] market = new int[ g.V() ];
         
-        DirectedGraph dig = (DirectedGraph) g;
+        // 0 - open
+        // 1 - in cycle
+        // 2 - closed
 
-        Deque<Integer> stack = new LinkedList<>();
-        int[] visited = new int[g.V()];
-
-        for (int v = 0; v < g.V() && visited[v] == 0; v++) {
+        for (int v = 0; v < g.V(); v++)
+        {
             stack.push(v);
 
             while (!stack.isEmpty()) {
                 Integer curr = stack.pop();
-                visited[curr] = 1;
+                market[curr] = 1;
                 
-                for (Integer vv : g.adjacentTo(curr)) {
-                    if (visited[vv] == 0) {
-                        stack.push(vv);
+                //todo
+                
+                for (Integer next : g.adjacentTo(curr)) {
+                    if ( market[next] == 0 ) {
+                        stack.push(next);
                     } else {
                         return false; // cycle detected
                     }
@@ -35,5 +38,13 @@ public class CycleDetector {
         }
 
         return true;
+    }
+    
+    public static void printCycles( DirectedGraph g ){
+        if( hasNoCycle(g) ){
+            System.out.println("No cycles detected, graph is DAG");
+        } else {
+            
+        }
     }
 }

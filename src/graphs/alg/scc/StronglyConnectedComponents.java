@@ -1,11 +1,11 @@
 package graphs.alg.scc;
 
-import graphs.Graph;
+import graphs.DirectedGraph;
 
 public class StronglyConnectedComponents {
     
-    public static int[] findSCC(Graph G){
-        int[] scc = new int[G.V()];
+    public static int[] findSCC( DirectedGraph G ){
+        int[] scc = new int[ G.V() ];
         
         return scc;
     }

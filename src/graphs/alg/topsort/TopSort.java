@@ -2,38 +2,35 @@ package graphs.alg.topsort;
 
 import graphs.DirectedGraph;
 
-import java.util.Deque;
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 
 public class TopSort {
+    
+    public static void printTopologicalOrder(final DirectedGraph g){
+        System.out.println(topologicalOrdering(g));
+    }
 
-    public static void printInOrder(DirectedGraph g){
-        
-        Deque<Integer> stack = new LinkedList<>();
-        
-        Deque<Integer> inOrder = new LinkedList<>();
-        
-        int[] visited = new int[g.V()];
-        
-        for(int v = 0; v < g.V() && visited[v] == 0; v++){
-            stack.push(v);
-            
-            while(!stack.isEmpty()){
-                Integer curr = stack.pop();
-                
-                if( visited[curr] == 0 ){
-                    visited[curr] = 1;
-                    
-                    inOrder.push(curr);
-                    
-                    for(Integer vv : g.adjacentTo(curr)){
-                        stack.push(vv);
+    public static List<Integer> topologicalOrdering(final DirectedGraph g){
+        Stack<Integer> stack = new Stack<>(), topsort = new Stack<>();
+        int[] visited = new int[ g.V() ];
+        for( int v = 0; v < g.V(); v++ ){
+            if ( visited[v] == 0 ){
+                stack.push(v);
+                while(!stack.isEmpty())
+                {
+                    Integer curr = stack.pop();
+                    if( visited[curr] == 0 ){
+                        visited[curr] = 1;
+                        topsort.push(curr);
+                        for( Integer next : g.adjacentTo(curr) ){
+                            stack.push(next);
+                        }
                     }
                 }
             }
         }
-        
-        System.out.println(inOrder);
-        
+        return new ArrayList<>( topsort );
     }
 }
