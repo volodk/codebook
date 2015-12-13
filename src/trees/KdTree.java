@@ -13,7 +13,7 @@ package trees;
 
 public class KdTree {
 
-    static class Node {
-        int x, y;
-    }
+	static class Node {
+		int x, y;
+	}
 }

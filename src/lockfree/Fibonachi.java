@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicReference;
 // Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 3:10:59 PM 
 
 public class Fibonachi {
-	
+
 	class Pair {
 		BigInteger a, b;
 
@@ -28,8 +28,7 @@ public class Fibonachi {
 		}
 	}
 
-	AtomicReference<Pair> state = new AtomicReference<>(new Pair(
-			BigInteger.ZERO, BigInteger.ONE));
+	AtomicReference<Pair> state = new AtomicReference<>(new Pair(BigInteger.ZERO, BigInteger.ONE));
 
 	public BigInteger next() {
 		Pair curr, update;
@@ -46,29 +45,27 @@ public class Fibonachi {
 
 		final int threads = 3;
 		final int tasks = 100;
-		
+
 		final Fibonachi alg = new Fibonachi();
 
 		ExecutorService executor = Executors.newFixedThreadPool(threads);
 
-		CompletionService<BigInteger> sc = new ExecutorCompletionService<>(
-				executor);
+		CompletionService<BigInteger> sc = new ExecutorCompletionService<>(executor);
 
-		for (Callable<BigInteger> task : Collections.nCopies(tasks,
-				new Callable<BigInteger>() {
-					@Override
-					public BigInteger call() throws Exception {
-						return alg.next();
-					}
-				})) {
+		for (Callable<BigInteger> task : Collections.nCopies(tasks, new Callable<BigInteger>() {
+			@Override
+			public BigInteger call() throws Exception {
+				return alg.next();
+			}
+		})) {
 			sc.submit(task);
 		}
-		
+
 		Future<BigInteger> result;
-		while( (result =  sc.poll()) != null ){
-			System.out.println( result.get() );
+		while ((result = sc.poll()) != null) {
+			System.out.println(result.get());
 		}
-		
+
 		executor.shutdown();
 
 	}

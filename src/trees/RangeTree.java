@@ -25,22 +25,22 @@ import java.util.List;
  */
 
 public class RangeTree {
-    
-    static class Node {
-        int value;
-        Node left, right;
-    }
-    
-    public void add(int value){
-        
-    }
-    
-    List<Integer> between(int from, int to){
-        return null;
-    }
 
-    public static void main(String[] args) {
+	static class Node {
+		int value;
+		Node left, right;
+	}
 
-    }
+	public void add(int value) {
+
+	}
+
+	List<Integer> between(int from, int to) {
+		return null;
+	}
+
+	public static void main(String[] args) {
+
+	}
 
 }

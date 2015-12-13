@@ -5,21 +5,23 @@ import graphs.GraphFactory.StorageType;
 // Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 6:23:50 PM 
 
 public class AbstractGraphFactory {
-    
-    private AbstractGraphFactory() {}
 
-    public static GraphFactory getFactory(StorageType type) {
-        switch (type) {
+	private AbstractGraphFactory() {
+	}
 
-        default: case ADJACENCY_MATRIX:
-            return new AdjacencyMatrixGF();
+	public static GraphFactory getFactory(StorageType type) {
+		switch (type) {
 
-        case ADJACENCY_LIST:
-            return new AdjacencyListGF();
+		default:
+		case ADJACENCY_MATRIX:
+			return new AdjacencyMatrixGF();
 
-        case EDGE_LIST:
-            return new EdgeListGF();
+		case ADJACENCY_LIST:
+			return new AdjacencyListGF();
 
-        }
-    }
+		case EDGE_LIST:
+			return new EdgeListGF();
+
+		}
+	}
 }

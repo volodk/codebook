@@ -11,61 +11,61 @@ import java.util.Random;
 
 public class ConnectedComponents {
 
-    static Random rnd = new Random();
+	static Random rnd = new Random();
 
-    public static boolean isConnected(Graph g) {
+	public static boolean isConnected(Graph g) {
 
-        Deque<Integer> stack = new LinkedList<>();
-        int marked[] = new int[g.V()];
+		Deque<Integer> stack = new LinkedList<>();
+		int marked[] = new int[g.V()];
 
-        stack.push(rnd.nextInt(g.V()));
+		stack.push(rnd.nextInt(g.V()));
 
-        while (!stack.isEmpty()) {
-            Integer v = stack.pop();
+		while (!stack.isEmpty()) {
+			Integer v = stack.pop();
 
-            marked[v] = 1;
-            for (Integer vv : g.adjacentTo(v)) {
-                if (marked[vv] == 0) {
-                    stack.push(vv);
-                }
-            }
-        }
-        
-        for (int i : marked) {
-            if (i == 0)
-                return false;
-        }
+			marked[v] = 1;
+			for (Integer vv : g.adjacentTo(v)) {
+				if (marked[vv] == 0) {
+					stack.push(vv);
+				}
+			}
+		}
 
-        return true;
-    }
+		for (int i : marked) {
+			if (i == 0)
+				return false;
+		}
 
-    public static void printConnectedComponents(Graph g) {
+		return true;
+	}
 
-        Deque<Integer> stack = new LinkedList<>();
+	public static void printConnectedComponents(Graph g) {
 
-        int[] mark = new int[g.V()];
+		Deque<Integer> stack = new LinkedList<>();
 
-        int color = 0;
+		int[] mark = new int[g.V()];
 
-        for (int i = 0; i < g.V(); i++) {
+		int color = 0;
 
-            stack.push(i);
-            if (mark[i] == 0)
-                color += 1;
+		for (int i = 0; i < g.V(); i++) {
 
-            while (!stack.isEmpty()) {
-                Integer v = stack.pop();
-                if (mark[v] == 0) {
-                    mark[v] = color;
-                    for (Integer vv : g.adjacentTo(v)) {
-                        stack.push(vv);
-                    }
-                }
-            }
+			stack.push(i);
+			if (mark[i] == 0)
+				color += 1;
 
-        }
+			while (!stack.isEmpty()) {
+				Integer v = stack.pop();
+				if (mark[v] == 0) {
+					mark[v] = color;
+					for (Integer vv : g.adjacentTo(v)) {
+						stack.push(vv);
+					}
+				}
+			}
 
-        System.out.println(Arrays.toString(mark));
+		}
 
-    }
+		System.out.println(Arrays.toString(mark));
+
+	}
 }
