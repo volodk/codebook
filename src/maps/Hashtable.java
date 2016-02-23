@@ -1,3 +1,5 @@
+package maps;
+
 import java.util.Arrays;
 
 public class Hashtable<K, V> {

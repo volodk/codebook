@@ -1,6 +1,6 @@
 package strings;
 
-public class RK {
+public class RabbinKarp {
 
 	public static void main(String[] args) {
 
