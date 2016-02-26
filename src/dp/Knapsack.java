@@ -1,4 +1,4 @@
-package dynamic_programming;
+package dp;
 
 // Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 12:23:37 PM 
 

@@ -5,7 +5,7 @@ import java.util.Queue;
 
 // Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 12:52:24 PM 
 
-public class Levelorder {
+public class LevelByLevel {
 
 	static class Node {
 		int value;
@@ -50,12 +50,10 @@ public class Levelorder {
 	}
 
 	public static void main(String[] args) {
-		Node tree = new Node(1, new Node(2, new Node(4, null, null), new Node(5, null, null)), new Node(3, null, null));
+		
+	    Node tree = new Node(1, new Node(2, new Node(4, null, null), new Node(5, null, null)), new Node(3, null, null));
 
-		// Node tree = new Node(2, new Node(1, null, null), new Node(5, null,
-		// null));
-
-		Levelorder tr = new Levelorder();
+		LevelByLevel tr = new LevelByLevel();
 
 		tr.print(tree);
 	}

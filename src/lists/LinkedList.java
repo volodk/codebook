@@ -1,6 +1,6 @@
 package lists;
 
-public class SinglyLinkedList {
+public class LinkedList {
 
 	static class Node {
 		int value;
