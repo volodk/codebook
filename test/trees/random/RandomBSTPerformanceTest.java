@@ -1,4 +1,4 @@
-package trees;
+package trees.random;
 
 import static org.junit.Assert.assertNotNull;
 

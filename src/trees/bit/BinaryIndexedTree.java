@@ -1,4 +1,4 @@
-package trees;
+package trees.bit;
 
 // Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 12:16:38 PM 
 

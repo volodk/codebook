@@ -1,4 +1,4 @@
-package trie;
+package trees.trie;
 
 import java.util.Set;
 

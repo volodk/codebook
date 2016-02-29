@@ -1,4 +1,4 @@
-package trees;
+package trees.splay;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -7,7 +7,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import trees.SplayTree;
+import trees.splay.SplayTree;
 
 // Volodymyr_Krasnikov <vkrasnikov@gmail.com> 5:52:45 PM 
 

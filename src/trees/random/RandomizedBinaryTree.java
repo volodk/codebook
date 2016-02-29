@@ -1,4 +1,4 @@
-package trees;
+package trees.random;
 
 import java.util.LinkedList;
 import java.util.Queue;

@@ -10,7 +10,7 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Tree {
+public class NaryTree {
 
 	static class Node {
 		int value;
