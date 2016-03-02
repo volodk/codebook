@@ -1,4 +1,4 @@
-package trees;
+package trees.range;
 
 import java.util.List;
 

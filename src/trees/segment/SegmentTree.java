@@ -1,4 +1,4 @@
-package trees;
+package trees.segment;
 
 import java.util.Arrays;
 import java.util.Collections;

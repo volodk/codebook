@@ -1,4 +1,4 @@
-package trees;
+package trees.avl;
 
 import static org.junit.Assert.assertTrue;
 
@@ -7,7 +7,7 @@ import java.util.Random;
 import org.junit.Before;
 import org.junit.Test;
 
-import trees.AVLTree;
+import trees.avl.AVLTree;
 
 public class AVLTreeTest {
 	

@@ -1,4 +1,4 @@
-package trees;
+package trees.splay;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -6,11 +6,13 @@ import java.util.Random;
 
 import org.junit.Test;
 
+import trees.splay.SplayTree;
+
 // Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 2:44:35 PM 
 
-public class AVLTreePerformanceTest {
+public class SplayTreePerformanceTest {
 
-    AVLTree<Integer, Integer> avl;
+    SplayTree<Integer, Integer> splayTree;
     
     int MAX = 1000000;
     int factor = 2;
@@ -18,16 +20,16 @@ public class AVLTreePerformanceTest {
     int Queries = 100000;
     
     public void constructSplayTree(int[] arr, int size) {
-        avl = new AVLTree<Integer, Integer>();
-        for( int a : arr ){
-            avl.insert(a, a);
+        splayTree = new SplayTree<Integer, Integer>();
+        for(int a : arr){
+            splayTree.insert(a, a);
         }
     }
     
     @Test
-    public void valuesFromNarrowRange() {
+    public void valuesFromNarrowRangeForSplay() {
         
-        System.out.println("Random sample range : AVL Tree");
+        System.out.println("\nRandom sample range : splay");
         System.out.println("SIZE TIME");
         
         int size = 1000;
@@ -43,7 +45,7 @@ public class AVLTreePerformanceTest {
             
             long start_t = System.currentTimeMillis();
             for( int i = 0; i < Queries; i++){
-                assertNotNull( avl.find( sample[ rnd.nextInt(sample.length) ] ) );
+                assertNotNull( splayTree.find( sample[ rnd.nextInt(sample.length) ] ) );
             }
             long end_t = System.currentTimeMillis();
             System.out.format("%d %d\n", size, end_t - start_t );

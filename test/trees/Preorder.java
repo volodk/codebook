@@ -1,8 +1,8 @@
-package trees.alg;
+package trees;
 
 // Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 12:52:24 PM 
 
-public class Postorder {
+public class Preorder {
 
 	static class Node {
 		int value;
@@ -25,9 +25,33 @@ public class Postorder {
 
 	void printRec(Node node) {
 		if (node != null) {
+			visit(node);
 			printRec(node.left);
 			printRec(node.right);
-			visit(node);
+		}
+	}
+
+	void printMorris(Node node) {
+		Node curr = node;
+		while (curr != null) {
+			if (curr.left == null) {
+				visit(curr);
+				curr = curr.right;
+			} else {
+				Node pred = curr.left;
+				while (pred.right != null && pred.right != curr) {
+					pred = pred.right;
+				}
+
+				if (pred.right == null) {
+					visit(curr);
+					pred.right = curr;
+					curr = curr.left;
+				} else {
+					pred.right = null;
+					curr = curr.right;
+				}
+			}
 		}
 	}
 
