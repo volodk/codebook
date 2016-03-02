@@ -5,8 +5,9 @@ package dp;
 public class GivingAChange {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		
+		int coins[] = { 1, 2, 5 };
+		int sum = 23;
 
 	}
-
 }
