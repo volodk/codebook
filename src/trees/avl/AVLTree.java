@@ -9,27 +9,13 @@ import java.util.Queue;
 
 public class AVLTree<K extends Comparable<? super K>, V> {
 
-	class Node {
-		int h = 1;
-		K key;
-		V value;
-		Node left, right;
+	private int h = 1;
+	private K key;
+	private V value;
+	private AVLTree<K,V> left, right;
 
-		public Node(K key, V value) {
-			this.key = key;
-			this.value = value;
-		}
-
-		@Override
-		public String toString() {
-			return String.format("%s", key);
-		}
-	}
-
-	Node root;
-
-	public void insert(K key, V value) {
-		root = insert(root, key, value);
+	public static <K,V> void insert(AVLTree<K,V> tree, K key, V value) {
+		insert(tree, key, value);
 	}
 
 	public void delete(K key) {

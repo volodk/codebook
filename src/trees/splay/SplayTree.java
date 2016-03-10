@@ -7,27 +7,10 @@ import java.util.Queue;
 
 public class SplayTree<K extends Comparable<K>, V> {
 
-	class Node {
-		K key;
-		V value;
-		Node left, right, parent;
-
-		public Node(K key, V value, Node parent, Node left, Node right) {
-			this.key = key;
-			this.value = value;
-			this.parent = parent;
-			this.left = left;
-			this.right = right;
-		}
-
-		@Override
-		public String toString() {
-			return String.format("%s", key);
-		}
-	}
-
-	Node root;
-
+	private K key;
+	private V value;
+	private SplayTree<K,V> left, right;
+	
 	// interface
 
 	public void insert(K key, V value) {
@@ -199,66 +182,5 @@ public class SplayTree<K extends Comparable<K>, V> {
 			return newRoot;
 		}
 		return null;
-	}
-
-	boolean lt(Node n1, Node n2) {
-		return n2 == null ? true : lt(n1.key, n2.key);
-	}
-
-	boolean lt(K key1, K key2) {
-		return key1.compareTo(key2) < 0;
-	}
-
-	boolean le(Node n1, Node n2) {
-		return n2 == null ? true : le(n1.key, n2.key);
-	}
-
-	boolean le(K key1, K key2) {
-		return key1.compareTo(key2) <= 0;
-	}
-
-	boolean gt(Node n1, Node n2) {
-		return n2 == null ? true : gt(n1.key, n2.key);
-	}
-
-	boolean gt(K key1, K key2) {
-		return key1.compareTo(key2) > 0;
-	}
-
-	boolean ge(Node n1, Node n2) {
-		return n2 == null ? true : ge(n1.key, n2.key);
-	}
-
-	boolean ge(K key1, K key2) {
-		return key1.compareTo(key2) >= 0;
-	}
-
-	boolean eq(K key1, K key2) {
-		return key1.compareTo(key2) == 0;
-	}
-
-	public void print() {
-		Queue<Node> q = new LinkedList<>();
-		q.offer(root);
-		int toPrint = 1, next = 0;
-		while (!q.isEmpty()) {
-			Node n = q.poll();
-			if (n.left != null) {
-				q.offer(n.left);
-				next++;
-			}
-			if (n.right != null) {
-				q.offer(n.right);
-				next++;
-			}
-			System.out.print(n);
-			System.out.print(" ");
-			if (--toPrint == 0) {
-				System.out.println();
-				toPrint = next;
-				next = 0;
-			}
-		}
-		System.out.print("\n");
 	}
 }
