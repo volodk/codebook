@@ -1,186 +1,110 @@
 package trees.splay;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
 // Volodymyr_Krasnikov <vkrasnikov@gmail.com> 6:48:13 PM 
 
 public class SplayTree<K extends Comparable<K>, V> {
-
-	private K key;
-	private V value;
-	private SplayTree<K,V> left, right;
 	
-	// interface
-
+	class Node {
+		K key;
+		V value;
+		Node left, right;
+		Node(K k, V v){ key = k; value = v; }
+	}
+	
+	Node root;
+	
 	public void insert(K key, V value) {
-		root = insert(root, null, key, value);
+		root = insert(root, new Node(key, value));
 	}
-
+	
 	public void delete(K key) {
-		root = delete(root, key);
-	}
-
-	public V find(K key) {
-		Node n = find(root, key);
-		if (n == null) {
-			return null;
-		} else {
-			root = n;
-			return n.value;
+		if (contains(root, key)) {
+			root = splay(root, predecessor(root, key));
+			root = delete(root, key);
 		}
 	}
-
-	public int size() {
-		return size(root);
-	}
-
-	public int size(Node tree) {
-		if (tree == null)
-			return 0;
-		else
-			return 1 + size(tree.left) + size(tree.right);
-	}
-
-	int height(Node tree) {
-		if (tree == null)
-			return 0;
-		else
-			return 1 + Math.max(height(tree.left), height(tree.right));
-	}
-
-	Node find(Node curr, K key) {
-		if (curr == null)
-			return null;
-
-		if (eq(key, curr.key))
-			return curr;
-
-		if (lt(key, curr.key)) {
-			curr.left = find(curr.left, key);
-			return rotateRight(curr);
-		} else {
-			curr.right = find(curr.right, key);
-			return rotateLeft(curr);
-		}
-
-	}
-
-	boolean isBST(Node curr) {
-		if (curr == null)
+	
+	public boolean contains(K key){
+		if (contains(root, key)) {
+			root = splay(root, key);
 			return true;
-		return isBST(curr.left) && (gt(curr, curr.left) && le(curr, curr.right)) && isBST(curr.right);
-	}
-
-	Node min(Node tree) {
-		if (tree != null && tree.left != null)
-			return min(tree.left);
-		return tree;
-	}
-
-	Node max(Node tree) {
-		if (tree != null && tree.right != null)
-			return max(tree.right);
-		return tree;
-	}
-
-	Node insert(Node curr, Node parent, K key, V value) {
-		if (curr == null) {
-			return new Node(key, value, parent, null, null);
 		} else {
-			if (lt(key, curr.key)) {
-				curr.left = insert(curr.left, curr, key, value);
-				return rotateRight(curr); // splay up
-			} else if (eq(key, curr.key)) {
-				curr.value = value;
-				return curr;
-			} else {
-				curr.right = insert(curr.right, curr, key, value);
-				return rotateLeft(curr); // splay up
-			}
+			root = splay(root, successor(root, key));
+			return false;
 		}
 	}
-
-	Node delete(Node curr, K key) {
-		if (find(root, key) == null) {
-			return null;
-		} else {
-			return root = delete(root);
-		}
-	}
-
-	Node delete(Node curr) {
-		if (curr.left == null && curr.right == null) {
-			Node p = curr.parent;
-			if (p.left == curr)
-				p.left = null;
-			if (p.right == curr)
-				p.right = null;
-			return p;
-		} else if (curr.left == null && curr.right != null) {
-			Node p = curr.parent;
-			if (p.left == curr)
-				p.left = curr.right;
-			if (p.right == curr)
-				p.right = curr.right;
-			return p;
-		} else if (curr.left != null && curr.right == null) {
-			Node p = curr.parent;
-			if (p.left == curr)
-				p.left = curr.left;
-			if (p.right == curr)
-				p.right = curr.left;
-			return p;
-		} else {
-			Node repl = max(curr.left);
-			curr.key = repl.key;
-			curr.value = repl.value;
-			delete(repl);
-			return curr;
-		}
-	}
-
-	Node rotateLeft(Node old) {
-		if (old.right != null) {
-			Node newRoot = old.right;
-			old.right = newRoot.left;
-			if (old.right != null)
-				old.right.parent = old;
-
-			newRoot.parent = old.parent;
-			if (old.parent != null) {
-				if (old.parent.left == old)
-					old.parent.left = newRoot;
-				if (old.parent.right == old)
-					old.parent.right = newRoot;
-			}
-			newRoot.left = old;
-			old.parent = newRoot;
-
-			return newRoot;
+	
+	public V get(K key) {
+		if(contains(root, key)){
+			root = splay(root, key);
+			return root.value;
 		}
 		return null;
 	}
+	
+	public int size() { return size(root); }
+	
+	public static <K extends Comparable<K>, V> SplayTree<K,V> merge(SplayTree<K,V> t1, SplayTree<K,V> t2){
+	}
+	
+	public static <K extends Comparable<K>, V> SplayTree<K,V>[] split(SplayTree<K,V> t, K key){
+	}
+	
+	private Node splay(Node n, K key){
+		
+	}
+	
+	private Node delete(Node n, K key){
+		
+	}
+	
+	private int size(Node n) {
+		if (n == null) return 0;
+		return 1 + size(n.left) + size(n.right);
+	}
 
-	Node rotateRight(Node old) {
-		if (old.left != null) {
-			Node newRoot = old.left;
-			old.left = newRoot.right;
-			if (old.left != null)
-				old.left.parent = old;
+	private boolean contains(Node n, K key){
+		if(n == null) return false;
+		if( key.compareTo(n.key) < 0) return contains(n.left, key);
+		if( key.compareTo(n.key) > 0) return contains(n.right, key);
+		return true;
+	}
+	
+	private Node insert(Node n, Node k){
+		
+	}
 
-			newRoot.parent = old.parent;
-			if (old.parent != null) {
-				if (old.parent.left == old)
-					old.parent.left = newRoot;
-				if (old.parent.right == old)
-					old.parent.right = newRoot;
-			}
-			newRoot.right = old;
-			old.parent = newRoot;
+	private Node min(Node n) {
+		while(n.left != null) n = n.left;
+		return n;
+	}
 
-			return newRoot;
-		}
-		return null;
+	private Node max(Node n) {
+		while(n.right != null) n = n.right;
+		return n;
+	}
+	
+	private K successor(Node n, K key){
+		
+	}
+	
+	private K predecessor(Node n, K key){
+		
+	}
+
+	private Node rotateLeft(Node n) {
+		if (n.right == null) return n;
+		Node r = n.right;
+		n.right = r.left;
+		r.left = n;
+		return r;
+	}
+
+	private Node rotateRight(Node n) {
+		if (n.left == null) return n;
+		Node r = n.left;
+		n.left = r.right;
+		r.right = n;
+		return r;
 	}
 }
