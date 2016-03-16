@@ -4,28 +4,21 @@ import java.util.Random;
 
 // Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 12:53:38 PM 
 
-public class Treap {
+public class Treap<X extends Comparable<X>, Y extends Comparable<Y>> {
 
-	private int key;
-	private float priority;
-	private Treap left, right;
-	
-	public Treap(){}
-	public Treap(int key, float priority){
-		this(key, priority, null, null);
-	}
-	public Treap(int key, float priority, Treap left, Treap right){
-		this.key = key;
-		this.priority = priority;
-		this.left = left;
-		this.right = right;
+	class Node {
+		X x; Y y;
+		Node left, right;
+		Node(X xx, Y yy, Node l, Node r){ x = xx; y = yy; left = l; right = r; }
 	}
 	
-	public static Treap merge(Treap l, Treap r){
-		if (l == null) return r;
-		if (r == null) return l;
-		if (l.priority < r.priority){
-			return new Treap(r.key, r.priority, l, merge(l.right, r.right));
+	Node root;
+	
+	public static <X extends Comparable<X>, Y extends Comparable<Y>> Treap<X,Y> merge(Treap<X,Y> t1, Treap<X,Y> t2){
+		if (t1 == null) return t2;
+		if (t2 == null) return t1;
+		if (t1.root.y.compareTo(t2.root.y) < 0){
+			return new Treap<X,Y>(t2.root.x, t2.root.y, t1, merge(t1.root.right, t2.root.right));
 		} else {
 			return new Treap(l.key, l.priority, merge(l.left, r.left), r);
 		}
@@ -37,13 +30,6 @@ public class Treap {
 		} else {
 			
 		}
-	}
-
-	
-
-	public static void main(String[] args) {
-		Treap t = new Treap();
-
 	}
 
 }
