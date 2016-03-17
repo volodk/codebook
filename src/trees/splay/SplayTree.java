@@ -11,7 +11,8 @@ public class SplayTree<K extends Comparable<K>, V> {
 		Node(K k, V v){ key = k; value = v; }
 	}
 	
-	Node root;
+	private Node root;
+	private SplayTree(Node root){ this.root = root;}
 	
 	public void insert(K key, V value) {
 		root = insert(root, new Node(key, value));
@@ -35,7 +36,7 @@ public class SplayTree<K extends Comparable<K>, V> {
 	}
 	
 	public V get(K key) {
-		if(contains(root, key)){
+		if (contains(root, key)){
 			root = splay(root, key);
 			return root.value;
 		}
@@ -44,10 +45,22 @@ public class SplayTree<K extends Comparable<K>, V> {
 	
 	public int size() { return size(root); }
 	
-	public static <K extends Comparable<K>, V> SplayTree<K,V> merge(SplayTree<K,V> t1, SplayTree<K,V> t2){
+	public SplayTree<K,V> merge(SplayTree<K,V> t){
+		return new SplayTree<K,V>(merge(root, t.root));
 	}
 	
-	public static <K extends Comparable<K>, V> SplayTree<K,V>[] split(SplayTree<K,V> t, K key){
+	@SuppressWarnings("unchecked")
+	public  SplayTree<K,V>[] split(K key){
+		Node[] pair = split(root, key);
+		return (SplayTree<K,V>[]) new SplayTree[]{new SplayTree<>(pair[0]), new SplayTree<>(pair[1])};
+	}
+	
+	private Node merge(Node t1, Node t2){
+		
+	}
+	
+	private Node[] split(Node n, K key){
+		
 	}
 	
 	private Node splay(Node n, K key){
