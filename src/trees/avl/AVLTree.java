@@ -5,17 +5,32 @@ package trees.avl;
 public class AVLTree<K extends Comparable<? super K>, V> {
 
 	class Node {
-		K key; V value; int ht;
+		int ht;
+		K key; V value; 
 		Node left, right;
 		Node(K k, V v){ key = k; value = v; }
 		Node(K k, V v, int h, Node l, Node r){ key = k; value = v; ht = h; left = l; right = r;}
 	}
 	
 	private Node root;
+	
 	private AVLTree(Node root){ this.root = root; }
 
 	public void insert(K key, V value){
 		root = insert(root, key, value);
+	}
+	
+	private Node insert(Node n, K key, V value) {
+		if (n == null) return new Node(key, value);
+		if (key.compareTo(n.key) < 0) {
+			n.left = insert(n.left, key, value);
+		} else if (key.compareTo(n.key) > 0) {
+			n.right = insert(n.right, key, value);
+		} else {
+			n.value = value;
+		}
+		n.ht = height(n);
+		return balance(n);
 	}
 
 	public void delete(K key) {
@@ -24,6 +39,27 @@ public class AVLTree<K extends Comparable<? super K>, V> {
 			if (n.left == null || n.right == null ) root = delete(root, key);
 			else root = delete(root, key, successor(root, key));
 		}
+	}
+	
+	private Node delete(Node n, K key) {
+		if (key.compareTo(n.key) < 0) n.left = delete(n.left, key);
+		if (key.compareTo(n.key) > 0) n.right = delete(n.right, key);
+		if (key.compareTo(n.key) == 0){
+			if (n.left == null && n.right == null) return null;
+			if (n.left == null) return n.right;
+			if (n.right == null) return n.left;
+		}
+		return n;
+	}
+	
+	private Node delete(Node n, K key, Node succ) {
+		if (key.compareTo(n.key) < 0) n.left = delete(n.left, key, succ);
+		if (key.compareTo(n.key) > 0) n.right = delete(n.right, key, succ);
+		if (key.compareTo(n.key) == 0){
+			n.key = succ.key; n.value = succ.value;
+			delete(root, succ);
+		}
+		return n;
 	}
 	
 	public boolean contains(K key){
@@ -82,42 +118,33 @@ public class AVLTree<K extends Comparable<? super K>, V> {
 			return rotateRight(n);
 		}
 	}
-
-	private Node insert(Node n, K key, V value) {
-		if (n == null) return new Node(key, value);
-		if (key.compareTo(n.key) < 0) {
-			n.left = insert(n.left, key, value);
-		} else if (key.compareTo(n.key) > 0) {
-			n.right = insert(n.right, key, value);
-		} else {
-			n.value = value;
-		}
-		n.ht = height(n);
-		return balance(n);
-	}
 	
 	private Node successor(Node n, K key){
-		
+		if (n.right != null) return min(n.right);
+		Node p = parent(root, n);
+		return (p.right == n) ? null : p;
 	}
 	
 	private Node predecessor(Node n, K key){
-		
+		if (n.left != null) return max(n.left);
+		Node p = parent(root, n);
+		return (p.left == n) ? null : p;
 	}
-
-	private Node delete(Node n, K key) {
-		if (key.compareTo(n.key) == 0){
-			if (n.left == null && n.right == null) return null;
-			if (n.left == null) return n.right;
-			if (n.right == null) return n.left;
-		}
-		if (key.compareTo(n.key) < 0) n.left = delete(n.left, key);
-		if (key.compareTo(n.key) > 0) n.right = delete(n.right, key);
+	
+	private Node parent(Node p, Node n){
+		if (p == n) return null;
+		if (p.left == n || p.right == n) return p;
+		return (n.key.compareTo(p.key) < 0) ? parent(p.left, n) : parent(p.right, n);
+	}
+	
+	private Node min(Node n){
+		while (n.left != null) n = n.left;
 		return n;
 	}
 	
-	private Node delete(Node n, K key, Node succ) {
-		if (key.compareTo(n.key) < 0) n.left = delete(n.left, key, succ);
-		if (key.compareTo(n.key) > 0) n.right = delete(n.right, key, succ);
+	private Node max(Node n){
+		while (n.right != null) n = n.right;
+		return n;
 	}
 	
 	private Node rotateLeft(Node n) {
