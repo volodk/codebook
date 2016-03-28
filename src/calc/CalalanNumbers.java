@@ -2,7 +2,7 @@ package calc;
 
 import java.util.Arrays;
 
-// volodymyr_krasnikov1 <vkrasnikov@gmail.com> 2:21:41 PM 
+// Volodymyr Krasnikov <vkrasnikov@gmail.com> 2:21:41 PM 
 
 //  https://en.wikipedia.org/wiki/Catalan_number
 

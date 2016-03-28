@@ -1,6 +1,6 @@
 package graphs;
 
-// Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 2:34:36 PM 
+// Volodymyr Krasnikov <vkrasnikov@gmail.com> 2:34:36 PM 
 
 class WeightedEdge extends Edge implements Comparable<WeightedEdge> {
 

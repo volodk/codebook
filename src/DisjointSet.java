@@ -1,6 +1,6 @@
 import java.util.Arrays;
 
-// Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 1:27:47 PM 
+// Volodymyr Krasnikov <vkrasnikov@gmail.com> 1:27:47 PM 
 
 public class DisjointSet {
 

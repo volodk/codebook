@@ -23,7 +23,7 @@ public class AVLTreeTest {
 		int[] arr = {5,2,7,1,3,4,0};
 		
 		for(int a : arr){
-			tree.insert(a, a);
+			tree.put(a, a);
 		}
 		
 		assertTrue(tree.isBST(tree.root));
@@ -41,7 +41,7 @@ public class AVLTreeTest {
 		int N = 1000000;
 		
 		for(int i = 0; i < N; i++)
-			tree.insert( rnd.nextInt(N), 1);
+			tree.put( rnd.nextInt(N), 1);
 		
 		assertTrue(tree.isBST(tree.root));
 		assertTrue(tree.isBalanced(tree.root));

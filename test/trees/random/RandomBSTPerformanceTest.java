@@ -6,7 +6,7 @@ import java.util.Random;
 
 import org.junit.Test;
 
-// Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 2:44:35 PM 
+// Volodymyr Krasnikov <vkrasnikov@gmail.com> 2:44:35 PM 
 
 public class RandomBSTPerformanceTest {
 

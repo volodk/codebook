@@ -2,7 +2,7 @@ package permutations;
 
 import java.util.Arrays;
 
-// Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 1:08:45 PM 
+// Volodymyr Krasnikov <vkrasnikov@gmail.com> 1:08:45 PM 
 
 public class Lex {
 

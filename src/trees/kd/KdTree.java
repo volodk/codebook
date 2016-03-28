@@ -1,5 +1,5 @@
 package trees.kd;
-// Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 3:46:55 PM 
+// Volodymyr Krasnikov <vkrasnikov@gmail.com> 3:46:55 PM 
 
 /**
  * In computer science, a k-d tree (short for k-dimensional tree) is a

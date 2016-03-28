@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import trees.splay.SplayTree;
 
-// Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 2:44:35 PM 
+// Volodymyr Krasnikov <vkrasnikov@gmail.com> 2:44:35 PM 
 
 public class SplayTreePerformanceTest {
 
@@ -45,7 +45,7 @@ public class SplayTreePerformanceTest {
             
             long start_t = System.currentTimeMillis();
             for( int i = 0; i < Queries; i++){
-                assertNotNull( splayTree.find( sample[ rnd.nextInt(sample.length) ] ) );
+                assertNotNull( splayTree.get( sample[ rnd.nextInt(sample.length) ] ) );
             }
             long end_t = System.currentTimeMillis();
             System.out.format("%d %d\n", size, end_t - start_t );

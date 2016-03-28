@@ -1,4 +1,4 @@
-// Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 4:52:22 PM 
+// Volodymyr Krasnikov <vkrasnikov@gmail.com> 4:52:22 PM 
 
 public class SuffixArray {
 

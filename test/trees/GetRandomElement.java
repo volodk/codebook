@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
 
-// Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 12:41:09 PM 
+// Volodymyr Krasnikov <vkrasnikov@gmail.com> 12:41:09 PM 
 
 public class GetRandomElement {
 

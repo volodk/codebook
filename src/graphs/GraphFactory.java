@@ -1,6 +1,6 @@
 package graphs;
 
-// Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 6:03:11 PM 
+// Volodymyr Krasnikov <vkrasnikov@gmail.com> 6:03:11 PM 
 
 public interface GraphFactory {
 

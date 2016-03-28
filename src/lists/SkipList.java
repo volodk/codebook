@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-// Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 5:39:15 PM 
+// Volodymyr Krasnikov <vkrasnikov@gmail.com> 5:39:15 PM 
 
 public class SkipList {
 

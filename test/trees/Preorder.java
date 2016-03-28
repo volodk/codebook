@@ -1,6 +1,6 @@
 package trees;
 
-// Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 12:52:24 PM 
+// Volodymyr Krasnikov <vkrasnikov@gmail.com> 12:52:24 PM 
 
 public class Preorder {
 

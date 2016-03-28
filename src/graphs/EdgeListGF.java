@@ -1,6 +1,6 @@
 package graphs;
 
-// Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 6:27:37 PM 
+// Volodymyr Krasnikov <vkrasnikov@gmail.com> 6:27:37 PM 
 
 public class EdgeListGF implements GraphFactory {
 

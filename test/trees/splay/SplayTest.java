@@ -35,13 +35,13 @@ public class SplayTest {
     
     @Test
     public void find() {
-        assertEquals(7, (int)splay.find(7));
+        assertEquals(7, (int)splay.get(7));
         assertTrue( splay.isBST( splay.root) );
     }
     
     @Test
     public void findNull() {
-        assertNull(splay.find(8));
+        assertNull(splay.get(8));
         assertTrue( splay.isBST( splay.root) );
     }
     
@@ -62,7 +62,7 @@ public class SplayTest {
         assertTrue( splay.size() > 0);
         
         for(int a : arr){
-            int out = splay.find(a);
+            int out = splay.get(a);
             assertEquals(a, out);
         }
     }

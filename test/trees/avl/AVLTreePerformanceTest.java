@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import trees.avl.AVLTree;
 
-// Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 2:44:35 PM 
+// Volodymyr Krasnikov <vkrasnikov@gmail.com> 2:44:35 PM 
 
 public class AVLTreePerformanceTest {
 
@@ -22,7 +22,7 @@ public class AVLTreePerformanceTest {
     public void constructSplayTree(int[] arr, int size) {
         avl = new AVLTree<Integer, Integer>();
         for( int a : arr ){
-            avl.insert(a, a);
+            avl.put(a, a);
         }
     }
     
@@ -45,7 +45,7 @@ public class AVLTreePerformanceTest {
             
             long start_t = System.currentTimeMillis();
             for( int i = 0; i < Queries; i++){
-                assertNotNull( avl.find( sample[ rnd.nextInt(sample.length) ] ) );
+                assertNotNull( avl.get( sample[ rnd.nextInt(sample.length) ] ) );
             }
             long end_t = System.currentTimeMillis();
             System.out.format("%d %d\n", size, end_t - start_t );

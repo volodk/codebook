@@ -2,7 +2,7 @@ package arrays;
 
 import java.util.Arrays;
 
-// Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 1:36:39 PM 
+// Volodymyr Krasnikov <vkrasnikov@gmail.com> 1:36:39 PM 
 
 public class Rotate {
 

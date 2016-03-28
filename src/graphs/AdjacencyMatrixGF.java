@@ -1,6 +1,6 @@
 package graphs;
 
-// Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 6:26:55 PM 
+// Volodymyr Krasnikov <vkrasnikov@gmail.com> 6:26:55 PM 
 
 public class AdjacencyMatrixGF implements GraphFactory {
 

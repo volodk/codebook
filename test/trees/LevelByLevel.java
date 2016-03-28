@@ -3,7 +3,7 @@ package trees;
 import java.util.LinkedList;
 import java.util.Queue;
 
-// Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 12:52:24 PM 
+// Volodymyr Krasnikov <vkrasnikov@gmail.com> 12:52:24 PM 
 
 public class LevelByLevel {
 

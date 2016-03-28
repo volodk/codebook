@@ -2,7 +2,7 @@ package trees.range;
 
 import java.util.List;
 
-// Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 12:16:25 PM 
+// Volodymyr Krasnikov <vkrasnikov@gmail.com> 12:16:25 PM 
 
 /**
  * In computer science, a range tree is an ordered tree data structure to hold 

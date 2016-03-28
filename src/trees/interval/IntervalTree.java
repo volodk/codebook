@@ -2,7 +2,7 @@ package trees.interval;
 
 import java.util.List;
 
-// Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 4:51:53 PM 
+// Volodymyr Krasnikov <vkrasnikov@gmail.com> 4:51:53 PM 
 
 /**
  * In computer science, an interval tree is an ordered tree data structure to

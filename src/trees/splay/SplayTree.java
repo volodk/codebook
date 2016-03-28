@@ -12,97 +12,116 @@ public class SplayTree<K extends Comparable<K>, V> {
 	}
 	
 	private Node root;
-	private SplayTree(Node root){ this.root = root;}
 	
-	public void insert(K key, V value) {
-		root = insert(root, new Node(key, value));
-	}
+	private SplayTree(Node root){ this.root = root; }
 	
-	public void delete(K key) {
-		if (contains(root, key)) {
-			root = splay(root, predecessor(root, key));
-			root = delete(root, key);
-		}
+	public V get(K key){
+		root = splay(root, key);
+		return key.compareTo(root.key) == 0 ? root.value : null;
 	}
 	
 	public boolean contains(K key){
-		if (contains(root, key)) {
-			root = splay(root, key);
-			return true;
-		} else {
-			root = splay(root, successor(root, key));
-			return false;
-		}
-	}
-	
-	public V get(K key) {
-		if (contains(root, key)){
-			root = splay(root, key);
-			return root.value;
-		}
-		return null;
-	}
-	
-	public int size() { return size(root); }
-	
-	public SplayTree<K,V> merge(SplayTree<K,V> t){
-		return new SplayTree<K,V>(merge(root, t.root));
-	}
-	
-	@SuppressWarnings("unchecked")
-	public  SplayTree<K,V>[] split(K key){
-		Node[] pair = split(root, key);
-		return (SplayTree<K,V>[]) new SplayTree[]{new SplayTree<>(pair[0]), new SplayTree<>(pair[1])};
-	}
-	
-	private Node merge(Node t1, Node t2){
-		
-	}
-	
-	private Node[] split(Node n, K key){
-		
+		root = splay(root, key);
+		return key.compareTo(root.key) == 0;
 	}
 	
 	private Node splay(Node n, K key){
-		
+		if (n == null) return null;
+		if (key.compareTo(n.key) < 0) {
+			if (n.left != null) n.left = splay(n.left, key);
+			return rotateRight(n);
+		} else if (key.compareTo(n.key) > 0){
+			if (n.right != null) n.right = splay(n.right, key);
+			return rotateLeft(n);
+		} else {
+			return n;
+		}
+	}
+
+	public void insert(K key, V value){
+		root = insert(root, key, value);
+	}
+	
+	private Node insert(Node n, K key, V value) {
+		if (n == null) return new Node(key, value);
+		if (key.compareTo(n.key) < 0){
+			n.left = insert(n.left, key, value);
+			return rotateRight(n);
+		} else if (key.compareTo(n.key) > 0) {
+			n.right = insert(n.right, key, value);
+			return rotateLeft(n);
+		} else {
+			n.value = value;
+			return n;
+		}
+	}
+	
+	public void delete(K key){
+		root = delete(root, key);
 	}
 	
 	private Node delete(Node n, K key){
-		
+		if (n == null) return null;
+		if (key.compareTo(n.key) < 0) { 
+			if (n.left != null) n.left = delete(n.left, key);
+			return rotateRight(n);
+		} else if (key.compareTo(n.key) > 0) {
+			if (n.right != null) n.right = delete(n.right, key);
+			return rotateLeft(n);
+		} else {
+			if (n.left == null) return n.right;
+			else if (n.right == null) return n.left;
+			else {
+				Node succ = successor(n);
+				n.key = succ.key; n.value = succ.value;
+				n.right = delete(n.right, succ.key);
+			}
+			return n;
+		}
 	}
 	
-	private int size(Node n) {
-		if (n == null) return 0;
-		return 1 + size(n.left) + size(n.right);
-	}
-
-	private boolean contains(Node n, K key){
-		if(n == null) return false;
-		if( key.compareTo(n.key) < 0) return contains(n.left, key);
-		if( key.compareTo(n.key) > 0) return contains(n.right, key);
-		return true;
-	}
-	
-	private Node insert(Node n, Node k){
-		
-	}
-
-	private Node min(Node n) {
-		while(n.left != null) n = n.left;
-		return n;
-	}
-
-	private Node max(Node n) {
-		while(n.right != null) n = n.right;
+	private Node successor(Node n){
+		if (n == null || n.right == null) return null;
+		n = n.right; while (n.left != null) n = n.left;
 		return n;
 	}
 	
-	private K successor(Node n, K key){
-		
+	@SuppressWarnings("unchecked")
+	public SplayTree<K, V>[] split(K key){
+		root = splay(root, key);
+		SplayTree<K, V> left = new SplayTree<>(root.left);
+		SplayTree<K, V> right = new SplayTree<>(root.right);
+		root = null;
+		return (SplayTree<K,V>[]) new SplayTree[]{left, right};
 	}
 	
-	private K predecessor(Node n, K key){
-		
+	public void join(SplayTree<K,V> t){
+		root = max(root);
+		root.right = t.root;
+	}
+
+	public V max(){
+		return root == null ? null : (root = max(root)).value; 
+	}
+	
+	private Node max(Node n){
+		if (n.right != null){
+			n.right = max(n.right);
+			return rotateLeft(n);
+		}
+		return n;
+	}
+	
+	public V min(){
+		return root == null ? null : (root = min(root)).value;
+	}
+	
+	private Node min(Node n){
+		if (n.left != null){
+			n.left = max(n.left);
+			return rotateRight(n);
+		}
+		return n;
 	}
 
 	private Node rotateLeft(Node n) {

@@ -1,6 +1,6 @@
 package dp;
 
-// Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 12:25:35 PM 
+// Volodymyr Krasnikov <vkrasnikov@gmail.com> 12:25:35 PM 
 
 public class Fibonacci {
 	

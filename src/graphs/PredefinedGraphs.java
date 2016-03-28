@@ -1,6 +1,6 @@
 package graphs;
 
-// Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 3:20:40 PM 
+// Volodymyr Krasnikov <vkrasnikov@gmail.com> 3:20:40 PM 
 
 public class PredefinedGraphs {
 

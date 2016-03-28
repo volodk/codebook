@@ -1,6 +1,6 @@
 package graphs;
 
-// Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 6:16:50 PM 
+// Volodymyr Krasnikov <vkrasnikov@gmail.com> 6:16:50 PM 
 
 public interface WeightedGraph extends Graph {
 	void addEdge(int from, int to, int w);

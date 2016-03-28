@@ -3,7 +3,7 @@ package arrays;
 import java.util.Arrays;
 import java.util.Random;
 
-// Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 3:27:33 PM 
+// Volodymyr Krasnikov <vkrasnikov@gmail.com> 3:27:33 PM 
 
 public class RandomSample {
 

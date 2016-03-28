@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-// Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 5:38:23 PM 
+// Volodymyr Krasnikov <vkrasnikov@gmail.com> 5:38:23 PM 
 
 /**
  * In computer science, a segment tree is a tree data structure for storing

@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-// Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 12:02:04 PM 
+// Volodymyr Krasnikov <vkrasnikov@gmail.com> 12:02:04 PM 
 
 public class EdgeListDirectedWeightedGraph implements DirectedWeightedGraph {
 

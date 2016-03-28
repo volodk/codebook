@@ -1,6 +1,6 @@
 package calc;
 
-// Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 12:11:41 PM 
+// Volodymyr Krasnikov <vkrasnikov@gmail.com> 12:11:41 PM 
 
 public class SQRT {
 

@@ -1,6 +1,6 @@
 package trees.treap;
 
-// Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 12:53:38 PM 
+// Volodymyr Krasnikov <vkrasnikov@gmail.com> 12:53:38 PM 
 
 public class Treap<X extends Comparable<X>, Y extends Comparable<Y>> {
 

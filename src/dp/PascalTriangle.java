@@ -1,6 +1,6 @@
 package dp;
 
-// Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 12:27:50 PM 
+// Volodymyr Krasnikov <vkrasnikov@gmail.com> 12:27:50 PM 
 
 public class PascalTriangle {
 

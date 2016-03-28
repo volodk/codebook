@@ -1,6 +1,6 @@
 package dp;
 
-// Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 12:24:39 PM 
+// Volodymyr Krasnikov <vkrasnikov@gmail.com> 12:24:39 PM 
 
 public class LongestIncreasingSequence {
 

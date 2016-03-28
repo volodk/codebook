@@ -4,7 +4,7 @@ import java.util.Comparator;
 import java.util.NoSuchElementException;
 import java.util.Random;
 
-// Volodymyr_Krasnikov1 <vkrasnikov@gmail.com> 12:35:43 PM 
+// Volodymyr Krasnikov <vkrasnikov@gmail.com> 12:35:43 PM 
 
 @SuppressWarnings("unchecked")
 public class Heaps {
