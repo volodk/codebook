@@ -1,30 +1,31 @@
 package trees.bit;
 
-// Volodymyr Krasnikov <vkrasnikov@gmail.com> 12:16:38 PM 
-
-public class LongBIT { // a.k.a Fenwick tree
+public class LongBIT {
 
 	private long N;
 	private long[] bit;
 
 	public LongBIT(int N) {
-		bit = new long[N];
+		bit = new long[N + 1];
 	}
 
-	public long sum(int k) {
+	public long get(int i) {
 		int ans = 0;
-		for (; k >= 0; k = (k & (k + 1)) - 1)
-			ans += bit[k];
+		while (i > 0){
+			ans += bit[i];
+			i -= (i & -i);
+		}
 		return ans;
 	}
-
-	public long sum(int i, int j) {
-		return sum(j) - sum(i - 1);
+	
+	public void set(int i, long d) {
+		while (i <= N){
+			bit[i] += d;
+			i += i & -i; 
+		}
 	}
 
-	public void update(int k, long delta) {
-		for (; k < N; k = k | (k + 1))
-			bit[k] += delta;
+	public long get(int i, int j) {
+		return get(j) - get(i);
 	}
-
 }

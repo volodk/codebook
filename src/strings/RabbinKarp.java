@@ -1,73 +1,63 @@
 package strings;
 
 public class RabbinKarp {
-
-	public static void main(String[] args) {
-
-		int B = 'z' - 'a' + 1;
-		int M = 46337;
-
-		char[] str = "aaaabaaaaabbaaaa".toCharArray();
-		char[] p = "aa".toCharArray();
-
-		int L = p.length;
-
-		int H = hash(p, 0, L, M, B);
-		int C = hash(str, 0, L, M, B);
-
+	
+	private static final int BASE = 'z' - 'a' + 1;
+	private static final int MOD = 104729;
+	
+	public static int indexOf(String text, String pattern){
+		int L = pattern.length();
+		int H = hash(pattern, 0, L), C = hash(text, 0, L);
 		int offset = 0;
-
 		do {
 			if (C == H) {
-				System.out.println(offset);
+				return offset;
 			}
-			offset += 1;
-			if (offset <= str.length - L) {
-				C = shift(str, C, offset, L, M, B);
+			++offset;
+			if (offset <= text.length() - L) {
+				C = rollingHash(text, C, offset, L);
 			}
-		} while (offset <= str.length - L);
-
+		} while (offset <= text.length() - L);
+		return -1;
 	}
 
-	static int shift(char[] str, int H, int i, int m, int M, int B) {
-		int tmp = modmul(str[i - 1], modpow(B, m - 1, M), M);
-		return add(modmul((H - tmp), B, M), str[i + m - 1], M);
+	private static int rollingHash(String str, int hash, int i, int m) {
+		int tmp = modmul(str.charAt(i-1), modpow(BASE, m - 1, MOD), MOD);
+		return modadd(modmul((hash - tmp), BASE, MOD), str.charAt(i + m - 1), MOD);
 	}
 
-	static int hash(char[] str, int i, int m, int M, int B) {
-		int H = 0;
+	private static int hash(String str, int i, int m) {
+		int hash = 0;
 		for (int k = 0; k < m; k++) {
-			int H1 = modmul(str[i + k], modpow(B, m - k - 1, M), M);
-			H = add(H, H1, M);
+			int H1 = modmul(str.charAt(i + k), modpow(BASE, m - k - 1, MOD), MOD);
+			hash = modadd(hash, H1, MOD);
 		}
-		return H;
+		return hash;
 	}
 
-	private static int add(int a, int b, int M) {
+	private static int modadd(int a, int b, int M) {
 		return (a % M + b % M) % M;
 	}
 
-	static int modmul(int a, int b, int M) {
-		int res = 0;
+	private static int modmul(int a, int b, int M) {
+		int ans = 0;
 		while (a > 0) {
-			if ((a & 1) == 1)
-				res = (res + b) % M;
+			if ((a & 1) == 1) ans = (ans + b) % M;
 			a >>= 1;
 			b = (b << 1) % M;
 		}
-		return res;
+		return ans;
 	}
 
-	static int modpow(int a, int n, int M) {
+	private static int modpow(int a, int n, int M) {
+		int ans = 1;
 		a %= M;
-		int result = 1;
 		while (n > 0) {
-			if ((n & 1) == 1)
-				result = (result * a) % M;
+			if ((n & 1) == 1) ans = (ans * a) % M;
 			a = (a * a) % M;
 			n >>= 1;
 		}
-		return result;
+		return ans;
 	}
 
 }

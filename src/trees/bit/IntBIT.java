@@ -1,8 +1,6 @@
 package trees.bit;
 
-// Volodymyr Krasnikov <vkrasnikov@gmail.com> 12:16:38 PM 
-
-public class IntBIT { // a.k.a Fenwick tree
+public class IntBIT {
 
 	private int N;
 	private int[] bit;
