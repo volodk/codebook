@@ -30,11 +30,17 @@ public class Treap<X extends Comparable<X>, Y extends Comparable<Y>> {
 	@SuppressWarnings("unchecked")
 	public Treap<X,Y>[] split(X x){
 		Node[] pair = split(root, x);
-		return (Treap<X,Y>[]) new Treap[]{new Treap<>(pair[0]), new Treap<>(pair[1])};
+		Treap<X, Y> left = new Treap<>(pair[0]);
+		Treap<X, Y> right = new Treap<>(pair[1]);
+		return (Treap<X,Y>[]) new Treap[]{left, right};
 	}
 
 	private Node[] split(Node n, X x) {
-		// TODO Auto-generated method stub
+		if ( n.x.compareTo(x) < 0 ){
+			
+		} else {
+			
+		}
 		return null;
 	}
 
