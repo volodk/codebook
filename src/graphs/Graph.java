@@ -1,18 +1,8 @@
 package graphs;
 
-// Volodymyr Krasnikov <vkrasnikov@gmail.com> 6:16:38 PM 
+import java.util.List;
 
 public interface Graph {
-
-	int V();
-
-	int E();
-
-	int[] adjacentTo(int v);
-
-	boolean hasEdge(int from, int to);
-
-	Graph reverse();
-
-	void print();
+	List<Vertex> vertices();
+	List<DirectedEdge> edges();
 }

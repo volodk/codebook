@@ -1,22 +1,8 @@
 package permutations;
 
-import java.util.Arrays;
-
 // Volodymyr Krasnikov <vkrasnikov@gmail.com> 1:08:45 PM 
 
 public class Lex {
-
-	public static void main(String[] args) {
-
-		int[] last = { 5, 4, 3, 2, 1 };
-		int[] p = { 1, 2, 3, 4, 5 };
-
-		do {
-			System.out.println(Arrays.toString(p));
-			next_permutation(p);
-		} while (!eq(last, p));
-
-	}
 
 	static void next_permutation(int[] p) {
 

@@ -1,10 +1,10 @@
 package sorts;
 
-import heap.Heaps;
-import heap.Heaps.Heap;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import heaps.Heaps;
+import heaps.Heaps.Heap;
 
 public class HeapSort {
 

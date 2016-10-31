@@ -112,45 +112,4 @@ public class Hashtable<K, V> {
 		size = 0;
 	}
 
-	public static void main(String[] args) {
-
-		Hashtable<Integer, String> map = new Hashtable<>();
-
-		map.put(0, "a");
-		map.put(1, "b");
-		map.put(2, "c");
-
-		System.out.println(map.size());
-
-		map.remove(2);
-
-		System.out.println(map.size());
-
-		System.out.println(map.contains(1));
-		System.out.println(map.contains(2));
-
-		map.put(0, "replace");
-		System.out.println(map.get(0));
-
-		map.clear();
-		System.out.println(map.size());
-
-		for (int i = 0; i < 10000; i++) {
-			map.put(i, String.valueOf(i));
-		}
-
-		System.out.println(map.size());
-
-		for (Entry e : map.table) {
-			int count = 0;
-			for (Entry ee = e; ee != null; ee = ee.next) {
-				count++;
-			}
-			if (count > 1) {
-				System.out.println(count);
-			}
-		}
-
-	}
-
 }

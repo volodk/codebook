@@ -6,18 +6,6 @@ import java.util.Arrays;
 
 public class Antilex {
 
-	public static void main(String[] args) {
-
-		int[] last = { 3, 2, 1 };
-		int[] p = { 1, 2, 3 };
-
-		do {
-			System.out.println(Arrays.toString(p));
-			next_permutation(p);
-		} while (!eq(last, p));
-
-	}
-
 	static void next_permutation(int[] p) {
 
 	}

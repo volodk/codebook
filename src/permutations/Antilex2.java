@@ -1,20 +1,8 @@
 package permutations;
 
-import java.util.Arrays;
-
 // Volodymyr Krasnikov <vkrasnikov@gmail.com> 6:53:48 PM 
 
 public class Antilex2 {
-
-	public static void main(String[] args) {
-
-		char[] p = { 'a', 'b', 'c', 'd' };
-
-		int m = p.length;
-
-		antilex(p, m - 1);
-
-	}
 
 	static void antilex(char[] p, int m) {
 		if (m == 0) {
