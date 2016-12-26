@@ -1,14 +1,10 @@
 package ds.graph;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-public interface Graph {
+public class Graph {
 
-	int vertices();
-
-	boolean hasPath(int from, int to);
-
-	List<Edge> edges(int from);
-
-	List<Edge> edges();
 }
