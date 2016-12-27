@@ -18,7 +18,7 @@ import java.util.List;
  * left subtree. A range tree on a set of points in d-dimensions is a
  * recursively defined multi-level binary search tree. Each level of the data
  * structure is a binary search tree on one of the d-dimensions. The first level
- * is a binary search tree on the first of the d-coordinates. Each vertex v of
+ * is a binary search tree on the first of the d-coordinates. Each setVertexValue v of
  * this tree contains an associated structure that is a (d-1)-dimensional range
  * tree on the last (d-1)-coordinates of the points stored in the subtree of v.
  * 

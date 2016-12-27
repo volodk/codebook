@@ -4,19 +4,17 @@ import java.util.*;
 
 public class Graph<X,Y> {
 
-    public static class IntGraph extends Graph<Integer, Integer> {}
-    public static class LongGraph extends Graph<Long, Long> {}
-    public static class StringGraph extends Graph<String, String> {}
-
     private int edgeCount;
     private boolean isDirected;
     private List<Set<Integer>> adjacencyList;
     private Map<Integer, X> vertexValues = new HashMap<>();
     private Map<Edge, Y> edgeValues = new HashMap<>();
 
-    private Graph() {
+    // API
+    public Graph(int vertexCount){
+        adjacencyList = new ArrayList<>(vertexCount);
+        for (int i = 0; i < vertexCount; i++) adjacencyList.add(new HashSet<>());
     }
-
     public int vertexCount(){ return adjacencyList.size(); }
     public int edgeCount(){ return edgeCount; }
     public Set<Integer> neighbors(int vertex){
@@ -42,34 +40,20 @@ public class Graph<X,Y> {
         }
     }
 
-    public static <X,Y> Builder<X,Y> builder(int vertexCount, boolean isDirected) {
-        return new Builder<>(vertexCount, isDirected);
+    // Construct API
+    public void isDirected(boolean value){
+        isDirected = value;
     }
-
-    public static class Builder<X,Y> {
-        Graph<X,Y> g = new Graph<>();
-        Builder(int vertexCount, boolean isDirected) {
-            g.isDirected = isDirected;
-            g.adjacencyList = new ArrayList<>(vertexCount);
-            for (int i = 0; i < vertexCount; i++) g.adjacencyList.add(new HashSet<>());
-        }
-        Graph<X,Y> build() {
-            return g;
-        }
-        Builder vertex(int vertex, X value){
-            g.vertexValues.put(vertex, value);
-            return this;
-        }
-        Builder edge(int from, int to) {
-            g.edgeCount++;
-            g.adjacencyList.get(from).add(to);
-            return this;
-        }
-        Builder edge(int from, int to, Y value) {
-            edge(from, to);
-            g.edgeValues.put(Edge.between(from, to), value);
-            return this;
-        }
+    public void setVertexValue(int vertex, X value){
+        vertexValues.put(vertex, value);
+    }
+    public void edge(int from, int to) {
+        edgeCount++;
+        adjacencyList.get(from).add(to);
+    }
+    public void edge(int from, int to, Y value) {
+        edge(from, to);
+        edgeValues.put(Edge.between(from, to), value);
     }
 
     private static class Edge {
@@ -92,4 +76,7 @@ public class Graph<X,Y> {
         }
     }
 
+    public static class IntGraph extends Graph<Integer, Integer> { public IntGraph(int n){super(n); } }
+    public static class LongGraph extends Graph<Long, Long> { public LongGraph(int n){super(n); } }
+    public static class StringGraph extends Graph<String, String> { public StringGraph(int n){super(n); } }
 }
