@@ -2,75 +2,79 @@ package ds.graph;
 
 import java.util.*;
 
-public class Graph<T> {
+public class Graph<X,Y> {
 
-    boolean isDirected;
+    public static class IntGraph extends Graph<Integer, Integer> {}
+    public static class LongGraph extends Graph<Long, Long> {}
+    public static class StringGraph extends Graph<String, String> {}
 
-    List<Set<Integer>> adjacencyList;
-
-    Map<Edge, T> edgeValues = new HashMap<>();
+    private int edgeCount;
+    private boolean isDirected;
+    private List<Set<Integer>> adjacencyList;
+    private Map<Integer, X> vertexValues = new HashMap<>();
+    private Map<Edge, Y> edgeValues = new HashMap<>();
 
     private Graph() {
     }
 
-    int vertexCount(){ return adjacencyList.size(); }
-
-    int edgeCount(){ return 0; }
-
-    Set<Integer> neighbors(int vertex){
+    public int vertexCount(){ return adjacencyList.size(); }
+    public int edgeCount(){ return edgeCount; }
+    public Set<Integer> neighbors(int vertex){
         return Collections.unmodifiableSet(adjacencyList.get(vertex));
     }
-
-    boolean hasPath(int from, int to){
+    public boolean hasPath(int from, int to){
         if (isDirected){
            return adjacencyList.get(from).contains(to);
         } else {
             return adjacencyList.get(from).contains(to) || adjacencyList.get(to).contains(from);
         }
     }
-
-    T edgeValue(int from, int to){
+    public X vertexValue(int vertex){
+        return vertexValues.get(vertex);
+    }
+    public Y edgeValue(int from, int to){
         if (isDirected) {
-            return edgeValues.get(Edge.of(from, to));
+            return edgeValues.get(Edge.between(from, to));
         } else {
-            T w1 = edgeValues.get(Edge.of(from, to));
-            if (w1 != null) return w1;
-            return edgeValues.get(Edge.of(to, from));
+            Y w = edgeValues.get(Edge.between(from, to));
+            if (w != null) return w;
+            return edgeValues.get(Edge.between(to, from));
         }
     }
 
-    static <T> Builder builder(int vertexCount, boolean isDirected, Class<T> edgeValueType) {
-        return new Builder<T>(vertexCount, isDirected);
+    public static <X,Y> Builder<X,Y> builder(int vertexCount, boolean isDirected) {
+        return new Builder<>(vertexCount, isDirected);
     }
 
-    static class Builder<T> {
-        Graph<T> g = new Graph<T>();
-
+    public static class Builder<X,Y> {
+        Graph<X,Y> g = new Graph<>();
         Builder(int vertexCount, boolean isDirected) {
             g.isDirected = isDirected;
             g.adjacencyList = new ArrayList<>(vertexCount);
             for (int i = 0; i < vertexCount; i++) g.adjacencyList.add(new HashSet<>());
         }
-
-        Graph<T> get() {
+        Graph<X,Y> build() {
             return g;
         }
-
+        Builder vertex(int vertex, X value){
+            g.vertexValues.put(vertex, value);
+            return this;
+        }
         Builder edge(int from, int to) {
+            g.edgeCount++;
             g.adjacencyList.get(from).add(to);
             return this;
         }
-
-        Builder edge(int from, int to, T weight) {
+        Builder edge(int from, int to, Y value) {
             edge(from, to);
-            g.edgeValues.put(Edge.of(from, to), weight);
+            g.edgeValues.put(Edge.between(from, to), value);
             return this;
         }
     }
 
     private static class Edge {
         int from, to;
-        static Edge of(int from, int to) {
+        static Edge between(int from, int to) {
             Edge e = new Edge();
             e.from = from; e.to = to;
             return e;
@@ -84,7 +88,8 @@ public class Graph<T> {
         }
         @Override
         public int hashCode() {
-            return 31 * from + 71 * to;
+            return 7907 * from + 7919 * to;
         }
     }
+
 }
