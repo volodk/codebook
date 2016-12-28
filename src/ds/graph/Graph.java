@@ -1,116 +1,94 @@
 package ds.graph;
 
-import java.util.*;
-
 public class Graph<X,Y> {
 
-    private int edgeCount;
-    private boolean isDirected;
-    private List<Set<Integer>> adjacencyList;
-    private Map<Integer, X> vertexValues = new HashMap<>();
-    private Map<Edge, Y> edgeValues = new HashMap<>();
+    private boolean directed;
+    private int vertexCount, edgeCount;
+    private java.util.List<java.util.Set<Integer>> vertices;
+    private java.util.Map<Integer, X> vertexValues = new java.util.HashMap<>();
+    private java.util.Map<Integer, java.util.Map<Integer, Y>> edges = new java.util.HashMap<>();
 
-    private Graph() {
+    public Graph(int n, boolean directed){
+        this.directed = directed;
+        vertices = new java.util.ArrayList<>(vertexCount =  n);
     }
 
-    public int vertexCount(){ return adjacencyList.size(); }
-
-    public int edgeCount(){ return edgeCount; }
-
-    public Set<Integer> neighbors(int vertex){
-        return Collections.unmodifiableSet(adjacencyList.get(vertex));
+    public Graph addEdge(int from, int to){
+        addEdge(from, to, null);
+        return this;
     }
 
-    public Set<Edge> edges(){
-        Set<Edge> edges = new HashSet<>();
-        for (int from = 0; from < vertexCount(); from++){
-            for (int to : adjacencyList.get(from)){
-                edges.add(Edge.between(from, to));
-            }
-        }
-        return Collections.unmodifiableSet(edges);
-    }
-
-    public boolean hasPath(int from, int to){
-        if (isDirected){
-            return adjacencyList.get(from).contains(to);
+    public Graph addEdge(int from, int to, Y value){
+        if(from >= vertexCount || to >= vertexCount) throw new IllegalArgumentException();
+        if (edges.containsKey(from)){
+            Y oldValue = edges.get(from).put(to, value);
+            if (oldValue == null) edgeCount++;
         } else {
-            return adjacencyList.get(from).contains(to) || adjacencyList.get(to).contains(from);
+            java.util.Map<Integer, Y> s = new java.util.HashMap<>();
+            s.put(to, value);
+            edges.put(from, s);
+            edgeCount++;
+        }
+        return this;
+    }
+
+    public Y getEdgeValue(int from, int to){
+        Y value = edges.getOrDefault(from, java.util.Collections.emptyMap()).get(to);
+        if (directed) {
+            return value;
+        } else {
+            if (value != null) return value;
+            else return edges.getOrDefault(to, java.util.Collections.emptyMap()).get(from);
         }
     }
 
-    public X vertexValue(int vertex){
+    public boolean hasEdge(int from, int to){
+        boolean hasDirectEdge = edges.getOrDefault(from, java.util.Collections.emptyMap()).containsKey(to);
+        if (directed){
+            return hasDirectEdge;
+        } else {
+            return hasDirectEdge || edges.getOrDefault(to, java.util.Collections.emptyMap()).containsKey(from);
+        }
+    }
+
+    public java.util.Set<Edge> edges(){
+        java.util.Set<Edge> allEdges = new java.util.HashSet<>();
+        for (Integer from : edges.keySet()){
+            edges.get(from).keySet().stream().map(to -> new Edge(from, to)).forEach(allEdges :: add);
+        }
+        return allEdges;
+    }
+
+    public int edgeCount(){ return edgeCount;}
+
+    public int vertexCount(){ return vertexCount; }
+
+    public java.util.Set<Integer> getAdjacentVertices(int vertex){
+        return java.util.Collections.unmodifiableSet(vertices.get(vertex));
+    }
+
+    public Graph<X,Y> setVertexValue(int vertex, X value){
+        vertexValues.put(vertex, value);
+        return this;
+    }
+
+    public X getVertexValue(int vertex){
         return vertexValues.get(vertex);
-    }
-
-    public Y edgeValue(int from, int to){
-        if (isDirected) {
-            return edgeValues.get(Edge.between(from, to));
-        } else {
-            Y w = edgeValues.get(Edge.between(from, to));
-            if (w != null) return w;
-            return edgeValues.get(Edge.between(to, from));
-        }
-    }
-
-    public static class Builder<X,Y> {
-        Graph<X,Y> g = new Graph<>();
-        Builder<X,Y> vertices(int vertexCount){
-            g.adjacencyList = new ArrayList<>(vertexCount);
-            for (int i = 0; i < vertexCount; i++) g.adjacencyList.add(new HashSet<>());
-            return this;
-        }
-        Builder<X,Y> directed(boolean isDirected){
-            g.isDirected = isDirected;
-            return this;
-        }
-        Builder<X,Y> vertex(int vertex, X value){
-            g.vertexValues.put(vertex, value);
-            return this;
-        }
-        Builder<X,Y> edge(int from, int to) {
-            g.edgeCount++;
-            g.adjacencyList.get(from).add(to);
-            return this;
-        }
-        Builder<X,Y> edge(int from, int to, Y value) {
-            edge(from, to);
-            g.edgeValues.put(Edge.between(from, to), value);
-            return this;
-        }
-        Graph<X,Y> build() {
-            return g;
-        }
     }
 
     public static class Edge {
         int from, to;
-        static Edge between(int from, int to) {
-            Edge e = new Edge();
-            e.from = from; e.to = to;
-            return e;
-        }
-        @Override
+        public Edge(int a, int b){ from = a; to = b;}
         public boolean equals(Object o) {
             if (this == o) return true;
             Edge other = (Edge) o;
             return this.from == other.from && this.to == other.to;
-
         }
-        @Override
         public int hashCode() {
             return 7907 * from + 7919 * to;
         }
-
-        @Override
         public String toString() {
             return from + "-" + to;
         }
     }
-
-    public static <X,Y> Builder<X,Y> newGraph() { return new Builder<>(); }
-    public static Builder<Integer, Integer> newIntValueGraph() { return new Builder<>(); }
-    public static Builder<Long, Long> newLongValueGraph() { return new Builder<>(); }
-    public static Builder<String, String> newStringValueGraph() { return new Builder<>(); }
-
 }
