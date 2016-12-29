@@ -1,16 +1,18 @@
 package ds.graph;
 
+import java.util.HashSet;
+
 public class Graph<X,Y> {
 
     private boolean directed;
-    private int vertexCount, edgeCount;
     private java.util.List<java.util.Set<Integer>> vertices;
     private java.util.Map<Integer, X> vertexValues = new java.util.HashMap<>();
     private java.util.Map<Integer, java.util.Map<Integer, Y>> edges = new java.util.HashMap<>();
 
-    public Graph(int n, boolean directed){
+    public Graph(int V, boolean directed){
         this.directed = directed;
-        vertices = new java.util.ArrayList<>(vertexCount =  n);
+        vertices = new java.util.ArrayList<>(V);
+        for (int i = 0; i < V; i++) vertices.add(new HashSet<>());
     }
 
     public Graph addEdge(int from, int to){
@@ -19,15 +21,16 @@ public class Graph<X,Y> {
     }
 
     public Graph addEdge(int from, int to, Y value){
-        if(from >= vertexCount || to >= vertexCount) throw new IllegalArgumentException();
+        if(from >= vertexCount() || to >= vertexCount() ) throw new IllegalArgumentException();
+
+        vertices.get(from).add(to);
+
         if (edges.containsKey(from)){
             Y oldValue = edges.get(from).put(to, value);
-            if (oldValue == null) edgeCount++;
         } else {
             java.util.Map<Integer, Y> s = new java.util.HashMap<>();
             s.put(to, value);
             edges.put(from, s);
-            edgeCount++;
         }
         return this;
     }
@@ -59,9 +62,11 @@ public class Graph<X,Y> {
         return allEdges;
     }
 
-    public int edgeCount(){ return edgeCount;}
+    public int edgeCount(){
+        return edges.values().stream().map(m -> m.size()).reduce(0, Integer :: sum);
+    }
 
-    public int vertexCount(){ return vertexCount; }
+    public int vertexCount(){ return vertices.size(); }
 
     public java.util.Set<Integer> getAdjacentVertices(int vertex){
         return java.util.Collections.unmodifiableSet(vertices.get(vertex));
