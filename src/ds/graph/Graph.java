@@ -7,10 +7,9 @@ public class Graph<X,Y> {
     private java.util.Map<Integer, X> vertexValues = new java.util.HashMap<>();
     private java.util.Map<Integer, java.util.Map<Integer, Y>> edges = new java.util.HashMap<>();
 
-    public Graph(int V, boolean directed){
-        this.directed = directed;
-        this.vertexCount = V;
-    }
+    public Graph(int V){ this.vertexCount = V; }
+
+    public Graph directed(){ this.directed = true; return this; }
 
     public Graph addEdge(int from, int to){
         addEdge(from, to, null);
