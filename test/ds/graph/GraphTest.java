@@ -17,14 +17,14 @@ public class GraphTest {
     @Test(expected = IllegalArgumentException.class)
     public void addEdgeBetweenExistingAndNonExistingVertex(){
         int V = 4;
-        Graph<Integer, Integer> g = new Graph<>(V).directed();
+        Graph g = new Graph(V).directed();
         g.addEdge(0, 100);
     }
 
     @Test
-    public void directAndBackwardEdges(){
+    public void directAndBackwardEdgesOnDirectedGraph(){
         int V = 2;
-        Graph<Integer, Integer> g = new Graph<>(V).directed();
+        Graph g = new Graph(V).directed();
         g.addEdge(0, 1);
         assertTrue(g.hasEdge(0, 1));
         assertFalse(g.hasEdge(1, 0));
@@ -34,23 +34,36 @@ public class GraphTest {
     }
 
     @Test
+    public void directAndBackwardEdgesOnUndirectedGraph(){
+        int V = 2;
+        Graph g = new Graph(V);
+        g.addEdge(0, 1);
+
+        assertTrue(g.hasEdge(0, 1));
+        assertTrue(g.hasEdge(1, 0));
+
+        assertFalse(g.getAdjacentVertices(0).isEmpty());
+        assertFalse(g.getAdjacentVertices(1).isEmpty());
+    }
+
+    @Test
     public void assignWeightToEdges(){
         int V = 3;
-        Graph<Integer, Integer> g = new Graph<>(V).directed();
+        Graph g = new Graph(V).directed();
         g.addEdge(0, 1, 100);
         g.addEdge(0, 2, 200);
         g.addEdge(1, 2, -1);
 
-        assertEquals(100, g.getEdgeValue(0, 1).intValue());
-        assertEquals(200, g.getEdgeValue(0, 2).intValue());
-        assertEquals(-1, g.getEdgeValue(1, 2).intValue());
+        assertEquals(100, g.getEdgeValue(0, 1));
+        assertEquals(200, g.getEdgeValue(0, 2));
+        assertEquals(-1, g.getEdgeValue(1, 2));
         assertNull(g.getEdgeValue(2, 1));   // no 2->1 edge
     }
 
     @Test
     public void createSimpleDirectedGraph(){
         int V = 4;
-        Graph<Integer, Integer> g = new Graph<>(V).directed();
+        Graph g = new Graph(V).directed();
 
         g.addEdge(0, 1);
         g.addEdge(1, 2);
@@ -69,7 +82,7 @@ public class GraphTest {
     @Test
     public void addSelfLoopEdge(){
         int V = 5;
-        Graph<Integer, Integer> g = new Graph<>(V).directed();
+        Graph g = new Graph(V).directed();
         for (int i = 0; i < 100; i++){
             g.addEdge(0, 0);
         }
@@ -79,7 +92,7 @@ public class GraphTest {
     @Test
     public void addTheSameEdge(){
         int V = 5;
-        Graph<Integer, Integer> g = new Graph<>(V).directed();
+        Graph g = new Graph(V).directed();
         for (int i = 0; i < 100; i++){
             g.addEdge(0, 1);
         }
@@ -89,7 +102,7 @@ public class GraphTest {
     @Test
     public void createStarDirectedGraph(){
         int V = 100001, E = 100000;
-        Graph<Integer, Integer> g = new Graph<>(V).directed();
+        Graph g = new Graph(V).directed();
         for (int i = 1; i < V; i++){
             g.addEdge(0, i);
         }
@@ -99,7 +112,7 @@ public class GraphTest {
     @Test
     public void deleteEdge(){
         int V = 3;
-        Graph<Integer, Integer> g = new Graph<>(V).directed();
+        Graph g = new Graph(V).directed();
         g.addEdge(0, 2);
         g.addEdge(1, 2);
 
@@ -123,7 +136,7 @@ public class GraphTest {
     @Test
     public void deleteVertex(){
         int V = 3;
-        Graph<Integer, Integer> g = new Graph<>(V).directed();
+        Graph g = new Graph(V).directed();
         g.addEdge(0, 1);
         g.addEdge(1, 2);
         g.addEdge(2, 0);
@@ -145,7 +158,7 @@ public class GraphTest {
     @Test
     public void createTreeGraph(){
         int V = 7;
-        Graph<Integer, Integer> g = new Graph<>(V).directed();
+        Graph g = new Graph(V).directed();
 
         g.setVertexValue(0, 0);
         g.setVertexValue(1, 1);
@@ -165,13 +178,13 @@ public class GraphTest {
         int[] values = {0,1,2,3,4,5,6};
         int index = 0;
 
-        Queue<Integer> q = new LinkedList<>();
+        Queue<Integer> q = new LinkedList();
         q.offer(0);
         while (!q.isEmpty()) {
             int v = q.poll();
             System.out.println(g.getVertexValue(v));
 
-            assertEquals(values[index++], g.getVertexValue(v).intValue());
+            assertEquals(values[index++], g.getVertexValue(v));
 
             for (int next : g.getAdjacentVertices(v)){
                 q.offer(next);
@@ -182,7 +195,7 @@ public class GraphTest {
     @Test
     public void denseFullGraph(){
         int V = 1000;
-        Graph<Integer, Integer> g = new Graph<>(V).directed();
+        Graph g = new Graph(V).directed();
 
         for (int i = 0; i < V; i++){
             for (int j = 0; j < V; j++){

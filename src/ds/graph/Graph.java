@@ -1,11 +1,15 @@
 package ds.graph;
 
-public class Graph<X,Y> {
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
+public class Graph {
 
     private int vertexCount;
     private boolean directed;
-    private java.util.Map<Integer, X> vertexValues = new java.util.HashMap<>();
-    private java.util.Map<Integer, java.util.Map<Integer, Y>> edges = new java.util.HashMap<>();
+    private java.util.Map<Integer, Object> vertexValues = new java.util.HashMap<>();
+    private java.util.Map<Integer, java.util.Map<Integer, Object>> edges = new java.util.HashMap<>();
 
     public Graph(int V){ this.vertexCount = V; }
 
@@ -16,21 +20,21 @@ public class Graph<X,Y> {
         return this;
     }
 
-    public Graph addEdge(int from, int to, Y value){
+    public Graph addEdge(int from, int to, Object value){
         if (from >= vertexCount() || to >= vertexCount() ) throw new IllegalArgumentException();
         if (edges.containsKey(from)){
             edges.get(from).put(to, value);
         } else {
-            java.util.Map<Integer, Y> s = new java.util.HashMap<>();
+            java.util.Map<Integer, Object> s = new java.util.HashMap<>();
             s.put(to, value);
             edges.put(from, s);
         }
         return this;
     }
 
-    public Y getEdgeValue(int from, int to){
+    public Object getEdgeValue(int from, int to){
         if (from >= vertexCount() || to >= vertexCount() ) throw new IllegalArgumentException();
-        Y value = edges.getOrDefault(from, java.util.Collections.emptyMap()).get(to);
+        Object value = edges.getOrDefault(from, java.util.Collections.emptyMap()).get(to);
         if (directed) {
             return value;
         } else {
@@ -63,6 +67,7 @@ public class Graph<X,Y> {
     public void removeEdge(int from, int to){
         if (from >= vertexCount() || to >= vertexCount() ) throw new IllegalArgumentException();
         edges.getOrDefault(from, java.util.Collections.emptyMap()).remove(to);
+        if (!directed) edges.getOrDefault(to, java.util.Collections.emptyMap()).remove(from);
     }
 
     public int vertexCount(){ return vertexCount; }
@@ -76,16 +81,25 @@ public class Graph<X,Y> {
 
     public java.util.Set<Integer> getAdjacentVertices(int vertex){
         if (vertex >= vertexCount()) throw new IllegalArgumentException();
-        return java.util.Collections.unmodifiableSet(edges.getOrDefault(vertex, java.util.Collections.emptyMap()).keySet());
+        Set<Integer> directNeighbors = edges.getOrDefault(vertex, Collections.emptyMap()).keySet();
+        if (directed) {
+            return java.util.Collections.unmodifiableSet(directNeighbors);
+        } else {
+            java.util.Set<Integer> s = new HashSet<>(directNeighbors);
+            for (Integer from : edges.keySet()){
+                if (edges.get(from).containsKey(vertex)) s.add(from);
+            }
+            return java.util.Collections.unmodifiableSet(s);
+        }
     }
 
-    public Graph<X,Y> setVertexValue(int vertex, X value){
+    public Graph setVertexValue(int vertex, Object value){
         if (vertex >= vertexCount()) throw new IllegalArgumentException();
         vertexValues.put(vertex, value);
         return this;
     }
 
-    public X getVertexValue(int vertex){
+    public Object getVertexValue(int vertex){
         if (vertex >= vertexCount()) throw new IllegalArgumentException();
         return vertexValues.get(vertex);
     }
