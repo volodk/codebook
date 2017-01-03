@@ -1,4 +1,4 @@
-package alg.tree;
+package alg.tree.traverse;
 
 import java.util.LinkedList;
 import java.util.Queue;

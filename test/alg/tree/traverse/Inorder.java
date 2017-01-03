@@ -1,8 +1,10 @@
-package alg.tree;
+package alg.tree.traverse;
+
+import java.util.Stack;
 
 // Volodymyr Krasnikov <vkrasnikov@gmail.com> 12:52:24 PM 
 
-public class Preorder {
+public class Inorder {
 
 	static class Node {
 		int value;
@@ -20,13 +22,16 @@ public class Preorder {
 	}
 
 	void print(Node node) {
+		if (node != null) {
+			Stack<Node> st = new Stack<>();
 
+		}
 	}
 
 	void printRec(Node node) {
 		if (node != null) {
-			visit(node);
 			printRec(node.left);
+			visit(node);
 			printRec(node.right);
 		}
 	}
@@ -39,16 +44,14 @@ public class Preorder {
 				curr = curr.right;
 			} else {
 				Node pred = curr.left;
-				while (pred.right != null && pred.right != curr) {
+				while (pred.right != null && pred.right != curr)
 					pred = pred.right;
-				}
-
 				if (pred.right == null) {
-					visit(curr);
 					pred.right = curr;
 					curr = curr.left;
 				} else {
 					pred.right = null;
+					visit(curr);
 					curr = curr.right;
 				}
 			}
@@ -56,7 +59,19 @@ public class Preorder {
 	}
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+
+		// Node tree = new Node(1, new Node(2, new Node(4, null, null), new
+		// Node(5, null, null)), new Node(3, null, null));
+
+		Node tree = new Node(2, new Node(1, null, null), new Node(5, null, null));
+
+		Inorder traversal = new Inorder();
+
+		traversal.print(tree);
+		System.out.println();
+		traversal.printRec(tree);
+		System.out.println();
+		traversal.printMorris(tree);
 
 	}
 
