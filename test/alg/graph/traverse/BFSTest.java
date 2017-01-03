@@ -21,14 +21,14 @@ public class BFSTest {
         g.setVertexValue(2, 3);
         g.setVertexValue(3, 4);
 
-        Visitor visitor = new Visitor() {
+        GraphVisitor graphVisitor = new GraphVisitor() {
             @Override
             public void openVertex(Graph g, Integer v) {
                 System.out.println(g.getVertexValue(v));
             }
         };
 
-        BFS.traverse(g, 0, visitor );
+        BFS.traverse(g, 0, graphVisitor);
     }
 
     @Test
@@ -44,13 +44,13 @@ public class BFSTest {
         g.setVertexValue(2, 3);
         g.setVertexValue(3, 4);
 
-        Visitor visitor = new Visitor() {
+        GraphVisitor graphVisitor = new GraphVisitor() {
             @Override
             public void openVertex(Graph g, Integer v) {
                 System.out.println(g.getVertexValue(v));
             }
         };
 
-        BFS.traverse(g, 0, visitor );
+        BFS.traverse(g, 0, graphVisitor);
     }
 }

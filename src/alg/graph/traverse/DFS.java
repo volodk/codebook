@@ -10,7 +10,7 @@ import java.util.Stack;
 
 public class DFS {
 
-    public static void traverse(Graph g, int start, Visitor visitor){
+    public static void traverse(Graph g, int start, GraphVisitor graphVisitor){
         Set<Integer> visited = new HashSet<>();
 
         Stack<Integer> s = new Stack<>();
@@ -19,7 +19,7 @@ public class DFS {
         while( !s.isEmpty() ){
             int v = s.pop();
 
-            visitor.openVertex(g, v);
+            graphVisitor.openVertex(g, v);
             visited.add(v);
 
             for (int w : g.getAdjacentVertices(v)){

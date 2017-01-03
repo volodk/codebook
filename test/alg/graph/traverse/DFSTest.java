@@ -31,7 +31,14 @@ public class DFSTest {
                 .addEdge(2, 5)
                 .addEdge(2, 6);
 
-        DFS.traverse(g, 0, (gr, v) -> {System.out.println(g.getVertexValue(v)); } );
+        GraphVisitor graphVisitor = new GraphVisitor() {
+            @Override
+            public void openVertex(Graph g, Integer v) {
+                System.out.println(g.getVertexValue(v));
+            }
+        };
+
+        DFS.traverse(g, 0, graphVisitor);
 
     }
 }

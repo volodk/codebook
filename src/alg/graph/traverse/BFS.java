@@ -9,7 +9,7 @@ import java.util.Set;
 
 public class BFS {
 
-    public static void traverse(Graph g, int start, Visitor visitor){
+    public static void traverse(Graph g, int start, GraphVisitor graphVisitor){
 
         Set<Integer> visited = new HashSet<>();
 
@@ -18,7 +18,7 @@ public class BFS {
         while (!q.isEmpty()) {
             Integer v = q.poll();
 
-            visitor.openVertex(g, v);
+            graphVisitor.openVertex(g, v);
             visited.add(v);
 
             for (Integer w : g.getAdjacentVertices(v)){
