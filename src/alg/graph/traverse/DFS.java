@@ -7,14 +7,27 @@ import ds.graph.Graph;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
-import java.util.function.BiConsumer;
 
 public class DFS {
 
-    public static void traverse(Graph g, int start, BiConsumer<Graph, Integer> action){
+    public static void traverse(Graph g, int start, Visitor visitor){
         Set<Integer> visited = new HashSet<>();
 
         Stack<Integer> s = new Stack<>();
+        s.push(start);
+
+        while( !s.isEmpty() ){
+            int v = s.pop();
+
+            visitor.openVertex(g, v);
+            visited.add(v);
+
+            for (int w : g.getAdjacentVertices(v)){
+                if (!visited.contains(w)){
+                    s.push(w);
+                }
+            }
+        }
 
     }
 

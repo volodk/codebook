@@ -6,11 +6,10 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Set;
-import java.util.function.BiConsumer;
 
 public class BFS {
 
-    public static void traverse(Graph g, int start, BiConsumer<Graph, Integer> action){
+    public static void traverse(Graph g, int start, Visitor visitor){
 
         Set<Integer> visited = new HashSet<>();
 
@@ -19,8 +18,8 @@ public class BFS {
         while (!q.isEmpty()) {
             Integer v = q.poll();
 
+            visitor.openVertex(g, v);
             visited.add(v);
-            action.accept(g, v);
 
             for (Integer w : g.getAdjacentVertices(v)){
                 if (!visited.contains(w)) {
