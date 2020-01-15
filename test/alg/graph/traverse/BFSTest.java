@@ -1,6 +1,5 @@
 package alg.graph.traverse;
 
-import ds.graph.Graph;
 import org.junit.Test;
 
 /**

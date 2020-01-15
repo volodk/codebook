@@ -22,7 +22,7 @@ public class DFS {
             graphVisitor.openVertex(g, v);
             visited.add(v);
 
-            for (int w : g.getAdjacentVertices(v)){
+            for (int w : g.adjacentTo(v)){
                 if (!visited.contains(w)){
                     s.push(w);
                 }

@@ -2,7 +2,7 @@ package alg.string;
 
 // Volodymyr Krasnikov <vkrasnikov@gmail.com> 6:50:58 PM 
 
-public class Z {
+public class ZAlg {
 	// s = pattern + $ + text
 	public static int[] zFunction(char[] s) {
 		int N = s.length;

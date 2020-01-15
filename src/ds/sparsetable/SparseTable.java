@@ -34,30 +34,6 @@ public class SparseTable<T> {
 		return (T) t[i][log2(j - i + 1)];
 	}
 
-	public void print() {
-		for (int i = 0; i < t.length; i++) {
-			System.out.println(Arrays.toString(t[i]));
-		}
-	}
-
-	public static void main(String[] args) {
-
-		Function<Integer> fun = new Function<Integer>() {
-			@Override
-			public Integer call(Integer a, Integer b) {
-				return Math.min(a, b);
-				// return Math.max(a, b);
-
-			}
-		};
-
-		SparseTable<Integer> st = new SparseTable<Integer>(fun, 2, 5, 0, 6, 8, -1, 9, 3, 4);
-
-		st.print();
-
-		System.out.println(st.query(1, 5));
-	}
-
 	private static int log2(int n) {
 		return (int) Math.ceil(Math.log(n) / Math.log(2));
 	}

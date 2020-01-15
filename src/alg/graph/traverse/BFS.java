@@ -16,12 +16,12 @@ public class BFS {
         Queue<Integer> q = new LinkedList<>();
         q.offer(start);
         while (!q.isEmpty()) {
-            Integer v = q.poll();
+            int v = q.poll();
 
             graphVisitor.openVertex(g, v);
             visited.add(v);
 
-            for (Integer w : g.getAdjacentVertices(v)){
+            for (int w : g.adjacentTo(v)){
                 if (!visited.contains(w)) {
                     q.offer(w);
                 }
