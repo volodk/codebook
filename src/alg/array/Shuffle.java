@@ -24,7 +24,6 @@ public class Shuffle {
 		while (--n > 0) {
 			swap(arr, rnd.nextInt(n + 1), n);
 		}
-		;
 	}
 
 	static void shuffle(int[] arr) {
